@@ -43,7 +43,7 @@ export default function MagneticButton({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "relative inline-flex items-center gap-2 px-8 py-4 text-sm tracking-wider uppercase cursor-pointer overflow-hidden transition-all duration-300 text-foreground",
+        "relative inline-flex items-center gap-2 px-8 py-4 text-sm tracking-wider uppercase cursor-pointer overflow-hidden transition-all duration-300 text-foreground hover:scale-[1.03]",
         isPrimary
           ? "bg-primary border border-primary-light/40"
           : "bg-[#0D0D0D] border border-white/[0.10]",

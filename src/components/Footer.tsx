@@ -88,7 +88,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="w-full px-4 py-3 text-[11px] uppercase tracking-[0.15em] font-medium text-foreground border border-primary/40 hover:bg-primary hover:border-primary transition-all duration-300 cursor-pointer"
+                className="w-full px-4 py-3 text-[11px] uppercase tracking-[0.15em] font-medium text-foreground bg-primary border border-primary-light/40 hover:border-primary-light/80 hover:shadow-[0_0_20px_rgba(122,26,26,0.4)] hover:scale-[1.03] transition-all duration-300 cursor-pointer"
               >
                 Subscribe
               </button>

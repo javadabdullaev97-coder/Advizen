@@ -67,7 +67,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact"
-            className="ml-4 px-6 py-2.5 bg-white/[0.04] backdrop-blur-sm border border-primary/60 text-[12px] uppercase tracking-[0.15em] font-medium text-foreground hover:bg-primary hover:border-primary hover:text-white transition-all duration-300 cursor-pointer"
+            className="ml-4 px-6 py-2.5 bg-primary border border-primary-light/40 text-[12px] uppercase tracking-[0.15em] font-medium text-foreground hover:border-primary-light/80 hover:shadow-[0_0_20px_rgba(122,26,26,0.4)] hover:scale-[1.03] transition-all duration-300 cursor-pointer"
           >
             Inquire
           </Link>
@@ -112,7 +112,7 @@ export default function Navbar() {
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="block w-full text-center mt-6 px-6 py-3 border border-primary text-sm uppercase tracking-widest text-foreground hover:bg-primary transition-colors cursor-pointer"
+              className="block w-full text-center mt-6 px-6 py-3 bg-primary border border-primary-light/40 text-sm uppercase tracking-widest text-foreground hover:border-primary-light/80 hover:shadow-[0_0_20px_rgba(122,26,26,0.4)] transition-all duration-300 cursor-pointer"
             >
               Inquire
             </Link>
