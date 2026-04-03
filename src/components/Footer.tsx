@@ -88,7 +88,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="shiny-btn w-full px-4 py-3 text-[11px] uppercase tracking-[0.15em] font-medium text-foreground cursor-pointer transition-colors duration-300"
+                className="w-full px-4 py-3 text-[11px] uppercase tracking-[0.15em] font-medium text-foreground border border-primary/40 hover:bg-primary hover:border-primary transition-all duration-300 cursor-pointer"
               >
                 Subscribe
               </button>

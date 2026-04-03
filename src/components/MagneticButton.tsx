@@ -27,7 +27,6 @@ export default function MagneticButton({
   const [hovered, setHovered] = useState(false);
   const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
 
-  // Magnetic spring physics
   const mx = useSpring(0, { stiffness: 200, damping: 20 });
   const my = useSpring(0, { stiffness: 200, damping: 20 });
   const imx = useSpring(0, { stiffness: 300, damping: 25 });
@@ -45,7 +44,6 @@ export default function MagneticButton({
     imx.set(dx * 0.08);
     imy.set(dy * 0.08);
 
-    // Glow position relative to button
     const btnRect = btnRef.current.getBoundingClientRect();
     setGlowPos({
       x: e.clientX - btnRect.left,
@@ -74,34 +72,40 @@ export default function MagneticButton({
     >
       <motion.span
         ref={btnRef}
-        style={{
-          x: imx,
-          y: imy,
-          ...(isPrimary ? { "--shiny-bg": "#630D0D" } as React.CSSProperties : {}),
-        }}
+        style={{ x: imx, y: imy }}
         className={cn(
-          "shiny-btn relative inline-flex items-center gap-2 px-8 py-4 text-sm tracking-wider uppercase cursor-pointer overflow-hidden transition-colors duration-300 text-foreground",
+          "relative inline-flex items-center gap-2 px-8 py-4 text-sm tracking-wider uppercase cursor-pointer overflow-hidden transition-all duration-300",
+          isPrimary
+            ? "bg-primary text-foreground border border-primary-light/40"
+            : "bg-[#0D0D0D] text-foreground border border-white/[0.10]",
+          hovered && isPrimary && "border-primary-light/80 shadow-[0_0_20px_rgba(122,26,26,0.4)]",
+          hovered && !isPrimary && "border-primary/60 shadow-[0_0_20px_rgba(99,13,13,0.25)]",
           className,
         )}
       >
         {/* Cursor-following glow */}
         <span
           className={cn(
-            "absolute w-[180px] h-[180px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 ease-out",
-            hovered ? "scale-100" : "scale-0",
+            "absolute w-[200px] h-[200px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-50 transition-transform duration-300 ease-out",
+            hovered ? "scale-125" : "scale-0",
           )}
           style={{
             left: glowPos.x,
             top: glowPos.y,
             background: isPrimary
-              ? "radial-gradient(circle, rgba(122, 26, 26, 0.6) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(99, 13, 13, 0.4) 0%, transparent 70%)",
+              ? "radial-gradient(circle, #7A1A1A 10%, transparent 70%)"
+              : "radial-gradient(circle, #630D0D 10%, transparent 70%)",
             zIndex: 0,
           }}
         />
 
         {/* Content */}
-        <span className="relative z-10 inline-flex items-center gap-2">
+        <span
+          className={cn(
+            "relative z-10 inline-flex items-center gap-2 transition-colors duration-300",
+            hovered && !isPrimary && "text-primary-light",
+          )}
+        >
           {children}
         </span>
       </motion.span>
