@@ -26,7 +26,6 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative min-h-screen flex items-end pb-24 md:pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[#0D0D0D]" />
         {/* Geometric circle decoration */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}

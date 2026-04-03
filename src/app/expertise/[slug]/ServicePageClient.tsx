@@ -38,7 +38,7 @@ export default function ServicePageClient({ slug }: { slug: string }) {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="relative pt-36 pb-20 md:pt-44 md:pb-28 bg-background overflow-hidden">
+      <section className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.05 }}

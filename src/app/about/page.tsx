@@ -45,7 +45,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 bg-background overflow-hidden">
+      <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 overflow-hidden">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.06 }}
