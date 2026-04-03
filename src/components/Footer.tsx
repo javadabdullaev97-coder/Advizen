@@ -1,81 +1,64 @@
 import Link from "next/link";
-import { Phone, Mail, MapPin } from "lucide-react";
 
 const footerLinks = {
-  Services: [
-    { label: "Tax Consulting", href: "/services" },
-    { label: "Legal Advisory", href: "/services" },
-    { label: "Finance & Accounting", href: "/services" },
-    { label: "HR Services", href: "/hr-services" },
-    { label: "Marketing", href: "/services" },
+  Expertise: [
+    { label: "Tax Consulting", href: "/expertise" },
+    { label: "Legal Advisory", href: "/expertise" },
+    { label: "Finance & Accounting", href: "/expertise" },
+    { label: "HR Services", href: "/expertise" },
+    { label: "Marketing", href: "/expertise" },
+    { label: "Funding & Grants", href: "/expertise" },
   ],
-  Company: [
-    { label: "About Us", href: "/about" },
-    { label: "Our Team", href: "/about" },
-    { label: "Careers", href: "/contact" },
+  Firm: [
+    { label: "About", href: "/about" },
+    { label: "The Library", href: "/library" },
     { label: "Contact", href: "/contact" },
   ],
 };
 
 export default function Footer() {
   return (
-    <footer className="relative bg-black border-t border-white/5">
-      {/* Red accent line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <footer className="bg-[#0A0A0A] border-t border-border">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Main footer */}
+        <div className="py-20 grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">
-                A
-              </div>
-              <div>
-                <span className="text-xl font-bold tracking-tight text-white">ADVIZEN</span>
-                <span className="block text-[10px] uppercase tracking-[0.25em] text-white/30 -mt-1">
-                  Consulting
-                </span>
-              </div>
-            </div>
-            <p className="text-white/40 text-sm leading-relaxed mb-6">
-              Your trusted partner for expert business consulting in Uzbekistan.
-              One-stop shop for all your business needs in Central Asia.
+          <div className="md:col-span-5">
+            <span className="text-lg font-serif tracking-[0.15em] text-foreground">
+              ADVIZEN
+            </span>
+            <p className="mt-6 text-sm text-muted leading-relaxed max-w-sm">
+              Premier business advisory in Uzbekistan. Integrated consulting
+              across tax, legal, finance, HR, and marketing — a single point of
+              contact for your entire operation.
             </p>
-            <div className="space-y-3">
+            <div className="mt-8 space-y-3">
               <a
                 href="tel:+998334884888"
-                className="flex items-center gap-3 text-sm text-white/40 hover:text-primary transition-colors"
+                className="block text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
               >
-                <Phone className="w-4 h-4 text-primary" />
                 +998 (33) 488 48 88
               </a>
               <a
                 href="mailto:info@advizenco.com"
-                className="flex items-center gap-3 text-sm text-white/40 hover:text-primary transition-colors"
+                className="block text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
               >
-                <Mail className="w-4 h-4 text-primary" />
                 info@advizenco.com
               </a>
-              <div className="flex items-center gap-3 text-sm text-white/40">
-                <MapPin className="w-4 h-4 text-primary shrink-0" />
-                Tashkent, Uzbekistan
-              </div>
+              <p className="text-sm text-muted-dark">Tashkent, Uzbekistan</p>
             </div>
           </div>
 
           {/* Link Columns */}
           {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <h3 className="font-semibold text-sm uppercase tracking-wider mb-6 text-white/60">
-                {title}
-              </h3>
+            <div key={title} className="md:col-span-2">
+              <h3 className="tracking-luxury text-muted-dark mb-6">{title}</h3>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-white/30 hover:text-primary transition-colors"
+                      className="text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
                     >
                       {link.label}
                     </Link>
@@ -86,22 +69,21 @@ export default function Footer() {
           ))}
 
           {/* Newsletter */}
-          <div>
-            <h3 className="font-semibold text-sm uppercase tracking-wider mb-6 text-white/60">
-              Stay Updated
-            </h3>
-            <p className="text-sm text-white/30 mb-4">
-              Get the latest insights on business consulting in Uzbekistan.
+          <div className="md:col-span-3">
+            <h3 className="tracking-luxury text-muted-dark mb-6">Newsletter</h3>
+            <p className="text-sm text-muted mb-4">
+              Insights on doing business in Central Asia.
             </p>
-            <form className="flex gap-2">
+            <form className="space-y-3">
               <input
                 type="email"
-                placeholder="Your email"
-                className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:shadow-[0_0_15px_rgba(220,38,38,0.1)] transition-all"
+                placeholder="Email address"
+                aria-label="Email address"
+                className="w-full px-4 py-3 bg-transparent border border-border text-sm text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
               />
               <button
                 type="submit"
-                className="px-4 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-light transition-colors"
+                className="w-full px-4 py-3 border border-primary text-[11px] uppercase tracking-[0.15em] font-medium text-foreground hover:bg-primary transition-all duration-300 cursor-pointer"
               >
                 Subscribe
               </button>
@@ -110,16 +92,23 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/20">
-            &copy; {new Date().getFullYear()} Advizen Consulting. All rights reserved.
+        <div className="py-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-dark tracking-wide">
+            &copy; {new Date().getFullYear()} Advizen Consulting. All rights
+            reserved.
           </p>
-          <div className="flex gap-6">
-            <Link href="#" className="text-sm text-white/20 hover:text-primary transition-colors">
-              Privacy Policy
+          <div className="flex gap-8">
+            <Link
+              href="#"
+              className="text-xs text-muted-dark hover:text-muted transition-colors tracking-wide cursor-pointer"
+            >
+              Privacy
             </Link>
-            <Link href="#" className="text-sm text-white/20 hover:text-primary transition-colors">
-              Terms of Service
+            <Link
+              href="#"
+              className="text-xs text-muted-dark hover:text-muted transition-colors tracking-wide cursor-pointer"
+            >
+              Terms
             </Link>
           </div>
         </div>

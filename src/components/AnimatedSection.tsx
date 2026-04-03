@@ -7,32 +7,43 @@ interface Props {
   children: ReactNode;
   className?: string;
   delay?: number;
-  direction?: "up" | "left" | "right" | "scale";
 }
+
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function AnimatedSection({
   children,
   className = "",
   delay = 0,
-  direction = "up",
 }: Props) {
-  const variants = {
-    up: { initial: { opacity: 0, y: 60 }, animate: { opacity: 1, y: 0 } },
-    left: { initial: { opacity: 0, x: -60 }, animate: { opacity: 1, x: 0 } },
-    right: { initial: { opacity: 0, x: 60 }, animate: { opacity: 1, x: 0 } },
-    scale: { initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 } },
-  };
-
   return (
     <motion.div
-      initial={variants[direction].initial}
-      whileInView={variants[direction].animate}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{
-        duration: 0.8,
-        delay,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.9, delay, ease }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function FadeIn({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1.2, delay, ease }}
       className={className}
     >
       {children}
@@ -51,10 +62,10 @@ export function StaggerContainer({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "-40px" }}
       variants={{
         hidden: {},
-        visible: { transition: { staggerChildren: 0.12 } },
+        visible: { transition: { staggerChildren: 0.1 } },
       }}
       className={className}
     >
@@ -73,12 +84,11 @@ export function StaggerItem({
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 40, filter: "blur(4px)" },
+        hidden: { opacity: 0, y: 24 },
         visible: {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
-          transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+          transition: { duration: 0.7, ease },
         },
       }}
       className={className}
@@ -88,24 +98,14 @@ export function StaggerItem({
   );
 }
 
-export function ParallaxSection({
-  children,
-  className = "",
-  speed = 0.3,
-}: {
-  children: ReactNode;
-  className?: string;
-  speed?: number;
-}) {
+export function HorizontalLine({ className = "" }: { className?: string }) {
   return (
     <motion.div
-      initial={{ y: 0 }}
-      whileInView={{ y: -30 * speed }}
-      viewport={{ once: false }}
-      transition={{ duration: 1.2, ease: "linear" }}
-      className={className}
-    >
-      {children}
-    </motion.div>
+      initial={{ scaleX: 0 }}
+      whileInView={{ scaleX: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1, ease }}
+      className={`h-px bg-border origin-left ${className}`}
+    />
   );
 }

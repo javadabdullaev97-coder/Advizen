@@ -1,197 +1,161 @@
 "use client";
 
-import {
-  Target,
-  Eye,
-  Heart,
-  Users,
-  Globe,
-  Shield,
-  Lightbulb,
-  Handshake,
-  ArrowRight,
-} from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import AnimatedSection, { StaggerContainer, StaggerItem } from "@/components/AnimatedSection";
+import { ArrowRight } from "lucide-react";
+import AnimatedSection, {
+  HorizontalLine,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/AnimatedSection";
 
-const values = [
+const principles = [
   {
-    icon: Shield,
-    title: "Integrity",
-    description: "We uphold the highest standards of honesty and transparency in every engagement.",
+    num: "01",
+    title: "Integration",
+    text: "Every discipline — legal, tax, HR, finance, marketing — works in concert. No silos, no gaps.",
   },
   {
-    icon: Lightbulb,
-    title: "Innovation",
-    description: "We bring modern, creative solutions to complex business challenges.",
+    num: "02",
+    title: "Precision",
+    text: "We operate with meticulous attention to regulatory detail and market nuance.",
   },
   {
-    icon: Handshake,
+    num: "03",
     title: "Partnership",
-    description: "We build lasting relationships and treat your business as our own.",
+    text: "We embed within your operations. Your challenges are ours to solve.",
   },
   {
-    icon: Users,
-    title: "Expertise",
-    description: "Our team of specialists brings deep knowledge across every business domain.",
-  },
-  {
-    icon: Globe,
-    title: "Local Insight",
-    description: "Deep understanding of Uzbekistan's regulatory and business landscape.",
-  },
-  {
-    icon: Heart,
-    title: "Client First",
-    description: "Every decision we make is guided by what's best for our clients.",
+    num: "04",
+    title: "Local Mastery",
+    text: "Deep, first-hand understanding of Uzbekistan's regulatory landscape and business culture.",
   },
 ];
 
-const timeline = [
-  { year: "2016", event: "Founded in Tashkent with a vision to simplify business consulting" },
-  { year: "2018", event: "Expanded services to include full HR and marketing solutions" },
-  { year: "2020", event: "Reached 30+ active clients across multiple industries" },
-  { year: "2022", event: "Launched Employer of Record (EOR) services for foreign companies" },
-  { year: "2024", event: "Surpassed 70+ completed projects and 50+ satisfied clients" },
+const milestones = [
+  { year: "2016", text: "Founded in Tashkent with a mandate to bring integrated advisory to Uzbekistan" },
+  { year: "2018", text: "Expanded into full-spectrum HR and digital marketing services" },
+  { year: "2020", text: "Surpassed 30 active institutional clients across multiple sectors" },
+  { year: "2022", text: "Launched Employer of Record services for international market entrants" },
+  { year: "2024", text: "Completed 70+ engagements, serving 15+ industries across Central Asia" },
 ];
 
 export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-black overflow-hidden">
-        <div className="absolute inset-0 grid-bg opacity-40" />
+      <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 bg-background overflow-hidden">
         <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-1/3 -right-32 w-96 h-96 bg-primary/20 rounded-full blur-[150px]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.06 }}
+          transition={{ duration: 3 }}
+          className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary rounded-full blur-[200px]"
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <AnimatedSection>
-            <span className="text-sm font-semibold text-primary uppercase tracking-widest">
-              About Advizen
-            </span>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mt-4 mb-6 max-w-3xl leading-tight">
-              Your Go-To Team
+            <p className="tracking-luxury text-muted-dark mb-6">About the Firm</p>
+            <h1 className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-3xl">
+              Built on expertise,
               <br />
-              <span className="text-white/30">in Central Asia</span>
+              <span className="text-primary-light">sustained by trust</span>
             </h1>
-            <p className="text-lg text-white/40 max-w-2xl leading-relaxed">
-              We bring all our specialized services together, offering one point of
-              contact and seamless support for everything your business needs.
-            </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="py-24 md:py-32 bg-section-bg border-y border-white/5">
+      {/* Institutional Overview */}
+      <section className="py-24 md:py-32 bg-surface border-y border-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            <AnimatedSection direction="left">
-              <div className="bg-card-bg border border-white/5 rounded-3xl p-10 h-full card-hover glow-border">
-                <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
-                  <Target className="w-7 h-7 text-primary" />
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-4">Our Mission</h2>
-                <p className="text-white/40 leading-relaxed">
-                  To be the most trusted one-stop business consulting partner in
-                  Uzbekistan, empowering companies with integrated services that
-                  simplify operations, ensure compliance, and drive sustainable
-                  growth across Central Asia.
-                </p>
-              </div>
+          <div className="grid lg:grid-cols-5 gap-16">
+            <AnimatedSection className="lg:col-span-2">
+              <p className="tracking-luxury text-muted-dark mb-4">Who We Are</p>
+              <h2 className="heading-luxury text-3xl md:text-4xl text-foreground leading-tight">
+                A single point of counsel
+              </h2>
             </AnimatedSection>
 
-            <AnimatedSection direction="right">
-              <div className="bg-card-bg border border-white/5 rounded-3xl p-10 h-full card-hover glow-border">
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
-                  <Eye className="w-7 h-7 text-primary" />
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-4">Our Vision</h2>
-                <p className="text-white/40 leading-relaxed">
-                  To redefine business consulting in Central Asia by delivering
-                  world-class, integrated solutions that help businesses of all sizes
-                  thrive in Uzbekistan&apos;s dynamic and rapidly growing economy.
+            <AnimatedSection delay={0.15} className="lg:col-span-3">
+              <div className="space-y-6 text-muted leading-relaxed">
+                <p>
+                  Advizen Consulting is Uzbekistan&apos;s integrated advisory
+                  practice. We provide the full spectrum of business services —
+                  tax, legal, finance, accounting, HR, and marketing — under one
+                  institutional roof.
+                </p>
+                <p>
+                  Our firm was established in 2016 with a clear thesis: businesses
+                  operating in Central Asia deserve the calibre of advisory
+                  typically reserved for mature markets. We bring that standard to
+                  every engagement, across every discipline.
+                </p>
+                <p>
+                  With over 500 hours of monthly consultation, we serve as the
+                  go-to team for companies navigating Uzbekistan&apos;s dynamic
+                  regulatory and commercial environment — from multinational
+                  market entrants to established local enterprises.
                 </p>
               </div>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+
+      {/* Principles */}
+      <section className="py-24 md:py-32 bg-background">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <AnimatedSection>
+            <p className="tracking-luxury text-muted-dark mb-4">
+              Our Principles
+            </p>
+            <h2 className="heading-luxury text-3xl md:text-4xl text-foreground mb-16">
+              What guides every engagement
+            </h2>
+          </AnimatedSection>
+
+          <HorizontalLine className="mb-0" />
+
+          {principles.map((p) => (
+            <AnimatedSection key={p.num}>
+              <div className="grid md:grid-cols-12 gap-6 py-10 border-b border-border">
+                <div className="md:col-span-1">
+                  <span className="text-xs font-mono text-muted-dark">{p.num}</span>
+                </div>
+                <div className="md:col-span-3">
+                  <h3 className="font-serif text-xl text-foreground tracking-wide">
+                    {p.title}
+                  </h3>
+                </div>
+                <div className="md:col-span-8">
+                  <p className="text-muted leading-relaxed">{p.text}</p>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
-        <div className="absolute inset-0 grid-bg opacity-30" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <AnimatedSection>
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="text-sm font-semibold text-primary uppercase tracking-widest">
-                Our Journey
-              </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mt-4">
-                Growing with Uzbekistan
-              </h2>
-              <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-6" />
-            </div>
-          </AnimatedSection>
-
-          <div className="max-w-3xl mx-auto">
-            {timeline.map((item, i) => (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="flex gap-6 mb-8 last:mb-0"
-              >
-                <div className="flex flex-col items-center">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/30 text-primary flex items-center justify-center font-bold text-sm shrink-0 counter-glow">
-                    {item.year}
-                  </div>
-                  {i < timeline.length - 1 && (
-                    <div className="w-px flex-1 bg-gradient-to-b from-primary/30 to-transparent mt-2" />
-                  )}
-                </div>
-                <div className="bg-card-bg rounded-2xl p-6 border border-white/5 flex-1 card-hover">
-                  <p className="text-white/60">{item.event}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="py-24 md:py-32 bg-section-bg border-y border-white/5">
+      <section className="py-24 md:py-32 bg-surface border-y border-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="text-sm font-semibold text-primary uppercase tracking-widest">
-                What Drives Us
-              </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mt-4 mb-4">
-                Our Core Values
-              </h2>
-              <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mt-6" />
-            </div>
+            <p className="tracking-luxury text-muted-dark mb-4">History</p>
+            <h2 className="heading-luxury text-3xl md:text-4xl text-foreground mb-16">
+              Milestones
+            </h2>
           </AnimatedSection>
 
-          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((value) => (
-              <StaggerItem key={value.title}>
-                <div className="bg-card-bg rounded-2xl p-8 border border-white/5 card-hover glow-border h-full group">
-                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-5 group-hover:bg-primary/10 transition-colors">
-                    <value.icon className="w-6 h-6 text-white/30 group-hover:text-primary transition-colors" />
+          <StaggerContainer className="space-y-0">
+            {milestones.map((m, i) => (
+              <StaggerItem key={m.year}>
+                <div className="grid md:grid-cols-12 gap-6 py-8 border-b border-border">
+                  <div className="md:col-span-2">
+                    <span className="font-serif text-2xl text-primary-light">
+                      {m.year}
+                    </span>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    {value.title}
-                  </h3>
-                  <p className="text-white/30 text-sm leading-relaxed">
-                    {value.description}
-                  </p>
+                  <div className="md:col-span-10">
+                    <p className="text-foreground/80 leading-relaxed">{m.text}</p>
+                  </div>
                 </div>
               </StaggerItem>
             ))}
@@ -200,24 +164,22 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative py-28 bg-black overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-[150px]" />
-        <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <AnimatedSection direction="scale">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Let&apos;s Build Something
-              <br />
-              <span className="text-shimmer">Great Together</span>
+      <section className="py-24 md:py-32 bg-background relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/6 rounded-full blur-[180px]" />
+        <div className="relative max-w-3xl mx-auto px-6 lg:px-8 text-center">
+          <AnimatedSection>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground mb-6">
+              Work with us
             </h2>
-            <p className="text-lg text-white/40 mb-10 max-w-2xl mx-auto">
-              Whether you&apos;re entering the Uzbek market or scaling your existing
-              operations, we&apos;re here to help.
+            <p className="text-muted leading-relaxed mb-10 max-w-lg mx-auto">
+              Whether you are entering the market or scaling existing operations,
+              our firm is prepared to advise.
             </p>
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-semibold rounded-full hover:bg-primary-light transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:scale-105"
+              className="group inline-flex items-center gap-3 px-10 py-4 bg-primary text-foreground text-sm uppercase tracking-[0.12em] font-medium hover:bg-primary-light transition-all duration-300 cursor-pointer"
             >
-              Contact Our Team
+              Contact us
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </AnimatedSection>
