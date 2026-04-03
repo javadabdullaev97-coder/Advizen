@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none">
+  <!-- Grey A-shape triangle -->
+  <path d="M120 8 L178 158 L148 158 L120 78 L92 158 L62 158 Z" fill="#8C8C8C"/>
+  <!-- Red dynamic swoosh -->
+  <path d="M18 168 C50 130, 80 115, 120 118 C150 120, 185 105, 222 80 L218 96 C185 118, 152 132, 120 130 C82 128, 52 142, 24 180 Z" fill="#E8292C"/>
+</svg>

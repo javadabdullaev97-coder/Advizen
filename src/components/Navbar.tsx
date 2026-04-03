@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -37,6 +38,13 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
+          <Image
+            src="/logo.svg"
+            alt="Advizen"
+            width={36}
+            height={30}
+            className="transition-opacity group-hover:opacity-80"
+          />
           <span className="text-lg font-serif tracking-[0.15em] text-foreground transition-colors group-hover:text-primary">
             ADVIZEN
           </span>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   Expertise: [
@@ -24,9 +25,17 @@ export default function Footer() {
         <div className="py-20 grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand */}
           <div className="md:col-span-5">
-            <span className="text-lg font-serif tracking-[0.15em] text-foreground">
-              ADVIZEN
-            </span>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/logo.svg"
+                alt="Advizen"
+                width={44}
+                height={36}
+              />
+              <span className="text-lg font-serif tracking-[0.15em] text-foreground">
+                ADVIZEN
+              </span>
+            </div>
             <p className="mt-6 text-sm text-muted leading-relaxed max-w-sm">
               Premier business advisory in Uzbekistan. Integrated consulting
               across tax, legal, finance, HR, and marketing — a single point of
