@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -30,7 +30,7 @@ export default function Navbar() {
       transition={{ duration: 1, delay: 0.2 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
         scrolled
-          ? "bg-[#0D0D0D]/95 backdrop-blur-md hairline-b"
+          ? "bg-[#0D0D0D]/70 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
           : "bg-transparent"
       }`}
     >
@@ -59,7 +59,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact"
-            className="ml-4 px-6 py-2.5 border border-primary text-[12px] uppercase tracking-[0.15em] font-medium text-foreground hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer"
+            className="ml-4 px-6 py-2.5 bg-white/[0.04] backdrop-blur-sm border border-primary/60 text-[12px] uppercase tracking-[0.15em] font-medium text-foreground hover:bg-primary hover:border-primary hover:text-white transition-all duration-300 cursor-pointer"
           >
             Inquire
           </Link>
@@ -83,7 +83,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-[#0D0D0D] border-b border-border px-6 pb-8 pt-4"
+            className="md:hidden bg-[#0D0D0D]/90 backdrop-blur-xl border-b border-white/[0.06] px-6 pb-8 pt-4"
           >
             {navLinks.map((link, i) => (
               <motion.div
@@ -95,7 +95,7 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block py-3 text-foreground/70 hover:text-foreground font-medium tracking-wide transition-colors border-b border-border/50 cursor-pointer"
+                  className="block py-3 text-foreground/70 hover:text-foreground font-medium tracking-wide transition-colors border-b border-white/[0.06] cursor-pointer"
                 >
                   {link.label}
                 </Link>

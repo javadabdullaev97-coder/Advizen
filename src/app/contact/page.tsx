@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, Send, ArrowRight } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 import AnimatedSection, {
   StaggerContainer,
   StaggerItem,
 } from "@/components/AnimatedSection";
+import TextReveal, { RevealLine } from "@/components/TextReveal";
+import MagneticButton from "@/components/MagneticButton";
+import GlassCard from "@/components/GlassCard";
 
 const contactInfo = [
   {
@@ -46,25 +49,34 @@ export default function ContactPage() {
           className="absolute bottom-0 left-1/3 w-[500px] h-[500px] bg-primary rounded-full blur-[200px]"
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-6">Contact</p>
-            <h1 className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-3xl">
-              Begin a
-              <br />
-              <span className="text-primary-light">conversation</span>
-            </h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="tracking-luxury text-muted-dark mb-6"
+          >
+            Contact
+          </motion.p>
+          <TextReveal
+            text="Begin a conversation"
+            as="h1"
+            mode="line"
+            className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-3xl"
+            delay={0.3}
+          />
+          <RevealLine delay={0.6}>
             <p className="text-lg text-muted max-w-2xl mt-8 leading-relaxed">
               Every engagement starts with understanding. Reach out and our team
               will respond within 24 hours.
             </p>
-          </AnimatedSection>
+          </RevealLine>
         </div>
       </section>
 
       {/* Contact Info Bar */}
-      <section className="bg-surface border-y border-border">
+      <section className="bg-surface border-y border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-border">
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-white/[0.06]">
             {contactInfo.map((item) => (
               <StaggerItem key={item.title}>
                 <div className="py-8 px-6 text-center">
@@ -96,9 +108,11 @@ export default function ContactPage() {
             {/* Form */}
             <AnimatedSection className="lg:col-span-7">
               <p className="tracking-luxury text-muted-dark mb-4">Inquiry</p>
-              <h2 className="heading-luxury text-3xl md:text-4xl text-foreground mb-10">
-                Send us a message
-              </h2>
+              <TextReveal
+                text="Send us a message"
+                as="h2"
+                className="heading-luxury text-3xl md:text-4xl text-foreground mb-10"
+              />
 
               <form className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
@@ -112,7 +126,7 @@ export default function ContactPage() {
                     <input
                       id="firstName"
                       type="text"
-                      className="w-full px-0 py-3 bg-transparent border-b border-border text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
+                      className="w-full px-0 py-3 bg-transparent border-b border-white/[0.08] text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
                       placeholder="John"
                     />
                   </div>
@@ -126,7 +140,7 @@ export default function ContactPage() {
                     <input
                       id="lastName"
                       type="text"
-                      className="w-full px-0 py-3 bg-transparent border-b border-border text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
+                      className="w-full px-0 py-3 bg-transparent border-b border-white/[0.08] text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
                       placeholder="Doe"
                     />
                   </div>
@@ -142,7 +156,7 @@ export default function ContactPage() {
                   <input
                     id="email"
                     type="email"
-                    className="w-full px-0 py-3 bg-transparent border-b border-border text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
+                    className="w-full px-0 py-3 bg-transparent border-b border-white/[0.08] text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
                     placeholder="john@company.com"
                   />
                 </div>
@@ -157,7 +171,7 @@ export default function ContactPage() {
                   <input
                     id="company"
                     type="text"
-                    className="w-full px-0 py-3 bg-transparent border-b border-border text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
+                    className="w-full px-0 py-3 bg-transparent border-b border-white/[0.08] text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
                     placeholder="Company name"
                   />
                 </div>
@@ -171,32 +185,16 @@ export default function ContactPage() {
                   </label>
                   <select
                     id="service"
-                    className="w-full px-0 py-3 bg-transparent border-b border-border text-foreground focus:outline-none focus:border-primary transition-colors cursor-pointer"
+                    className="w-full px-0 py-3 bg-transparent border-b border-white/[0.08] text-foreground focus:outline-none focus:border-primary transition-colors cursor-pointer"
                   >
-                    <option value="" className="bg-surface">
-                      Select a service
-                    </option>
-                    <option value="tax" className="bg-surface">
-                      Tax Consulting
-                    </option>
-                    <option value="legal" className="bg-surface">
-                      Legal Advisory
-                    </option>
-                    <option value="finance" className="bg-surface">
-                      Finance &amp; Accounting
-                    </option>
-                    <option value="hr" className="bg-surface">
-                      Human Resources
-                    </option>
-                    <option value="marketing" className="bg-surface">
-                      Marketing &amp; SMM
-                    </option>
-                    <option value="funding" className="bg-surface">
-                      Funding &amp; Grants
-                    </option>
-                    <option value="other" className="bg-surface">
-                      Other
-                    </option>
+                    <option value="" className="bg-surface">Select a service</option>
+                    <option value="tax" className="bg-surface">Tax Consulting</option>
+                    <option value="legal" className="bg-surface">Legal Advisory</option>
+                    <option value="finance" className="bg-surface">Finance &amp; Accounting</option>
+                    <option value="hr" className="bg-surface">Human Resources</option>
+                    <option value="marketing" className="bg-surface">Strategic Marketing</option>
+                    <option value="funding" className="bg-surface">Funding &amp; Grants</option>
+                    <option value="other" className="bg-surface">Other</option>
                   </select>
                 </div>
 
@@ -210,24 +208,23 @@ export default function ContactPage() {
                   <textarea
                     id="message"
                     rows={5}
-                    className="w-full px-0 py-3 bg-transparent border-b border-border text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors resize-none"
+                    className="w-full px-0 py-3 bg-transparent border-b border-white/[0.08] text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors resize-none"
                     placeholder="Tell us about your project or question..."
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="group inline-flex items-center gap-3 px-10 py-4 bg-primary text-foreground text-sm uppercase tracking-[0.12em] font-medium hover:bg-primary-light transition-all duration-300 mt-4 cursor-pointer"
-                >
-                  <Send className="w-4 h-4" />
-                  Send message
-                </button>
+                <div className="mt-4">
+                  <MagneticButton variant="primary" type="submit">
+                    <Send className="w-4 h-4" />
+                    Send message
+                  </MagneticButton>
+                </div>
               </form>
             </AnimatedSection>
 
             {/* Sidebar */}
             <AnimatedSection delay={0.2} className="lg:col-span-5">
-              <div className="border border-border p-10 md:p-12 mb-8">
+              <GlassCard className="p-10 md:p-12 mb-8" hover={false}>
                 <p className="tracking-luxury text-muted-dark mb-6">
                   What to Expect
                 </p>
@@ -256,7 +253,7 @@ export default function ContactPage() {
                   ].map((step) => (
                     <div
                       key={step.num}
-                      className="flex gap-4 pb-6 border-b border-border last:border-0 last:pb-0"
+                      className="flex gap-4 pb-6 border-b border-white/[0.06] last:border-0 last:pb-0"
                     >
                       <span className="text-xs font-mono text-primary mt-0.5">
                         {step.num}
@@ -270,22 +267,20 @@ export default function ContactPage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </GlassCard>
 
               {/* Location card */}
-              <div className="border border-border p-10">
+              <GlassCard className="p-10" hover={false}>
                 <div className="flex items-center gap-3 mb-6">
                   <MapPin className="w-5 h-5 text-primary" />
-                  <p className="tracking-luxury text-muted-dark">
-                    Our Office
-                  </p>
+                  <p className="tracking-luxury text-muted-dark">Our Office</p>
                 </div>
                 <p className="text-foreground mb-2">Tashkent, Uzbekistan</p>
                 <p className="text-sm text-muted leading-relaxed">
                   Located in the heart of Tashkent, serving businesses across
                   Uzbekistan and the broader Central Asian region.
                 </p>
-              </div>
+              </GlassCard>
             </AnimatedSection>
           </div>
         </div>

@@ -9,15 +9,10 @@ import AnimatedSection, {
   StaggerContainer,
   StaggerItem,
 } from "@/components/AnimatedSection";
-
-const services = [
-  { title: "Tax Consulting", num: "01" },
-  { title: "Legal Advisory", num: "02" },
-  { title: "Finance & Accounting", num: "03" },
-  { title: "Human Resources", num: "04" },
-  { title: "Marketing & SMM", num: "05" },
-  { title: "Funding & Grants", num: "06" },
-];
+import TextReveal, { RevealLine } from "@/components/TextReveal";
+import MagneticButton from "@/components/MagneticButton";
+import GlassCard from "@/components/GlassCard";
+import { servicesData } from "@/lib/services";
 
 const stats = [
   { value: "8+", label: "Years" },
@@ -31,12 +26,11 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative min-h-screen flex items-end pb-24 md:pb-32 overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0 bg-[#0D0D0D]" />
-        {/* Subtle geometric accent */}
+        {/* Geometric circle decoration */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.04 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.04, scale: 1 }}
           transition={{ duration: 3 }}
           className="absolute top-0 right-0 w-[600px] h-[600px]"
         >
@@ -63,28 +57,19 @@ export default function Home() {
               Premier Advisory &middot; Uzbekistan
             </motion.p>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            <TextReveal
+              text="Counsel for businesses that shape markets"
+              as="h1"
               className="heading-luxury text-5xl md:text-7xl lg:text-[5.5rem] text-foreground leading-[1.08] mb-8"
-            >
-              Counsel for
-              <br />
-              businesses that
-              <br />
-              <span className="text-primary-light">shape markets</span>
-            </motion.h1>
+              delay={0.4}
+            />
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-lg md:text-xl text-muted max-w-xl leading-relaxed mb-12"
-            >
-              Integrated tax, legal, finance, and human capital advisory.
-              One firm, one point of contact, across Central Asia.
-            </motion.p>
+            <RevealLine delay={0.7}>
+              <p className="text-lg md:text-xl text-muted max-w-xl leading-relaxed mb-12">
+                Integrated tax, legal, finance, and human capital advisory.
+                One firm, one point of contact, across Central Asia.
+              </p>
+            </RevealLine>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -92,19 +77,13 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 1 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Link
-                href="/contact"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-foreground text-sm uppercase tracking-[0.12em] font-medium hover:bg-primary-light transition-all duration-300 cursor-pointer"
-              >
+              <MagneticButton variant="primary" as="a" href="/contact">
                 Begin a conversation
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/expertise"
-                className="inline-flex items-center gap-3 px-8 py-4 border border-border text-sm uppercase tracking-[0.12em] font-medium text-muted hover:text-foreground hover:border-foreground/30 transition-all duration-300 cursor-pointer"
-              >
+                <ArrowRight className="w-4 h-4" />
+              </MagneticButton>
+              <MagneticButton variant="outline" as="a" href="/expertise">
                 View expertise
-              </Link>
+              </MagneticButton>
             </motion.div>
           </div>
 
@@ -126,6 +105,23 @@ export default function Home() {
               </div>
             ))}
           </motion.div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.4 }}
+            transition={{ duration: 1, delay: 2 }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          >
+            <span className="text-[10px] uppercase tracking-[0.3em] text-muted">Scroll</span>
+            <div className="w-px h-8 bg-white/20 relative overflow-hidden">
+              <motion.div
+                animate={{ y: [0, 32, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="w-full h-2 bg-primary absolute top-0"
+              />
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -136,11 +132,11 @@ export default function Home() {
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
               <div>
                 <p className="tracking-luxury text-muted-dark mb-4">Our Expertise</p>
-                <h2 className="heading-luxury text-4xl md:text-5xl text-foreground">
-                  Integrated counsel,
-                  <br />
-                  singular focus
-                </h2>
+                <TextReveal
+                  text="Integrated counsel, singular focus"
+                  as="h2"
+                  className="heading-luxury text-4xl md:text-5xl text-foreground"
+                />
               </div>
               <Link
                 href="/expertise"
@@ -155,9 +151,9 @@ export default function Home() {
           <HorizontalLine className="mb-0" />
 
           <div>
-            {services.map((service) => (
+            {servicesData.map((service) => (
               <AnimatedSection key={service.num}>
-                <Link href="/expertise" className="group block cursor-pointer">
+                <Link href={`/expertise/${service.slug}`} className="group block cursor-pointer">
                   <div className="flex items-center justify-between py-7 border-b border-border hover:border-primary/30 transition-colors">
                     <div className="flex items-center gap-8">
                       <span className="text-xs text-muted-dark font-mono w-6">
@@ -182,33 +178,34 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
             <AnimatedSection>
               <p className="tracking-luxury text-muted-dark mb-4">The Firm</p>
-              <h2 className="heading-luxury text-4xl md:text-5xl text-foreground leading-tight mb-8">
-                A tradition of
-                <br />
-                precision &amp; trust
-              </h2>
-              <p className="text-muted leading-relaxed mb-6">
-                Founded in 2016, Advizen Consulting has grown into one of
-                Uzbekistan&apos;s most trusted integrated advisory firms. We serve as
-                the single point of contact for businesses navigating the
-                complexities of Central Asian markets.
-              </p>
-              <p className="text-muted leading-relaxed mb-10">
-                Our multidisciplinary approach ensures that every aspect of your
-                business — from tax and compliance to talent and brand — receives
-                coordinated, expert attention.
-              </p>
-              <Link
-                href="/about"
-                className="group inline-flex items-center gap-2 text-sm uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors cursor-pointer"
-              >
+              <TextReveal
+                text="A tradition of precision & trust"
+                as="h2"
+                className="heading-luxury text-4xl md:text-5xl text-foreground leading-tight mb-8"
+              />
+              <RevealLine delay={0.1}>
+                <p className="text-muted leading-relaxed mb-6">
+                  Founded in 2016, Advizen Consulting has grown into one of
+                  Uzbekistan&apos;s most trusted integrated advisory firms. We serve as
+                  the single point of contact for businesses navigating the
+                  complexities of Central Asian markets.
+                </p>
+              </RevealLine>
+              <RevealLine delay={0.2}>
+                <p className="text-muted leading-relaxed mb-10">
+                  Our multidisciplinary approach ensures that every aspect of your
+                  business — from tax and compliance to talent and brand — receives
+                  coordinated, expert attention.
+                </p>
+              </RevealLine>
+              <MagneticButton variant="outline" as="a" href="/about">
                 About the firm
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <ArrowRight className="w-4 h-4" />
+              </MagneticButton>
             </AnimatedSection>
 
             <AnimatedSection delay={0.2}>
-              <div className="border border-border p-10 md:p-14">
+              <GlassCard className="p-10 md:p-14" hover={false}>
                 <blockquote className="font-serif text-2xl md:text-3xl text-foreground/90 leading-relaxed italic mb-8">
                   &ldquo;We don&apos;t just advise — we integrate into the fabric
                   of your operations.&rdquo;
@@ -217,7 +214,7 @@ export default function Home() {
                 <p className="tracking-luxury text-muted-dark">
                   Advizen Consulting
                 </p>
-              </div>
+              </GlassCard>
             </AnimatedSection>
           </div>
         </div>
@@ -232,9 +229,11 @@ export default function Home() {
                 <p className="tracking-luxury text-muted-dark mb-4">
                   The Library
                 </p>
-                <h2 className="heading-luxury text-4xl md:text-5xl text-foreground">
-                  Knowledge &amp; publications
-                </h2>
+                <TextReveal
+                  text="Knowledge & publications"
+                  as="h2"
+                  className="heading-luxury text-4xl md:text-5xl text-foreground"
+                />
               </div>
               <Link
                 href="/library"
@@ -266,7 +265,7 @@ export default function Home() {
             ].map((pub) => (
               <StaggerItem key={pub.title}>
                 <Link href="/library" className="group block h-full cursor-pointer">
-                  <article className="border border-border p-8 h-full flex flex-col hover:border-primary/30 transition-all duration-300">
+                  <GlassCard className="p-8 h-full flex flex-col">
                     <p className="tracking-luxury text-primary mb-4">{pub.tag}</p>
                     <h3 className="font-serif text-xl text-foreground mb-4 group-hover:text-primary-light transition-colors leading-snug">
                       {pub.title}
@@ -274,13 +273,13 @@ export default function Home() {
                     <p className="text-sm text-muted leading-relaxed flex-1">
                       {pub.desc}
                     </p>
-                    <div className="mt-6 pt-6 border-t border-border flex items-center justify-between">
+                    <div className="mt-6 pt-6 border-t border-white/[0.06] flex items-center justify-between">
                       <span className="text-xs text-muted-dark uppercase tracking-wider">
                         Read more
                       </span>
                       <ArrowUpRight className="w-4 h-4 text-muted-dark group-hover:text-primary transition-colors" />
                     </div>
-                  </article>
+                  </GlassCard>
                 </Link>
               </StaggerItem>
             ))}
@@ -290,35 +289,30 @@ export default function Home() {
 
       {/* CTA */}
       <section className="py-28 md:py-36 bg-background relative overflow-hidden">
-        {/* Oxblood glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/6 rounded-full blur-[180px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/[0.05] rounded-full blur-[180px]" />
 
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-6">
-              Next Step
-            </p>
-            <h2 className="heading-luxury text-4xl md:text-6xl text-foreground mb-6">
-              Ready to begin?
-            </h2>
-            <p className="text-lg text-muted max-w-xl mx-auto mb-12 leading-relaxed">
-              Whether you are entering Uzbekistan or expanding operations across
-              Central Asia, our team is prepared to advise.
-            </p>
+            <p className="tracking-luxury text-muted-dark mb-6">Next Step</p>
+            <TextReveal
+              text="Ready to begin?"
+              as="h2"
+              className="heading-luxury text-4xl md:text-6xl text-foreground mb-6"
+            />
+            <RevealLine delay={0.2}>
+              <p className="text-lg text-muted max-w-xl mx-auto mb-12 leading-relaxed">
+                Whether you are entering Uzbekistan or expanding operations across
+                Central Asia, our team is prepared to advise.
+              </p>
+            </RevealLine>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contact"
-                className="group inline-flex items-center justify-center gap-3 px-10 py-4 bg-primary text-foreground text-sm uppercase tracking-[0.12em] font-medium hover:bg-primary-light transition-all duration-300 cursor-pointer"
-              >
+              <MagneticButton variant="primary" as="a" href="/contact">
                 Schedule a consultation
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <a
-                href="tel:+998334884888"
-                className="inline-flex items-center justify-center gap-3 px-10 py-4 border border-border text-sm uppercase tracking-[0.12em] text-muted hover:text-foreground hover:border-foreground/30 transition-all duration-300 cursor-pointer"
-              >
+                <ArrowRight className="w-4 h-4" />
+              </MagneticButton>
+              <MagneticButton variant="outline" as="a" href="tel:+998334884888">
                 +998 (33) 488 48 88
-              </a>
+              </MagneticButton>
             </div>
           </AnimatedSection>
         </div>

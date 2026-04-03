@@ -7,6 +7,9 @@ import AnimatedSection, {
   StaggerContainer,
   StaggerItem,
 } from "@/components/AnimatedSection";
+import TextReveal, { RevealLine } from "@/components/TextReveal";
+import MagneticButton from "@/components/MagneticButton";
+import GlassCard from "@/components/GlassCard";
 
 const flagship = {
   tag: "Flagship Publication",
@@ -81,28 +84,35 @@ export default function LibraryPage() {
           className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary rounded-full blur-[200px]"
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-6">
-              The Library
-            </p>
-            <h1 className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-3xl">
-              Knowledge that
-              <br />
-              <span className="text-primary-light">empowers decisions</span>
-            </h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="tracking-luxury text-muted-dark mb-6"
+          >
+            The Library
+          </motion.p>
+          <TextReveal
+            text="Knowledge that empowers decisions"
+            as="h1"
+            mode="line"
+            className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-3xl"
+            delay={0.3}
+          />
+          <RevealLine delay={0.6}>
             <p className="text-lg text-muted max-w-2xl mt-8 leading-relaxed">
               Guides, briefings, and market intelligence from our practice.
               Rigorous, practical, and freely available.
             </p>
-          </AnimatedSection>
+          </RevealLine>
         </div>
       </section>
 
       {/* Flagship Publication */}
-      <section className="py-24 md:py-32 bg-surface border-y border-border">
+      <section className="py-24 md:py-32 bg-surface border-y border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
-            <article className="border border-border p-10 md:p-16 hover:border-primary/20 transition-all duration-500">
+            <GlassCard className="p-10 md:p-16" hover={false}>
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
                 <div>
                   <p className="tracking-luxury text-primary mb-6">
@@ -118,14 +128,14 @@ export default function LibraryPage() {
                     {flagship.description}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <button className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-foreground text-sm uppercase tracking-[0.12em] font-medium hover:bg-primary-light transition-all duration-300 cursor-pointer">
+                    <MagneticButton variant="primary">
                       <Download className="w-4 h-4" />
                       Download PDF
-                    </button>
-                    <button className="inline-flex items-center gap-3 px-8 py-4 border border-border text-sm uppercase tracking-[0.12em] text-muted hover:text-foreground hover:border-foreground/30 transition-all duration-300 cursor-pointer">
+                    </MagneticButton>
+                    <MagneticButton variant="outline">
                       <BookOpen className="w-4 h-4" />
                       Read online
-                    </button>
+                    </MagneticButton>
                   </div>
                 </div>
 
@@ -137,7 +147,7 @@ export default function LibraryPage() {
                     {flagship.chapters.map((chapter, i) => (
                       <div
                         key={chapter}
-                        className="flex items-start gap-4 py-4 border-b border-border"
+                        className="flex items-start gap-4 py-4 border-b border-white/[0.06]"
                       >
                         <span className="text-xs font-mono text-primary mt-0.5">
                           {String(i + 1).padStart(2, "0")}
@@ -150,7 +160,7 @@ export default function LibraryPage() {
                   </div>
                 </div>
               </div>
-            </article>
+            </GlassCard>
           </AnimatedSection>
         </div>
       </section>
@@ -161,12 +171,12 @@ export default function LibraryPage() {
           <AnimatedSection>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
               <div>
-                <p className="tracking-luxury text-muted-dark mb-4">
-                  Publications
-                </p>
-                <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
-                  Briefings &amp; guides
-                </h2>
+                <p className="tracking-luxury text-muted-dark mb-4">Publications</p>
+                <TextReveal
+                  text="Briefings & guides"
+                  as="h2"
+                  className="heading-luxury text-3xl md:text-4xl text-foreground"
+                />
               </div>
             </div>
           </AnimatedSection>
@@ -174,7 +184,7 @@ export default function LibraryPage() {
           <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {publications.map((pub) => (
               <StaggerItem key={pub.title}>
-                <article className="border border-border p-8 h-full flex flex-col hover:border-primary/20 transition-all duration-500 group cursor-pointer">
+                <GlassCard className="p-8 h-full flex flex-col">
                   <div className="flex items-center justify-between mb-6">
                     <span className="tracking-luxury text-primary">
                       {pub.tag}
@@ -189,13 +199,13 @@ export default function LibraryPage() {
                   <p className="text-sm text-muted leading-relaxed flex-1">
                     {pub.description}
                   </p>
-                  <div className="mt-8 pt-6 border-t border-border flex items-center justify-between">
-                    <span className="text-xs text-muted-dark uppercase tracking-wider group-hover:text-foreground transition-colors">
+                  <div className="mt-8 pt-6 border-t border-white/[0.06] flex items-center justify-between">
+                    <span className="text-xs text-muted-dark uppercase tracking-wider">
                       Download
                     </span>
-                    <ArrowUpRight className="w-4 h-4 text-muted-dark group-hover:text-primary transition-colors" />
+                    <ArrowUpRight className="w-4 h-4 text-muted-dark" />
                   </div>
-                </article>
+                </GlassCard>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -203,24 +213,25 @@ export default function LibraryPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 md:py-32 bg-surface border-t border-border relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/6 rounded-full blur-[180px]" />
+      <section className="py-24 md:py-32 bg-surface border-t border-white/[0.06] relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/[0.05] rounded-full blur-[180px]" />
         <div className="relative max-w-3xl mx-auto px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground mb-6">
-              Need tailored analysis?
-            </h2>
-            <p className="text-muted leading-relaxed mb-10 max-w-lg mx-auto">
-              Our advisory team produces bespoke reports and market studies.
-              Contact us to discuss your requirements.
-            </p>
-            <Link
-              href="/contact"
-              className="group inline-flex items-center gap-3 px-10 py-4 bg-primary text-foreground text-sm uppercase tracking-[0.12em] font-medium hover:bg-primary-light transition-all duration-300 cursor-pointer"
-            >
+            <TextReveal
+              text="Need tailored analysis?"
+              as="h2"
+              className="heading-luxury text-3xl md:text-5xl text-foreground mb-6"
+            />
+            <RevealLine delay={0.2}>
+              <p className="text-muted leading-relaxed mb-10 max-w-lg mx-auto">
+                Our advisory team produces bespoke reports and market studies.
+                Contact us to discuss your requirements.
+              </p>
+            </RevealLine>
+            <MagneticButton variant="primary" as="a" href="/contact">
               Commission a report
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+              <ArrowRight className="w-4 h-4" />
+            </MagneticButton>
           </AnimatedSection>
         </div>
       </section>

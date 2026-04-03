@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import AnimatedSection, {
@@ -8,6 +7,8 @@ import AnimatedSection, {
   StaggerContainer,
   StaggerItem,
 } from "@/components/AnimatedSection";
+import TextReveal, { RevealLine } from "@/components/TextReveal";
+import MagneticButton from "@/components/MagneticButton";
 
 const principles = [
   {
@@ -52,48 +53,63 @@ export default function AboutPage() {
           className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary rounded-full blur-[200px]"
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-6">About the Firm</p>
-            <h1 className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-3xl">
-              Built on expertise,
-              <br />
-              <span className="text-primary-light">sustained by trust</span>
-            </h1>
-          </AnimatedSection>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="tracking-luxury text-muted-dark mb-6"
+          >
+            About the Firm
+          </motion.p>
+          <TextReveal
+            text="Built on expertise, sustained by trust"
+            as="h1"
+            mode="line"
+            className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-3xl"
+            delay={0.3}
+          />
         </div>
       </section>
 
       {/* Institutional Overview */}
-      <section className="py-24 md:py-32 bg-surface border-y border-border">
+      <section className="py-24 md:py-32 bg-surface border-y border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-16">
             <AnimatedSection className="lg:col-span-2">
               <p className="tracking-luxury text-muted-dark mb-4">Who We Are</p>
-              <h2 className="heading-luxury text-3xl md:text-4xl text-foreground leading-tight">
-                A single point of counsel
-              </h2>
+              <TextReveal
+                text="A single point of counsel"
+                as="h2"
+                className="heading-luxury text-3xl md:text-4xl text-foreground leading-tight"
+              />
             </AnimatedSection>
 
             <AnimatedSection delay={0.15} className="lg:col-span-3">
-              <div className="space-y-6 text-muted leading-relaxed">
-                <p>
-                  Advizen Consulting is Uzbekistan&apos;s integrated advisory
-                  practice. We provide the full spectrum of business services —
-                  tax, legal, finance, accounting, HR, and marketing — under one
-                  institutional roof.
-                </p>
-                <p>
-                  Our firm was established in 2016 with a clear thesis: businesses
-                  operating in Central Asia deserve the calibre of advisory
-                  typically reserved for mature markets. We bring that standard to
-                  every engagement, across every discipline.
-                </p>
-                <p>
-                  With over 500 hours of monthly consultation, we serve as the
-                  go-to team for companies navigating Uzbekistan&apos;s dynamic
-                  regulatory and commercial environment — from multinational
-                  market entrants to established local enterprises.
-                </p>
+              <div className="space-y-6">
+                <RevealLine>
+                  <p className="text-muted leading-relaxed">
+                    Advizen Consulting is Uzbekistan&apos;s integrated advisory
+                    practice. We provide the full spectrum of business services —
+                    tax, legal, finance, accounting, HR, and marketing — under one
+                    institutional roof.
+                  </p>
+                </RevealLine>
+                <RevealLine delay={0.1}>
+                  <p className="text-muted leading-relaxed">
+                    Our firm was established in 2016 with a clear thesis: businesses
+                    operating in Central Asia deserve the calibre of advisory
+                    typically reserved for mature markets. We bring that standard to
+                    every engagement, across every discipline.
+                  </p>
+                </RevealLine>
+                <RevealLine delay={0.2}>
+                  <p className="text-muted leading-relaxed">
+                    With over 500 hours of monthly consultation, we serve as the
+                    go-to team for companies navigating Uzbekistan&apos;s dynamic
+                    regulatory and commercial environment — from multinational
+                    market entrants to established local enterprises.
+                  </p>
+                </RevealLine>
               </div>
             </AnimatedSection>
           </div>
@@ -104,19 +120,19 @@ export default function AboutPage() {
       <section className="py-24 md:py-32 bg-background">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-4">
-              Our Principles
-            </p>
-            <h2 className="heading-luxury text-3xl md:text-4xl text-foreground mb-16">
-              What guides every engagement
-            </h2>
+            <p className="tracking-luxury text-muted-dark mb-4">Our Principles</p>
+            <TextReveal
+              text="What guides every engagement"
+              as="h2"
+              className="heading-luxury text-3xl md:text-4xl text-foreground mb-16"
+            />
           </AnimatedSection>
 
           <HorizontalLine className="mb-0" />
 
           {principles.map((p) => (
             <AnimatedSection key={p.num}>
-              <div className="grid md:grid-cols-12 gap-6 py-10 border-b border-border">
+              <div className="grid md:grid-cols-12 gap-6 py-10 border-b border-white/[0.06]">
                 <div className="md:col-span-1">
                   <span className="text-xs font-mono text-muted-dark">{p.num}</span>
                 </div>
@@ -135,19 +151,21 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-24 md:py-32 bg-surface border-y border-border">
+      <section className="py-24 md:py-32 bg-surface border-y border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
             <p className="tracking-luxury text-muted-dark mb-4">History</p>
-            <h2 className="heading-luxury text-3xl md:text-4xl text-foreground mb-16">
-              Milestones
-            </h2>
+            <TextReveal
+              text="Milestones"
+              as="h2"
+              className="heading-luxury text-3xl md:text-4xl text-foreground mb-16"
+            />
           </AnimatedSection>
 
           <StaggerContainer className="space-y-0">
-            {milestones.map((m, i) => (
+            {milestones.map((m) => (
               <StaggerItem key={m.year}>
-                <div className="grid md:grid-cols-12 gap-6 py-8 border-b border-border">
+                <div className="grid md:grid-cols-12 gap-6 py-8 border-b border-white/[0.06]">
                   <div className="md:col-span-2">
                     <span className="font-serif text-2xl text-primary-light">
                       {m.year}
@@ -165,23 +183,24 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="py-24 md:py-32 bg-background relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/6 rounded-full blur-[180px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/[0.05] rounded-full blur-[180px]" />
         <div className="relative max-w-3xl mx-auto px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground mb-6">
-              Work with us
-            </h2>
-            <p className="text-muted leading-relaxed mb-10 max-w-lg mx-auto">
-              Whether you are entering the market or scaling existing operations,
-              our firm is prepared to advise.
-            </p>
-            <Link
-              href="/contact"
-              className="group inline-flex items-center gap-3 px-10 py-4 bg-primary text-foreground text-sm uppercase tracking-[0.12em] font-medium hover:bg-primary-light transition-all duration-300 cursor-pointer"
-            >
+            <TextReveal
+              text="Work with us"
+              as="h2"
+              className="heading-luxury text-3xl md:text-5xl text-foreground mb-6"
+            />
+            <RevealLine delay={0.2}>
+              <p className="text-muted leading-relaxed mb-10 max-w-lg mx-auto">
+                Whether you are entering the market or scaling existing operations,
+                our firm is prepared to advise.
+              </p>
+            </RevealLine>
+            <MagneticButton variant="primary" as="a" href="/contact">
               Contact us
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+              <ArrowRight className="w-4 h-4" />
+            </MagneticButton>
           </AnimatedSection>
         </div>
       </section>
