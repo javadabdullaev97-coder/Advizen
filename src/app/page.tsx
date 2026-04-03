@@ -12,6 +12,7 @@ import AnimatedSection, {
 import TextReveal, { RevealLine } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
+import AuroraBackground from "@/components/AuroraBackground";
 import { servicesData } from "@/lib/services";
 
 const stats = [
@@ -25,27 +26,8 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-screen flex items-end pb-24 md:pb-32 overflow-hidden">
-        {/* Geometric circle decoration */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.04, scale: 1 }}
-          transition={{ duration: 3 }}
-          className="absolute top-0 right-0 w-[600px] h-[600px]"
-        >
-          <div className="absolute inset-0 border border-primary/20 rounded-full" />
-          <div className="absolute inset-12 border border-primary/15 rounded-full" />
-          <div className="absolute inset-24 border border-primary/10 rounded-full" />
-        </motion.div>
-        {/* Oxblood glow */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2, delay: 0.5 }}
-          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[200px]"
-        />
-
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 w-full">
+      <AuroraBackground className="pb-24 md:pb-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
           <div className="max-w-4xl">
             <motion.p
               initial={{ opacity: 0 }}
@@ -91,7 +73,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.3 }}
-            className="mt-20 pt-8 border-t border-border flex gap-12 md:gap-16"
+            className="mt-20 pt-8 border-t border-white/[0.08] flex gap-12 md:gap-16"
           >
             {stats.map((stat) => (
               <div key={stat.label}>
@@ -122,7 +104,7 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </AuroraBackground>
 
       {/* Expertise Preview */}
       <section className="py-28 md:py-36 bg-surface">
