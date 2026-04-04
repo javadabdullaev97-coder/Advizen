@@ -39,7 +39,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="Advizen"
             width={36}
             height={30}
