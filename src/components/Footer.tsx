@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">
-              <Image src="/logo.svg" alt="Advizen" width={44} height={36} />
+              <Image src="/logo.png" alt="Advizen" width={40} height={32} />
               <span className="text-lg font-serif tracking-[0.15em] text-foreground">
                 ADVIZEN
               </span>
