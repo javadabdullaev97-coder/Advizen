@@ -98,7 +98,7 @@ export default function Home() {
       <ClientsBar />
 
       {/* Expertise Preview */}
-      <section className="py-28 md:py-36 bg-surface">
+      <section className="py-28 md:py-36 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
@@ -133,7 +133,7 @@ export default function Home() {
       </section>
 
       {/* About Preview */}
-      <section className="py-28 md:py-36 bg-background">
+      <section className="py-28 md:py-36 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
             <AnimatedSection>
@@ -181,7 +181,7 @@ export default function Home() {
       </section>
 
       {/* Library Preview */}
-      <section className="py-28 md:py-36 bg-surface border-t border-border">
+      <section className="py-28 md:py-36 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
@@ -248,7 +248,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-28 md:py-36 bg-background relative overflow-hidden">
+      <section className="py-28 md:py-36 bg-[#0a0a0a] relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/[0.05] rounded-full blur-[180px]" />
 
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">

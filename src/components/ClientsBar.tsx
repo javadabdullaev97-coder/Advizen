@@ -25,7 +25,7 @@ const clients: ClientLogo[] = [
 
 export default function ClientsBar() {
   return (
-    <section className="py-14 md:py-20 bg-black">
+    <section className="py-14 md:py-20 bg-[#0a0a0a]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <p className="tracking-luxury text-white/30 text-center mb-10">
           Trusted by leading organizations
@@ -51,8 +51,8 @@ export default function ClientsBar() {
             ))}
           </CarouselContent>
         </Carousel>
-        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black to-transparent pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#0a0a0a] to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none" />
       </div>
     </section>
   );
