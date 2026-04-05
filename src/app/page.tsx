@@ -64,7 +64,7 @@ export default function Home() {
           </h1>
 
           {/* Subtitle */}
-          <p className="cosmic-subtitle text-base md:text-lg lg:text-xl mt-10">
+          <p className="cosmic-subtitle text-base md:text-lg lg:text-xl mt-20">
             Consulting &amp; Advisory
           </p>
 
