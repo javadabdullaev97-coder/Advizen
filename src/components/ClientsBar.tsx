@@ -25,9 +25,9 @@ const clients: ClientLogo[] = [
 
 export default function ClientsBar() {
   return (
-    <section className="py-14 md:py-20 bg-surface border-y border-white/[0.06]">
+    <section className="py-14 md:py-20 bg-black">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <p className="tracking-luxury text-muted-dark text-center mb-10">
+        <p className="tracking-luxury text-white/30 text-center mb-10">
           Trusted by leading organizations
         </p>
       </div>
@@ -43,7 +43,7 @@ export default function ClientsBar() {
                 className="flex basis-1/3 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
               >
                 <div className="mx-6 md:mx-10 flex shrink-0 items-center justify-center">
-                  <span className="text-sm md:text-base font-light tracking-[0.1em] text-muted-dark whitespace-nowrap uppercase select-none">
+                  <span className="text-sm md:text-base font-light tracking-[0.1em] text-white/30 hover:text-white transition-colors duration-300 whitespace-nowrap uppercase select-none cursor-default">
                     {client.name}
                   </span>
                 </div>
@@ -51,8 +51,8 @@ export default function ClientsBar() {
             ))}
           </CarouselContent>
         </Carousel>
-        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-surface to-transparent pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-surface to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black to-transparent pointer-events-none" />
       </div>
     </section>
   );
