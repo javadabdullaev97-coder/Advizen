@@ -211,8 +211,8 @@ body {
   border-radius: 50%;
   background: radial-gradient(
     ellipse at 50% 20%,
-    rgba(26, 26, 26, 1) 0%,
-    rgba(13, 13, 13, 1) 50%
+    rgba(10, 10, 10, 1) 0%,
+    rgba(0, 0, 0, 1) 50%
   );
   box-shadow:
     0 -20px 80px rgba(122, 26, 26, 0.2),

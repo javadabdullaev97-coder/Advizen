@@ -64,7 +64,7 @@ export default function Home() {
           </h1>
 
           {/* Subtitle */}
-          <p className="cosmic-subtitle text-sm md:text-base mt-6">
+          <p className="cosmic-subtitle text-base md:text-lg lg:text-xl mt-10">
             Consulting &amp; Advisory
           </p>
 
@@ -73,7 +73,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-12"
+            className="flex flex-col sm:flex-row gap-4 justify-center mt-14"
           >
             <MagneticButton variant="primary" as="a" href="/contact">
               Begin a conversation
@@ -103,22 +103,6 @@ export default function Home() {
             ))}
           </motion.div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
-            transition={{ duration: 1, delay: 3.5 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          >
-            <span className="text-[10px] uppercase tracking-[0.3em] text-muted">Scroll</span>
-            <div className="w-px h-8 bg-white/20 relative overflow-hidden">
-              <motion.div
-                animate={{ y: [0, 32, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-full h-2 bg-primary absolute top-0"
-              />
-            </div>
-          </motion.div>
         </div>
       </CosmicParallaxBg>
 
