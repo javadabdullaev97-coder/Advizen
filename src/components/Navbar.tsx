@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import MagneticButton from "@/components/MagneticButton";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -60,12 +61,9 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/contact"
-            className="ml-4 px-6 py-2.5 bg-transparent border border-transparent rounded-full text-[12px] uppercase tracking-[0.15em] font-medium text-foreground hover:bg-white/[0.06] hover:scale-[1.05] transition-all duration-300 cursor-pointer"
-          >
+          <MagneticButton as="a" href="/contact" className="ml-4 px-6 py-2.5 text-[12px]">
             Inquire
-          </Link>
+          </MagneticButton>
         </div>
 
         {/* Mobile Toggle */}
@@ -104,13 +102,11 @@ export default function Navbar() {
                 </Link>
               </motion.div>
             ))}
-            <Link
-              href="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="block w-full text-center mt-6 px-6 py-3 bg-transparent border border-transparent rounded-full text-sm uppercase tracking-widest text-foreground hover:bg-white/[0.06] hover:scale-[1.05] transition-all duration-300 cursor-pointer"
-            >
-              Inquire
-            </Link>
+            <div className="mt-6" onClick={() => setMobileOpen(false)}>
+              <MagneticButton as="a" href="/contact" className="w-full justify-center px-6 py-3 text-sm">
+                Inquire
+              </MagneticButton>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

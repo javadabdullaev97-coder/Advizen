@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import SocialIcons from "@/components/SocialIcons";
+import MagneticButton from "@/components/MagneticButton";
 import { Phone, Mail, MapPin } from "lucide-react";
 
 const footerLinks = {
@@ -95,12 +96,9 @@ export default function Footer() {
                 aria-label="Email address"
                 className="w-full px-4 py-3 bg-transparent border border-white/[0.08] text-sm text-foreground placeholder:text-muted-dark focus:outline-none focus:border-primary transition-colors"
               />
-              <button
-                type="submit"
-                className="w-full px-4 py-3 text-[11px] uppercase tracking-[0.15em] font-medium text-foreground bg-transparent border border-transparent rounded-full hover:bg-white/[0.06] hover:scale-[1.05] transition-all duration-300 cursor-pointer"
-              >
+              <MagneticButton as="button" type="submit" className="w-full justify-center px-4 py-3 text-[11px]">
                 Subscribe
-              </button>
+              </MagneticButton>
             </form>
           </div>
         </div>
