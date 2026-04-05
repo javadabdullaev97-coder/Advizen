@@ -14,6 +14,7 @@ import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
 import AuroraBackground from "@/components/AuroraBackground";
 import CategoryList from "@/components/CategoryList";
+import ClientsBar from "@/components/ClientsBar";
 import { servicesData } from "@/lib/services";
 
 const stats = [
@@ -107,6 +108,9 @@ export default function Home() {
           </motion.div>
         </div>
       </AuroraBackground>
+
+      {/* Clients Bar */}
+      <ClientsBar />
 
       {/* Expertise Preview */}
       <section className="py-28 md:py-36 bg-surface">

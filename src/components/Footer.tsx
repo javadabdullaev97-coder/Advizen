@@ -29,8 +29,7 @@ export default function Footer() {
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">
               <Image src="/logo.png" alt="Advizen" width={40} height={32} />
-              {/* UPDATED: Matches the new Navbar logo text styling */}
-              <span className="text-lg font-light tracking-[0.2em] uppercase text-foreground">
+              <span className="text-lg font-light tracking-[0.25em] uppercase text-foreground">
                 ADVIZEN
               </span>
             </div>

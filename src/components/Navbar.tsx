@@ -29,29 +29,21 @@ export default function Navbar() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1, delay: 0.2 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-        scrolled
-          ? "bg-[#0D0D0D]/70 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
-          : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 bg-[#0D0D0D]/80 backdrop-blur-2xl border-b border-white/[0.06] ${
+        scrolled ? "shadow-[0_4px_30px_rgba(0,0,0,0.3)]" : ""
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.png"
             alt="Advizen"
             width={36}
             height={30}
-            className="transition-opacity group-hover:opacity-80"
           />
-          {/* UPDATED: Premium, minimalist font style, fixed color (no hover color change) */}
-          <span className="text-lg font-light tracking-[0.2em] uppercase text-foreground transition-none">
+          <span className="text-lg font-light tracking-[0.25em] uppercase text-foreground">
             ADVIZEN
-          </span>
-          <span className="hidden sm:block w-px h-5 bg-border" />
-          <span className="hidden sm:block text-[10px] uppercase tracking-[0.3em] text-muted">
-            Consulting
           </span>
         </Link>
 
