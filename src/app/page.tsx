@@ -60,24 +60,27 @@ export default function Home() {
     <>
       {/* Hero */}
       {/* ADDED pt-36 md:pt-48 here to push the hero content below the transparent nav */}
-      <CosmicParallaxBg className="flex items-center justify-center min-h-screen pb-[15vh]">
-        <div className="relative z-10 w-full text-center px-6">
-          {/* Title — template-style CSS animation */}
+      <CosmicParallaxBg className="relative min-h-screen">
+        {/* Title — sits just above the earth curve */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center" style={{ paddingBottom: '2vh' }}>
           <h1 className="cosmic-title text-5xl md:text-7xl lg:text-8xl">
             ADVIZEN
           </h1>
+        </div>
 
+        {/* Subtitle + Stats — below the earth curve, on the dark surface */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[10vh] px-6">
           {/* Subtitle */}
-          <p className="cosmic-subtitle text-base md:text-lg lg:text-xl mt-20">
+          <p className="cosmic-subtitle text-base md:text-lg lg:text-xl mb-12">
             Consulting &amp; Advisory
           </p>
 
-          {/* Stats — centered, bigger, count-up — reveals with title */}
+          {/* Stats — centered, bigger, count-up */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 2 }}
-            className="mt-16 flex justify-center gap-12 md:gap-20"
+            className="flex justify-center gap-12 md:gap-20"
           >
             {stats.map((stat) => (
               <div key={stat.label} className="text-center">
@@ -90,7 +93,6 @@ export default function Home() {
               </div>
             ))}
           </motion.div>
-
         </div>
       </CosmicParallaxBg>
 
