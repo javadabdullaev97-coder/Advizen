@@ -34,8 +34,6 @@ export default function MagneticButton({
     });
   }
 
-  const isPrimary = variant === "primary";
-
   const btn = (
     <span
       ref={btnRef}
@@ -43,12 +41,7 @@ export default function MagneticButton({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "relative inline-flex items-center gap-2 px-8 py-4 text-sm tracking-wider uppercase cursor-pointer overflow-hidden transition-all duration-300 text-foreground hover:scale-[1.03]",
-        isPrimary
-          ? "bg-primary border border-primary-light/40"
-          : "bg-[#0D0D0D] border border-white/[0.10]",
-        hovered && isPrimary && "border-primary-light/80 shadow-[0_0_20px_rgba(122,26,26,0.4)]",
-        hovered && !isPrimary && "border-primary/60 shadow-[0_0_20px_rgba(99,13,13,0.25)]",
+        "relative inline-flex items-center gap-2 px-8 py-4 text-sm tracking-wider uppercase cursor-pointer overflow-hidden transition-all duration-300 text-foreground hover:scale-[1.05] rounded-full bg-transparent border border-transparent",
         className,
       )}
     >
@@ -61,9 +54,7 @@ export default function MagneticButton({
         style={{
           left: glowPos.x,
           top: glowPos.y,
-          background: isPrimary
-            ? "radial-gradient(circle, rgba(200,200,200,0.15) 10%, transparent 70%)"
-            : "radial-gradient(circle, rgba(99,13,13,0.5) 10%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(200,200,200,0.15) 10%, transparent 70%)",
           zIndex: 0,
         }}
       />
