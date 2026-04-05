@@ -97,6 +97,129 @@ body {
   width: 100%;
 }
 
+/* ── Cosmic Parallax Stars ── */
+.cosmic-parallax-container {
+  background: radial-gradient(ellipse at bottom, #1a0505 0%, #0D0D0D 100%);
+}
+
+.cosmic-stars {
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  animation: cosmicStarsAnim 50s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.cosmic-stars::after {
+  content: "";
+  position: absolute;
+  top: 2000px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: inherit;
+}
+
+.cosmic-stars-medium {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  animation: cosmicStarsAnim 100s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.cosmic-stars-medium::after {
+  content: "";
+  position: absolute;
+  top: 2000px;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: inherit;
+}
+
+.cosmic-stars-large {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  animation: cosmicStarsAnim 150s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.cosmic-stars-large::after {
+  content: "";
+  position: absolute;
+  top: 2000px;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: inherit;
+}
+
+@keyframes cosmicStarsAnim {
+  from { transform: translateY(0); }
+  to { transform: translateY(-2000px); }
+}
+
+/* Horizon glow */
+.cosmic-horizon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.cosmic-horizon-glow {
+  position: absolute;
+  bottom: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at center bottom,
+    rgba(122, 26, 26, 0.35) 0%,
+    rgba(99, 13, 13, 0.2) 25%,
+    rgba(74, 8, 8, 0.1) 50%,
+    transparent 70%
+  );
+  animation: horizonPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes horizonPulse {
+  0% { opacity: 0.7; transform: translateX(-50%) scaleX(1); }
+  100% { opacity: 1; transform: translateX(-50%) scaleX(1.1); }
+}
+
+/* Earth element */
+.cosmic-earth {
+  position: absolute;
+  bottom: -60%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 20%,
+    rgba(26, 26, 26, 1) 0%,
+    rgba(13, 13, 13, 1) 50%
+  );
+  box-shadow:
+    0 -20px 60px rgba(122, 26, 26, 0.15),
+    0 -5px 30px rgba(99, 13, 13, 0.1);
+  z-index: 3;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   * {

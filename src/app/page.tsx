@@ -12,7 +12,7 @@ import AnimatedSection, {
 import TextReveal, { RevealLine } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
-import AuroraBackground from "@/components/AuroraBackground";
+import CosmicParallaxBg from "@/components/CosmicParallaxBg";
 import CategoryList from "@/components/CategoryList";
 import ClientsBar from "@/components/ClientsBar";
 import { servicesData } from "@/lib/services";
@@ -29,7 +29,7 @@ export default function Home() {
     <>
       {/* Hero */}
       {/* ADDED pt-36 md:pt-48 here to push the hero content below the transparent nav */}
-      <AuroraBackground className="pt-36 md:pt-48 pb-24 md:pb-32">
+      <CosmicParallaxBg className="pt-36 md:pt-48 pb-24 md:pb-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
           <div className="max-w-4xl">
             <motion.p
@@ -107,7 +107,7 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-      </AuroraBackground>
+      </CosmicParallaxBg>
 
       {/* Clients Bar */}
       <ClientsBar />
