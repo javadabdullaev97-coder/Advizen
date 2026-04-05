@@ -25,7 +25,7 @@ const stats = [
   { value: 15, suffix: "+", label: "Industries" },
 ];
 
-function CountUp({ target, suffix, duration = 1.5, delay = 3 }: { target: number; suffix: string; duration?: number; delay?: number }) {
+function CountUp({ target, suffix, duration = 1.5, delay = 2 }: { target: number; suffix: string; duration?: number; delay?: number }) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
 
@@ -72,27 +72,11 @@ export default function Home() {
             Consulting &amp; Advisory
           </p>
 
-          {/* Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-14"
-          >
-            <MagneticButton variant="primary" as="a" href="/contact">
-              Begin a conversation
-              <ArrowRight className="w-4 h-4" />
-            </MagneticButton>
-            <MagneticButton variant="outline" as="a" href="/expertise">
-              View expertise
-            </MagneticButton>
-          </motion.div>
-
-          {/* Stats — centered, bigger, count-up */}
+          {/* Stats — centered, bigger, count-up — reveals with title */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 3 }}
+            transition={{ duration: 1, delay: 2 }}
             className="mt-16 flex justify-center gap-12 md:gap-20"
           >
             {stats.map((stat) => (
@@ -281,13 +265,10 @@ export default function Home() {
                 Central Asia, our team is prepared to advise.
               </p>
             </RevealLine>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <MagneticButton variant="primary" as="a" href="/contact">
                 Schedule a consultation
                 <ArrowRight className="w-4 h-4" />
-              </MagneticButton>
-              <MagneticButton variant="outline" as="a" href="tel:+998334884888">
-                +998 (33) 488 48 88
               </MagneticButton>
             </div>
           </AnimatedSection>
