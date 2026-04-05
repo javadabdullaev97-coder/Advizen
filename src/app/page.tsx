@@ -60,7 +60,7 @@ export default function Home() {
     <>
       {/* Hero */}
       {/* ADDED pt-36 md:pt-48 here to push the hero content below the transparent nav */}
-      <CosmicParallaxBg className="flex items-end justify-center min-h-screen pb-[12vh]">
+      <CosmicParallaxBg className="flex items-center justify-center min-h-screen pb-[15vh]">
         <div className="relative z-10 w-full text-center px-6">
           {/* Title — template-style CSS animation */}
           <h1 className="cosmic-title text-5xl md:text-7xl lg:text-8xl">

@@ -180,7 +180,7 @@ body {
 
 .cosmic-horizon-glow {
   position: absolute;
-  bottom: -50%;
+  bottom: -40%;
   left: 50%;
   transform: translateX(-50%);
   width: 120%;
@@ -203,7 +203,7 @@ body {
 /* Earth element */
 .cosmic-earth {
   position: absolute;
-  bottom: -50%;
+  bottom: -35%;
   left: 50%;
   transform: translateX(-50%);
   width: 150%;
