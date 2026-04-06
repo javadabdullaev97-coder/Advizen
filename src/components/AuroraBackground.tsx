@@ -21,17 +21,17 @@ export default function AuroraBackground({
       )}
     >
       {/* Aurora Gradient Background */}
-      <div className="absolute inset-0 overflow-hidden opacity-15" aria-hidden="true">
+      <div className="absolute inset-0 overflow-hidden opacity-40" aria-hidden="true">
         <motion.div
           className="absolute inset-[-100%]"
           style={{
             background: `
               repeating-linear-gradient(100deg,
-                #4A0808 10%,
-                #2D0404 15%,
-                #630D0D 20%,
-                #4A0808 25%,
-                #1A0303 30%)
+                #B22222 10%,
+                #8B0000 15%,
+                #DC143C 20%,
+                #B22222 25%,
+                #A0153E 30%)
             `,
             backgroundSize: "300% 100%",
             filter: "blur(80px)",
@@ -50,21 +50,21 @@ export default function AuroraBackground({
           style={{
             background: `
               repeating-linear-gradient(100deg,
-                rgba(74, 8, 8, 0.15) 0%,
-                rgba(74, 8, 8, 0.15) 7%,
+                rgba(178, 34, 34, 0.1) 0%,
+                rgba(178, 34, 34, 0.1) 7%,
                 transparent 10%,
                 transparent 12%,
-                rgba(74, 8, 8, 0.15) 16%),
+                rgba(178, 34, 34, 0.1) 16%),
               repeating-linear-gradient(100deg,
-                #4A0808 10%,
-                #2D0404 15%,
-                #630D0D 20%,
-                #4A0808 25%,
-                #1A0303 30%)
+                #B22222 10%,
+                #8B0000 15%,
+                #DC143C 20%,
+                #B22222 25%,
+                #A0153E 30%)
             `,
             backgroundSize: "200%, 100%",
             backgroundPosition: "50% 50%, 50% 50%",
-            mixBlendMode: "overlay",
+            mixBlendMode: "difference",
           }}
           animate={{
             backgroundPosition: [
@@ -86,7 +86,7 @@ export default function AuroraBackground({
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%)",
+            "radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%)",
         }}
         aria-hidden="true"
       />
