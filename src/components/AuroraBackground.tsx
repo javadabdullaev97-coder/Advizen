@@ -21,17 +21,17 @@ export default function AuroraBackground({
       )}
     >
       {/* Aurora Gradient Background */}
-      <div className="absolute inset-0 overflow-hidden opacity-70" aria-hidden="true">
+      <div className="absolute inset-0 overflow-hidden opacity-15" aria-hidden="true">
         <motion.div
           className="absolute inset-[-100%]"
           style={{
             background: `
               repeating-linear-gradient(100deg,
-                #6B1010 10%,
-                #4A0808 15%,
-                #8B1A1A 20%,
-                #6B1010 25%,
-                #3D0707 30%)
+                #4A0808 10%,
+                #2D0404 15%,
+                #630D0D 20%,
+                #4A0808 25%,
+                #1A0303 30%)
             `,
             backgroundSize: "300% 100%",
             filter: "blur(80px)",
@@ -50,17 +50,17 @@ export default function AuroraBackground({
           style={{
             background: `
               repeating-linear-gradient(100deg,
-                rgba(107, 16, 16, 0.15) 0%,
-                rgba(107, 16, 16, 0.15) 7%,
+                rgba(74, 8, 8, 0.15) 0%,
+                rgba(74, 8, 8, 0.15) 7%,
                 transparent 10%,
                 transparent 12%,
-                rgba(107, 16, 16, 0.15) 16%),
+                rgba(74, 8, 8, 0.15) 16%),
               repeating-linear-gradient(100deg,
-                #6B1010 10%,
-                #4A0808 15%,
-                #8B1A1A 20%,
-                #6B1010 25%,
-                #3D0707 30%)
+                #4A0808 10%,
+                #2D0404 15%,
+                #630D0D 20%,
+                #4A0808 25%,
+                #1A0303 30%)
             `,
             backgroundSize: "200%, 100%",
             backgroundPosition: "50% 50%, 50% 50%",
@@ -86,7 +86,7 @@ export default function AuroraBackground({
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.35) 100%)",
+            "radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%)",
         }}
         aria-hidden="true"
       />
