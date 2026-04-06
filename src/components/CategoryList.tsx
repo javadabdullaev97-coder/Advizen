@@ -56,14 +56,17 @@ function CategoryRow({ item, index }: { item: CategoryItem; index: number }) {
     >
       {/* Cursor-following glow */}
       <div
-        className="absolute pointer-events-none rounded-full transition-all duration-500 ease-out"
+        className="absolute pointer-events-none rounded-full"
         style={{
           left: glowPos.x,
           top: glowPos.y,
           width: 600,
           height: 600,
-          transform: `translate(-50%, -50%) scale(${hovered ? 1 : 0})`,
+          marginLeft: -300,
+          marginTop: -300,
           opacity: hovered ? 1 : 0,
+          transform: `scale(${hovered ? 1 : 0})`,
+          transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
           background:
             "radial-gradient(circle, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 30%, transparent 60%)",
           zIndex: 0,
