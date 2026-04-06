@@ -16,7 +16,7 @@ export default function AuroraBackground({
   return (
     <div
       className={cn(
-        "relative w-full min-h-screen flex items-end overflow-hidden",
+        "relative w-full overflow-hidden",
         className,
       )}
     >

@@ -13,6 +13,7 @@ import TextReveal, { RevealLine } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
 import { servicesData } from "@/lib/services";
+import AuroraBackground from "@/components/AuroraBackground";
 
 type Category = "all" | "Advisory" | "Operations" | "Growth";
 
@@ -41,37 +42,33 @@ export default function ExpertisePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.05 }}
-          transition={{ duration: 3 }}
-          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary rounded-full blur-[200px]"
-        />
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="tracking-luxury text-muted-dark mb-6"
-          >
-            Expertise
-          </motion.p>
-          <TextReveal
-            text="Integrated services, singular results"
-            as="h1"
-            mode="line"
-            className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-4xl"
-            delay={0.3}
-          />
-          <RevealLine delay={0.6}>
-            <p className="text-lg text-muted max-w-2xl mt-8 leading-relaxed">
-              Six core disciplines. Fifteen industries. One cohesive advisory
-              practice designed for the complexities of Central Asian markets.
-            </p>
-          </RevealLine>
-        </div>
-      </section>
+      <AuroraBackground>
+        <section className="relative pt-36 pb-24 md:pt-44 md:pb-32">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="tracking-luxury text-muted-dark mb-6"
+            >
+              Expertise
+            </motion.p>
+            <TextReveal
+              text="Integrated services, singular results"
+              as="h1"
+              mode="line"
+              className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.08] max-w-4xl"
+              delay={0.3}
+            />
+            <RevealLine delay={0.6}>
+              <p className="text-lg text-muted max-w-2xl mt-8 leading-relaxed">
+                Six core disciplines. Fifteen industries. One cohesive advisory
+                practice designed for the complexities of Central Asian markets.
+              </p>
+            </RevealLine>
+          </div>
+        </section>
+      </AuroraBackground>
 
       {/* Filter + Services */}
       <section className="py-24 md:py-32 bg-surface border-y border-white/[0.06]">
