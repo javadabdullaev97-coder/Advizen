@@ -21,7 +21,7 @@ export default function AuroraBackground({
       )}
     >
       {/* Aurora Gradient Background */}
-      <div className="absolute inset-0 overflow-hidden opacity-40" aria-hidden="true">
+      <div className="absolute inset-0 overflow-hidden opacity-50" aria-hidden="true">
         <motion.div
           className="absolute inset-[-100%]"
           style={{
@@ -86,7 +86,7 @@ export default function AuroraBackground({
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%)",
+            "radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%)",
         }}
         aria-hidden="true"
       />
