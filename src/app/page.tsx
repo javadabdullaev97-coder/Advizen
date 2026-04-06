@@ -98,7 +98,7 @@ export default function Home() {
       <ClientsBar />
 
       {/* Faded Hairline Divider */}
-      <div className="w-full max-w-7xl mx-auto h-px bg-gradient-to-r from-black via-gray-800 to-black my-20" />
+      <div className="w-full max-w-7xl mx-auto h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent my-20" />
 
       {/* Expertise Preview */}
       <section className="py-28 md:py-36 bg-black">
