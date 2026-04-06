@@ -34,12 +34,11 @@ const principles = [
   },
 ];
 
-const milestones = [
-  { year: "2016", text: "Founded in Tashkent with a mandate to bring integrated advisory to Uzbekistan" },
-  { year: "2018", text: "Expanded into full-spectrum HR and digital marketing services" },
-  { year: "2020", text: "Surpassed 30 active institutional clients across multiple sectors" },
-  { year: "2022", text: "Launched Employer of Record services for international market entrants" },
-  { year: "2024", text: "Completed 70+ engagements, serving 15+ industries across Central Asia" },
+const industries = [
+  "Construction", "Real Estate", "Manufacturing", "FMCG",
+  "Technology", "Agriculture", "Textiles", "Healthcare",
+  "Education", "Media & Advertising", "Interior Design",
+  "Dairy & Food", "Logistics", "Retail", "Legal Services",
 ];
 
 export default function AboutPage() {
@@ -147,30 +146,27 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline */}
+      {/* Industries */}
       <section className="py-24 md:py-32 bg-surface border-y border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-4">History</p>
+            <p className="tracking-luxury text-muted-dark mb-4">Industries Served</p>
             <TextReveal
-              text="Milestones"
+              text="15+ sectors, one standard of excellence"
               as="h2"
               className="heading-luxury text-3xl md:text-4xl text-foreground mb-16"
             />
           </AnimatedSection>
 
-          <StaggerContainer className="space-y-0">
-            {milestones.map((m) => (
-              <StaggerItem key={m.year}>
-                <div className="grid md:grid-cols-12 gap-6 py-8 border-b border-white/[0.06]">
-                  <div className="md:col-span-2">
-                    <span className="font-serif text-2xl text-primary-light">
-                      {m.year}
-                    </span>
-                  </div>
-                  <div className="md:col-span-10">
-                    <p className="text-foreground/80 leading-relaxed">{m.text}</p>
-                  </div>
+          <HorizontalLine className="mb-0" />
+
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0">
+            {industries.map((ind) => (
+              <StaggerItem key={ind}>
+                <div className="py-6 px-4 border-b border-r border-white/[0.06] hover:bg-background transition-colors group cursor-default">
+                  <span className="text-sm text-muted group-hover:text-foreground transition-colors">
+                    {ind}
+                  </span>
                 </div>
               </StaggerItem>
             ))}
