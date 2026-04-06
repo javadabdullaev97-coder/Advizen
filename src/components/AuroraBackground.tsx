@@ -64,7 +64,7 @@ export default function AuroraBackground({
             `,
             backgroundSize: "200%, 100%",
             backgroundPosition: "50% 50%, 50% 50%",
-            mixBlendMode: "difference",
+            mixBlendMode: "screen",
           }}
           animate={{
             backgroundPosition: [
