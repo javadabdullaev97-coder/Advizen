@@ -133,23 +133,24 @@ export default function Home() {
             Consulting &amp; Advisory
           </p>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 2 }}
-            className="flex justify-center gap-12 md:gap-20"
-          >
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
+          <div className="flex justify-center gap-12 md:gap-20">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 2 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="text-center"
+              >
                 <span className="text-4xl md:text-5xl font-extralight text-foreground tracking-wider">
-                  <CountUp target={stat.value} suffix={stat.suffix} />
+                  <CountUp target={stat.value} suffix={stat.suffix} delay={2 + i * 0.15} />
                 </span>
                 <span className="block text-xs text-muted-dark uppercase tracking-[0.2em] mt-2">
                   {stat.label}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </CosmicParallaxBg>
 
