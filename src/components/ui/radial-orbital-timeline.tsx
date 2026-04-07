@@ -166,16 +166,12 @@ export default function RadialOrbitalTimeline({
             transform: `translate(${centerOffset.x}px, ${centerOffset.y}px)`,
           }}
         >
-          {/* Center sun with radiating glow */}
+          {/* Center — red glowing orb, fades from center to edge */}
           <div className="absolute flex items-center justify-center z-10">
-            {/* Outer glow layers */}
-            <div className="absolute w-40 h-40 rounded-full opacity-20" style={{ background: "radial-gradient(circle, rgba(122,26,26,0.6) 0%, transparent 70%)" }}></div>
-            <div className="absolute w-28 h-28 rounded-full opacity-30" style={{ background: "radial-gradient(circle, rgba(139,32,32,0.5) 0%, transparent 70%)" }}></div>
-            {/* Core sun */}
-            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-200/90 via-orange-300/80 to-primary-light flex items-center justify-center shadow-[0_0_40px_rgba(255,180,50,0.3),0_0_80px_rgba(122,26,26,0.2)]">
-              <div className="absolute w-24 h-24 rounded-full border border-amber-200/20 animate-ping opacity-40"></div>
-              <div className="absolute w-32 h-32 rounded-full border border-orange-300/10 animate-ping opacity-20" style={{ animationDelay: "0.7s" }}></div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-white/90 to-amber-100/80 backdrop-blur-md shadow-[0_0_20px_rgba(255,200,100,0.5)]"></div>
+            <div className="absolute w-48 h-48 rounded-full" style={{ background: "radial-gradient(circle, rgba(122,26,26,0.15) 0%, transparent 70%)" }}></div>
+            <div className="absolute w-32 h-32 rounded-full" style={{ background: "radial-gradient(circle, rgba(139,32,32,0.25) 0%, transparent 70%)" }}></div>
+            <div className="w-16 h-16 rounded-full shadow-[0_0_30px_rgba(122,26,26,0.5),0_0_60px_rgba(99,13,13,0.3),0_0_100px_rgba(74,8,8,0.15)]" style={{ background: "radial-gradient(circle, rgba(180,40,40,0.9) 0%, rgba(122,26,26,0.6) 50%, rgba(74,8,8,0.2) 100%)" }}>
+              <div className="absolute w-20 h-20 rounded-full border border-primary/20 animate-ping opacity-30" style={{ left: "-0.5rem", top: "-0.5rem" }}></div>
             </div>
           </div>
 
@@ -209,38 +205,26 @@ export default function RadialOrbitalTimeline({
                 }}
               >
                 <div
-                  className={`absolute rounded-full -inset-1 ${
-                    isPulsing ? "animate-pulse duration-1000" : ""
-                  }`}
-                  style={{
-                    background: `radial-gradient(circle, rgba(122,26,26,0.3) 0%, rgba(122,26,26,0) 70%)`,
-                    width: `${item.energy * 0.5 + 40}px`,
-                    height: `${item.energy * 0.5 + 40}px`,
-                    left: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
-                    top: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
-                  }}
-                ></div>
-
-                <div
                   className={`
                   w-14 h-14 rounded-full flex items-center justify-center
                   ${
                     isExpanded
-                      ? "bg-primary text-white"
+                      ? "bg-white/10 text-white"
                       : isRelated
-                      ? "bg-primary/50 text-white"
+                      ? "bg-white/5 text-white"
                       : "bg-black text-white"
                   }
-                  border-2
+                  border
                   ${
                     isExpanded
-                      ? "border-primary-light shadow-lg shadow-primary/30"
+                      ? "border-white/40"
                       : isRelated
-                      ? "border-primary animate-pulse"
-                      : "border-white/40"
+                      ? "border-white/30 animate-pulse"
+                      : "border-white/20"
                   }
                   transition-all duration-300 transform
                   ${isExpanded ? "scale-125" : ""}
+                  ${isPulsing ? "animate-pulse" : ""}
                 `}
                 >
                   <Icon size={20} />
