@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LenisProvider from "@/components/LenisProvider";
 
 export const metadata: Metadata = {
   title: "Advizen Consulting | Premier Business Advisory in Uzbekistan",
@@ -73,11 +74,13 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col relative">
-        <Navbar />
-        <main className="flex-1 relative z-10">{children}</main>
-        <div className="relative z-10">
-          <Footer />
-        </div>
+        <LenisProvider>
+          <Navbar />
+          <main className="flex-1 relative z-10">{children}</main>
+          <div className="relative z-10">
+            <Footer />
+          </div>
+        </LenisProvider>
       </body>
     </html>
   );
