@@ -161,7 +161,8 @@ export default function Home() {
 
       {/* Expertise Preview */}
       <section className="py-28 md:py-36 bg-black relative overflow-hidden">
-        <div className="ambient-glow ambient-glow-oxblood w-[600px] h-[600px] -top-40 -right-40 opacity-60" />
+        <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -right-32 opacity-40" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <Parallax offset={20} fade>
             <AnimatedSection>
@@ -248,7 +249,8 @@ export default function Home() {
 
       {/* Library Preview */}
       <section className="py-28 md:py-36 bg-black relative overflow-hidden">
-        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -left-32 opacity-40" />
+        <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -bottom-32 -right-32 opacity-40" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <Parallax offset={20} fade>
             <AnimatedSection>
@@ -320,7 +322,8 @@ export default function Home() {
 
       {/* Editorial Breakout Quote */}
       <section className="py-32 md:py-44 bg-black relative overflow-hidden">
-        <div className="ambient-glow ambient-glow-oxblood w-[700px] h-[700px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-50" />
+        <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -left-32 opacity-40" />
         <div className="max-w-5xl mx-auto px-6 lg:px-8 relative">
           <AnimatedSection>
             <blockquote className="text-center">
@@ -339,9 +342,8 @@ export default function Home() {
 
       {/* CTA */}
       <section className="py-28 md:py-36 bg-black relative overflow-hidden">
-        <Parallax offset={60} className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/[0.07] rounded-full blur-[180px]" />
-        </Parallax>
+        <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -bottom-32 -left-32 opacity-40" />
 
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <Parallax offset={25} fade>
