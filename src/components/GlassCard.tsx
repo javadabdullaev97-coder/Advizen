@@ -15,23 +15,34 @@ export default function GlassCard({
   className = "",
   hover = true,
 }: GlassCardProps) {
+  if (hover) {
+    return (
+      <motion.div
+        variants={scaleReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-5%" }}
+        whileHover={{ y: -4, scale: 1.02 }}
+        transition={{ duration: 0.3 }}
+        className="glow-card"
+      >
+        <div className="glow-card-spinner" />
+        <div className={`glow-card-content ${className}`}>
+          <div className="glow-card-glow" />
+          {children}
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       variants={scaleReveal}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-5%" }}
-      whileHover={
-        hover
-          ? {
-              y: -6,
-              scale: 1.015,
-              boxShadow: "0 12px 50px rgba(99, 13, 13, 0.12), 0 0 0 1px rgba(122, 26, 26, 0.15)",
-            }
-          : undefined
-      }
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative bg-[#1A1A1A]/60 backdrop-blur-xl border border-white/[0.06] overflow-hidden transition-colors duration-300 hover:border-white/[0.12] ${className}`}
+      className={`relative bg-[#1A1A1A]/60 backdrop-blur-xl border border-white/[0.06] overflow-hidden ${className}`}
     >
       {/* Top highlight gradient */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
