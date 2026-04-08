@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Shield, Users, Lightbulb, Target, Handshake } from "lucide-react";
+import Parallax from "@/components/Parallax";
 import { useEffect, useState } from "react";
 import AnimatedSection, {
   StaggerContainer,
@@ -131,23 +132,24 @@ export default function Home() {
             Consulting &amp; Advisory
           </p>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 2 }}
-            className="flex justify-center gap-12 md:gap-20"
-          >
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
+          <div className="flex justify-center gap-12 md:gap-20">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 2 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="text-center"
+              >
                 <span className="text-4xl md:text-5xl font-extralight text-foreground tracking-wider">
-                  <CountUp target={stat.value} suffix={stat.suffix} />
+                  <CountUp target={stat.value} suffix={stat.suffix} delay={2 + i * 0.15} />
                 </span>
                 <span className="block text-xs text-muted-dark uppercase tracking-[0.2em] mt-2">
                   {stat.label}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </CosmicParallaxBg>
 
@@ -160,25 +162,27 @@ export default function Home() {
       {/* Expertise Preview */}
       <section className="py-28 md:py-36 bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <AnimatedSection>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-              <div>
-                <p className="tracking-luxury text-muted-dark mb-4">Our Expertise</p>
-                <TextReveal
-                  text="Integrated counsel, singular focus"
-                  as="h2"
-                  className="heading-luxury text-4xl md:text-5xl text-foreground"
-                />
+          <Parallax offset={20} fade>
+            <AnimatedSection>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+                <div>
+                  <p className="tracking-luxury text-muted-dark mb-4">Our Expertise</p>
+                  <TextReveal
+                    text="Integrated counsel, singular focus"
+                    as="h2"
+                    className="heading-luxury text-4xl md:text-5xl text-foreground"
+                  />
+                </div>
+                <Link
+                  href="/expertise"
+                  className="group inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
+                >
+                  View all services
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </Link>
               </div>
-              <Link
-                href="/expertise"
-                className="group inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
-              >
-                View all services
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Link>
-            </div>
-          </AnimatedSection>
+            </AnimatedSection>
+          </Parallax>
 
           <CategoryList
             items={servicesData.map((s) => ({
@@ -197,19 +201,21 @@ export default function Home() {
       {/* About Preview — Orbital Values */}
       <section className="py-20 md:py-28 bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <AnimatedSection>
-            <div className="text-center mb-8">
-              <p className="tracking-luxury text-muted-dark mb-4">The Firm</p>
-              <TextReveal
-                text="What we stand for"
-                as="h2"
-                className="heading-luxury text-4xl md:text-5xl text-foreground leading-tight mb-4"
-              />
-              <p className="text-white/50 leading-relaxed max-w-xl mx-auto text-sm">
-                Tap a node to explore our core values
-              </p>
-            </div>
-          </AnimatedSection>
+          <Parallax offset={15}>
+            <AnimatedSection>
+              <div className="text-center mb-8">
+                <p className="tracking-luxury text-muted-dark mb-4">The Firm</p>
+                <TextReveal
+                  text="What we stand for"
+                  as="h2"
+                  className="heading-luxury text-4xl md:text-5xl text-foreground leading-tight mb-4"
+                />
+                <p className="text-white/50 leading-relaxed max-w-xl mx-auto text-sm">
+                  Tap a node to explore our core values
+                </p>
+              </div>
+            </AnimatedSection>
+          </Parallax>
 
           <RadialOrbitalTimeline timelineData={firmValues} />
 
@@ -229,27 +235,29 @@ export default function Home() {
       {/* Library Preview */}
       <section className="py-28 md:py-36 bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <AnimatedSection>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-              <div>
-                <p className="tracking-luxury text-muted-dark mb-4">
-                  The Library
-                </p>
-                <TextReveal
-                  text="Knowledge & publications"
-                  as="h2"
-                  className="heading-luxury text-4xl md:text-5xl text-foreground"
-                />
+          <Parallax offset={20} fade>
+            <AnimatedSection>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+                <div>
+                  <p className="tracking-luxury text-muted-dark mb-4">
+                    The Library
+                  </p>
+                  <TextReveal
+                    text="Knowledge & publications"
+                    as="h2"
+                    className="heading-luxury text-4xl md:text-5xl text-foreground"
+                  />
+                </div>
+                <Link
+                  href="/library"
+                  className="group inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
+                >
+                  Browse all
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </Link>
               </div>
-              <Link
-                href="/library"
-                className="group inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors cursor-pointer"
-              >
-                Browse all
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Link>
-            </div>
-          </AnimatedSection>
+            </AnimatedSection>
+          </Parallax>
 
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
             {[
@@ -315,27 +323,31 @@ export default function Home() {
 
       {/* CTA */}
       <section className="py-28 md:py-36 bg-black relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/[0.05] rounded-full blur-[180px]" />
+        <Parallax offset={60} className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/[0.07] rounded-full blur-[180px]" />
+        </Parallax>
 
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-6">Next Step</p>
-            <TextReveal
-              text="Ready to begin?"
-              as="h2"
-              className="heading-luxury text-4xl md:text-6xl text-foreground mb-6"
-            />
-            <p className="text-lg text-white/60 max-w-xl mx-auto mb-12 leading-relaxed">
-              Whether you are entering Uzbekistan or expanding operations across
-              Central Asia, our team is prepared to advise.
-            </p>
-            <div className="flex justify-center">
-              <MagneticButton variant="primary" as="a" href="/contact">
-                Schedule a consultation
-                <ArrowRight className="w-4 h-4" />
-              </MagneticButton>
-            </div>
-          </AnimatedSection>
+          <Parallax offset={25} fade>
+            <AnimatedSection>
+              <p className="tracking-luxury text-muted-dark mb-6">Next Step</p>
+              <TextReveal
+                text="Ready to begin?"
+                as="h2"
+                className="heading-luxury text-4xl md:text-6xl text-foreground mb-6"
+              />
+              <p className="text-lg text-white/60 max-w-xl mx-auto mb-12 leading-relaxed">
+                Whether you are entering Uzbekistan or expanding operations across
+                Central Asia, our team is prepared to advise.
+              </p>
+              <div className="flex justify-center">
+                <MagneticButton variant="primary" as="a" href="/contact">
+                  Schedule a consultation
+                  <ArrowRight className="w-4 h-4" />
+                </MagneticButton>
+              </div>
+            </AnimatedSection>
+          </Parallax>
         </div>
       </section>
     </>

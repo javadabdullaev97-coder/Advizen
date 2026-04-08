@@ -41,7 +41,7 @@ export default function GlassCard({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-5%" }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className={`relative bg-[#1A1A1A]/60 backdrop-blur-xl border border-white/[0.06] overflow-hidden ${className}`}
     >
       {/* Top highlight gradient */}
