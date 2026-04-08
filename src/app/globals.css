@@ -35,9 +35,7 @@
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
-* {
-  scroll-behavior: smooth;
-}
+/* Native scroll — no artificial smoothing delay */
 
 body {
   background: #000;
