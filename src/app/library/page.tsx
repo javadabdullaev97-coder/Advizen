@@ -200,7 +200,7 @@ export default function LibraryPage() {
                     <span className="text-xs text-muted-dark uppercase tracking-wider">
                       Download
                     </span>
-                    <ArrowUpRight className="w-4 h-4 text-muted-dark" />
+                    <ArrowRight className="w-4 h-4 text-muted-dark" />
                   </div>
                 </GlassCard>
               </StaggerItem>

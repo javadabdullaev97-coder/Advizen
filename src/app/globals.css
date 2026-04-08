@@ -342,7 +342,7 @@ body {
   );
   opacity: 0;
   transition: opacity 400ms ease;
-  animation: cardBorderRotate 3s linear infinite;
+  animation: cardBorderRotate 5s linear infinite;
   animation-play-state: paused;
   pointer-events: none;
 }
@@ -371,7 +371,7 @@ body {
 .glow-card-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, transparent 70%);
+  background: rgba(255,255,255,0.03);
   opacity: 0;
   transition: opacity 400ms ease;
   pointer-events: none;
