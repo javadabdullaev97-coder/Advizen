@@ -27,8 +27,9 @@ export default function RadialOrbitalTimeline({
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
     {}
   );
-  const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
+  const rotationAngleRef = useRef<number>(0);
+  const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
   const [centerOffset] = useState<{ x: number; y: number }>({
     x: 0,
@@ -84,13 +85,19 @@ export default function RadialOrbitalTimeline({
   useEffect(() => {
     let frameId: number;
     let lastTime: number | null = null;
+    let frameCount = 0;
     const speed = 6; // degrees per second
 
     if (autoRotate) {
       const animate = (time: number) => {
         if (lastTime !== null) {
           const delta = (time - lastTime) / 1000;
-          setRotationAngle((prev) => (prev + speed * delta) % 360);
+          rotationAngleRef.current = (rotationAngleRef.current + speed * delta) % 360;
+          frameCount++;
+          // Sync to React state every 3 frames to reduce re-renders
+          if (frameCount % 3 === 0) {
+            setRotationAngle(rotationAngleRef.current);
+          }
         }
         lastTime = time;
         frameId = requestAnimationFrame(animate);
@@ -175,7 +182,7 @@ export default function RadialOrbitalTimeline({
             <div className="absolute w-48 h-48 rounded-full" style={{ background: "radial-gradient(circle, rgba(122,26,26,0.15) 0%, transparent 70%)" }}></div>
             <div className="absolute w-32 h-32 rounded-full" style={{ background: "radial-gradient(circle, rgba(139,32,32,0.25) 0%, transparent 70%)" }}></div>
             <div className="w-16 h-16 rounded-full shadow-[0_0_30px_rgba(122,26,26,0.5),0_0_60px_rgba(99,13,13,0.3),0_0_100px_rgba(74,8,8,0.15)]" style={{ background: "radial-gradient(circle, rgba(180,40,40,0.9) 0%, rgba(122,26,26,0.6) 50%, rgba(74,8,8,0.2) 100%)" }}>
-              <div className="absolute w-20 h-20 rounded-full border border-primary/20 animate-ping opacity-30" style={{ left: "-0.5rem", top: "-0.5rem" }}></div>
+              <div className="absolute w-20 h-20 rounded-full border border-primary/20 animate-ping opacity-30" style={{ left: "-0.5rem", top: "-0.5rem", willChange: "transform, opacity" }}></div>
             </div>
           </div>
 

@@ -111,6 +111,7 @@ body {
   top: 0;
   left: 0;
   z-index: 1;
+  will-change: transform;
 }
 .cosmic-stars::after {
   content: "";
@@ -131,6 +132,7 @@ body {
   top: 0;
   left: 0;
   z-index: 1;
+  will-change: transform;
 }
 .cosmic-stars-medium::after {
   content: "";
@@ -151,6 +153,7 @@ body {
   top: 0;
   left: 0;
   z-index: 1;
+  will-change: transform;
 }
 .cosmic-stars-large::after {
   content: "";
@@ -163,8 +166,12 @@ body {
 }
 
 @keyframes cosmicStarsAnim {
-  from { transform: translateY(0); }
-  to { transform: translateY(-2000px); }
+  from { transform: translateY(0) translateZ(0); }
+  to { transform: translateY(-2000px) translateZ(0); }
+}
+
+.cosmic-parallax-container {
+  contain: layout style paint;
 }
 
 /* Horizon glow */

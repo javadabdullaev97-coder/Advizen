@@ -27,9 +27,9 @@ export default function CosmicParallaxBg({
   const [bigStars, setBigStars] = useState<string>("");
 
   useEffect(() => {
-    setSmallStars(generateStarBoxShadow(700));
-    setMediumStars(generateStarBoxShadow(200));
-    setBigStars(generateStarBoxShadow(100));
+    setSmallStars(generateStarBoxShadow(400));
+    setMediumStars(generateStarBoxShadow(100));
+    setBigStars(generateStarBoxShadow(50));
   }, []);
 
   return (
