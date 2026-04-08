@@ -31,7 +31,7 @@ export default function ClientsBar() {
               {clients.map((name) => (
                 <span
                   key={name}
-                  className="mx-8 md:mx-12 text-sm md:text-base font-light tracking-[0.1em] text-white/30 hover:text-white transition-colors duration-300 whitespace-nowrap uppercase select-none cursor-default"
+                  className="mx-8 md:mx-12 text-sm md:text-base font-light tracking-[0.1em] text-white/30 whitespace-nowrap uppercase select-none"
                 >
                   {name}
                 </span>
