@@ -328,16 +328,17 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 120px;
-  height: 360px;
-  margin-left: -60px;
-  margin-top: -180px;
+  width: 200px;
+  height: 400px;
+  margin-left: -100px;
+  margin-top: -200px;
   background: linear-gradient(
     90deg,
-    transparent,
-    #7A1A1A,
-    #a52a2a,
-    transparent
+    transparent 10%,
+    #7A1A1A 35%,
+    #a52a2a 50%,
+    #7A1A1A 65%,
+    transparent 90%
   );
   opacity: 0;
   transition: opacity 400ms ease;
@@ -369,21 +370,33 @@ body {
 
 .glow-card-glow {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  background: white;
-  filter: blur(50px);
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, transparent 70%);
   opacity: 0;
-  transition: opacity 300ms ease;
+  transition: opacity 400ms ease;
   pointer-events: none;
   z-index: 2;
 }
 
 .glow-card:hover .glow-card-glow {
   opacity: 1;
+}
+
+/* Card text dims by default, brightens on hover */
+.glow-card .glow-card-title {
+  color: rgba(255,255,255,0.55);
+  transition: color 400ms ease;
+}
+.glow-card:hover .glow-card-title {
+  color: rgba(255,255,255,0.95);
+}
+
+.glow-card .glow-card-desc {
+  color: rgba(255,255,255,0.3);
+  transition: color 400ms ease;
+}
+.glow-card:hover .glow-card-desc {
+  color: rgba(255,255,255,0.55);
 }
 
 /* Reduced motion support */
