@@ -5,12 +5,10 @@ import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Shield, Users, Lightbulb, Target, Handshake } from "lucide-react";
 import { useEffect, useState } from "react";
 import AnimatedSection, {
-  FadeIn,
-  HorizontalLine,
   StaggerContainer,
   StaggerItem,
 } from "@/components/AnimatedSection";
-import TextReveal, { RevealLine } from "@/components/TextReveal";
+import TextReveal from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
 import CosmicParallaxBg from "@/components/CosmicParallaxBg";
@@ -197,7 +195,7 @@ export default function Home() {
       <div className="w-full max-w-7xl mx-auto h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
       {/* About Preview — Orbital Values */}
-      <section className="py-28 md:py-36 bg-black">
+      <section className="py-20 md:py-28 bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <AnimatedSection>
             <div className="text-center mb-8">
@@ -207,11 +205,9 @@ export default function Home() {
                 as="h2"
                 className="heading-luxury text-4xl md:text-5xl text-foreground leading-tight mb-4"
               />
-              <RevealLine delay={0.1}>
-                <p className="text-muted leading-relaxed max-w-xl mx-auto">
-                  Click each node to explore our core values
-                </p>
-              </RevealLine>
+              <p className="text-white/50 leading-relaxed max-w-xl mx-auto text-sm">
+                Tap a node to explore our core values
+              </p>
             </div>
           </AnimatedSection>
 
@@ -280,7 +276,7 @@ export default function Home() {
                     <h3 className="font-serif text-xl text-foreground mb-4 group-hover:text-primary-light transition-colors leading-snug">
                       {pub.title}
                     </h3>
-                    <p className="text-sm text-muted leading-relaxed flex-1">
+                    <p className="text-sm text-white/50 leading-relaxed flex-1">
                       {pub.desc}
                     </p>
                     <div className="mt-6 pt-6 border-t border-white/[0.06] flex items-center justify-between">
@@ -299,6 +295,24 @@ export default function Home() {
 
       <div className="w-full max-w-7xl mx-auto h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
+      {/* Editorial Breakout Quote */}
+      <section className="py-32 md:py-44 bg-black">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+          <AnimatedSection>
+            <blockquote className="text-center">
+              <p className="font-serif text-3xl md:text-5xl lg:text-6xl text-foreground leading-[1.2] font-light italic">
+                &ldquo;One partner, one point of contact&nbsp;&mdash; complete coverage for your entire operation.&rdquo;
+              </p>
+              <cite className="block mt-10 tracking-luxury text-muted-dark not-italic">
+                The Advizen Promise
+              </cite>
+            </blockquote>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <div className="w-full max-w-7xl mx-auto h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+
       {/* CTA */}
       <section className="py-28 md:py-36 bg-black relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/[0.05] rounded-full blur-[180px]" />
@@ -311,12 +325,10 @@ export default function Home() {
               as="h2"
               className="heading-luxury text-4xl md:text-6xl text-foreground mb-6"
             />
-            <RevealLine delay={0.2}>
-              <p className="text-lg text-muted max-w-xl mx-auto mb-12 leading-relaxed">
-                Whether you are entering Uzbekistan or expanding operations across
-                Central Asia, our team is prepared to advise.
-              </p>
-            </RevealLine>
+            <p className="text-lg text-white/60 max-w-xl mx-auto mb-12 leading-relaxed">
+              Whether you are entering Uzbekistan or expanding operations across
+              Central Asia, our team is prepared to advise.
+            </p>
             <div className="flex justify-center">
               <MagneticButton variant="primary" as="a" href="/contact">
                 Schedule a consultation
