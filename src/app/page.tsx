@@ -273,7 +273,7 @@ export default function Home() {
                 <Link href="/library" className="group block h-full cursor-pointer">
                   <GlassCard className="p-8 h-full flex flex-col">
                     <p className="tracking-luxury text-primary mb-4">{pub.tag}</p>
-                    <h3 className="font-serif text-xl text-foreground mb-4 group-hover:text-primary-light transition-colors leading-snug">
+                    <h3 className="font-serif text-xl text-foreground mb-4 leading-snug">
                       {pub.title}
                     </h3>
                     <p className="text-sm text-white/50 leading-relaxed flex-1">

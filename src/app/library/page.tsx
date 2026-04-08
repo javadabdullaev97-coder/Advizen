@@ -190,10 +190,10 @@ export default function LibraryPage() {
                       {pub.year}
                     </span>
                   </div>
-                  <h3 className="font-serif text-xl text-foreground mb-4 group-hover:text-primary-light transition-colors leading-snug">
+                  <h3 className="font-serif text-xl text-foreground mb-4 leading-snug">
                     {pub.title}
                   </h3>
-                  <p className="text-sm text-muted leading-relaxed flex-1">
+                  <p className="text-sm text-white/50 leading-relaxed flex-1">
                     {pub.description}
                   </p>
                   <div className="mt-8 pt-6 border-t border-white/[0.06] flex items-center justify-between">

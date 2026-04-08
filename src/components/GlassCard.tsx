@@ -15,17 +15,32 @@ export default function GlassCard({
   className = "",
   hover = true,
 }: GlassCardProps) {
+  if (hover) {
+    return (
+      <motion.div
+        variants={scaleReveal}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-5%" }}
+        whileHover={{ y: -4, scale: 1.02 }}
+        transition={{ duration: 0.3 }}
+        className="glow-card"
+      >
+        <div className="glow-card-spinner" />
+        <div className={`glow-card-content ${className}`}>
+          <div className="glow-card-glow" />
+          {children}
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       variants={scaleReveal}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-5%" }}
-      whileHover={
-        hover
-          ? { y: -4, boxShadow: "0 8px 40px rgba(99, 13, 13, 0.08)" }
-          : undefined
-      }
       transition={{ duration: 0.3 }}
       className={`relative bg-[#1A1A1A]/60 backdrop-blur-xl border border-white/[0.06] overflow-hidden ${className}`}
     >

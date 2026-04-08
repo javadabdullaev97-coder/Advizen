@@ -310,6 +310,75 @@ body {
   animation: nodeBreath 3s ease-in-out infinite;
 }
 
+/* Rotating border glow card */
+@keyframes cardBorderRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.glow-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.glow-card-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  margin-left: -75%;
+  margin-top: -75%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 30%,
+    #7A1A1A 38%,
+    #a52a2a 50%,
+    #7A1A1A 62%,
+    transparent 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 400ms ease;
+  animation: cardBorderRotate 3s linear infinite;
+  animation-play-state: paused;
+  pointer-events: none;
+}
+
+.glow-card:hover .glow-card-spinner {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.glow-card-content {
+  position: relative;
+  z-index: 1;
+  background: #1a1a1a;
+  margin: 1.5px;
+  border-radius: 3px;
+}
+
+.glow-card-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: white;
+  filter: blur(80px);
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glow-card:hover .glow-card-glow {
+  opacity: 0.06;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   * {
