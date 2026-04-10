@@ -1,14 +1,11 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   AnimatePresence,
   motion,
-  useMotionValueEvent,
+  useInView,
   useReducedMotion,
-  useScroll,
-  useTransform,
-  type MotionValue,
 } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Mail, Phone } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -82,125 +79,93 @@ const industries = [
   "Dairy & Food", "Logistics", "Retail", "Legal Services",
 ];
 
-/* ── Principles: Pinned Scrollytelling ────────────────────
+/* ── Principles: Sticky label + natural scrolling content ──
 
-   Implementation:
-   - The section is N * 100vh tall; a sticky child fills the viewport and
-     stays pinned for the full (N-1)*100vh of scroll distance.
-   - useScroll tracks progress (0 → 1) through the section.
-   - Active index is derived from progress and drives the left label swap.
-   - Each card on the right is absolutely positioned inside a container and
-     reads scroll progress directly via useTransform, sliding up from below
-     and covering the previous card. Once entered, it stays at y:0 and the
-     next card covers it — producing a stacked reveal.
-   - Respects prefers-reduced-motion by rendering a plain vertical list. */
+   Layout:
+   - Two-column grid. The left column (col-span-5) contains a sticky
+     label that stays at top-28 of the viewport for the entire duration
+     of the right column (col-span-7).
+   - The right column is just a natural flow of principle blocks —
+     no cards, no borders, no chrome. Each block is a long-form
+     paragraph unit separated by a thin hairline.
+   - Each right-column block uses useInView (detection band in the
+     middle of the viewport) and reports its index up to the parent.
+     The parent drives the left label swap via AnimatePresence.
+   - Sticky works here because no ancestor between the section and the
+     sticky element has overflow-hidden (the ambient glows live in a
+     sibling absolutely-positioned wrapper, not an ancestor). */
 
 function PrinciplesPinned() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const shouldReduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
   const [active, setActive] = useState(0);
   const N = principles.length;
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.max(0, Math.min(N - 1, Math.floor(v * N)));
-    setActive((prev) => (prev === idx ? prev : idx));
-  });
-
-  if (shouldReduce) return <PrinciplesFallbackList />;
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative bg-black"
-      style={{ height: `${N * 100}vh` }}
-      aria-label="Our principles"
-    >
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Ambient glows */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="ambient-glow ambient-glow-warm w-[700px] h-[700px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-          <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -right-32 opacity-40" />
-        </div>
+    <section className="relative bg-black py-24 md:py-32" aria-label="Our principles">
+      {/* Ambient glows — sibling, not ancestor, of the sticky element. */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="ambient-glow ambient-glow-warm w-[700px] h-[700px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -right-32 opacity-40" />
+      </div>
 
-        <div className="relative h-full flex items-center">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start lg:items-center">
-              {/* Left — pinned label, stays put while cards scroll */}
-              <div className="lg:col-span-5">
-                <div className="mb-8 lg:mb-14">
-                  <p className="tracking-luxury text-muted-dark mb-3">Our Principles</p>
-                  <h2 className="font-serif text-xl md:text-2xl text-white/65 leading-snug max-w-xs">
-                    What guides every engagement
-                  </h2>
-                </div>
-
-                <p className="font-mono text-[11px] text-primary-light tracking-[0.2em] mb-4">
-                  PRINCIPLE {principles[active].num} /{" "}
-                  {String(N).padStart(2, "0")}
-                </p>
-                <div className="relative min-h-[52px] md:min-h-[64px]">
-                  <AnimatePresence mode="wait">
-                    <motion.h3
-                      key={active}
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -12 }}
-                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute inset-x-0 font-serif text-3xl md:text-4xl text-foreground tracking-tight leading-[1.1]"
-                    >
-                      {principles[active].title}
-                    </motion.h3>
-                  </AnimatePresence>
-                </div>
-
-                <div className="mt-10 flex items-center gap-3">
-                  {principles.map((_, j) => (
-                    <button
-                      key={j}
-                      type="button"
-                      aria-label={`Go to principle ${j + 1}`}
-                      onClick={() => {
-                        const el = sectionRef.current;
-                        if (!el) return;
-                        // Scroll to the start of this principle's segment
-                        const rect = el.getBoundingClientRect();
-                        const top = window.scrollY + rect.top + (el.offsetHeight * j) / N;
-                        window.scrollTo({ top, behavior: "smooth" });
-                      }}
-                      className="group flex items-center"
-                    >
-                      <span
-                        className={cn(
-                          "h-px transition-all duration-500 ease-out",
-                          active === j
-                            ? "w-12 bg-primary-light"
-                            : "w-6 bg-white/15 group-hover:bg-white/40",
-                        )}
-                      />
-                    </button>
-                  ))}
-                </div>
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+          {/* Left — sticky label */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-28">
+              <div className="mb-10 lg:mb-14">
+                <p className="tracking-luxury text-muted-dark mb-3">Our Principles</p>
+                <h2 className="font-serif text-xl md:text-2xl text-white/70 leading-snug max-w-xs">
+                  What guides every engagement
+                </h2>
               </div>
 
-              {/* Right — stacking cards */}
-              <div className="lg:col-span-7">
-                <div className="relative h-[55vh] md:h-[62vh] lg:h-[68vh]">
-                  {principles.map((p, i) => (
-                    <PrincipleStackCard
-                      key={p.num}
-                      item={p}
-                      index={i}
-                      total={N}
-                      scrollYProgress={scrollYProgress}
-                    />
-                  ))}
-                </div>
+              <p className="font-mono text-[11px] text-primary-light tracking-[0.2em] mb-4">
+                PRINCIPLE {principles[active].num} /{" "}
+                {String(N).padStart(2, "0")}
+              </p>
+              <div className="relative min-h-[44px] md:min-h-[52px] mb-10">
+                <AnimatePresence mode="wait">
+                  <motion.h3
+                    key={active}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute inset-x-0 font-serif text-2xl md:text-3xl text-foreground tracking-tight leading-[1.1]"
+                  >
+                    {principles[active].title}
+                  </motion.h3>
+                </AnimatePresence>
+              </div>
+
+              <div className="flex items-center gap-3">
+                {principles.map((_, j) => (
+                  <span
+                    key={j}
+                    className={cn(
+                      "h-px transition-all duration-500 ease-out",
+                      active === j
+                        ? "w-12 bg-primary-light"
+                        : "w-6 bg-white/15",
+                    )}
+                  />
+                ))}
               </div>
             </div>
+          </div>
+
+          {/* Right — natural scrolling content */}
+          <div className="lg:col-span-7">
+            {principles.map((p, i) => (
+              <PrincipleBlock
+                key={p.num}
+                item={p}
+                index={i}
+                total={N}
+                isLast={i === N - 1}
+                onActive={setActive}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -208,53 +173,42 @@ function PrinciplesPinned() {
   );
 }
 
-function PrincipleStackCard({
+function PrincipleBlock({
   item,
   index,
   total,
-  scrollYProgress,
+  isLast,
+  onActive,
 }: {
   item: (typeof principles)[number];
   index: number;
   total: number;
-  scrollYProgress: MotionValue<number>;
+  isLast: boolean;
+  onActive: (i: number) => void;
 }) {
-  const segment = 1 / total;
-  const start = index * segment;
-  const entryEnd = start + segment * 0.55;
+  const ref = useRef<HTMLElement>(null);
+  // Detection band = middle 40% of the viewport. A block becomes active
+  // once its center crosses into that band.
+  const inView = useInView(ref, { margin: "-35% 0px -35% 0px" });
+  const shouldReduce = useReducedMotion();
 
-  // Card 0 is visible from the start. Subsequent cards slide up from below
-  // during their entry window, then stay at y:0 (covered by the next card).
-  const y = useTransform(
-    scrollYProgress,
-    [Math.max(0, start - 0.001), start, entryEnd],
-    index === 0 ? ["0%", "0%", "0%"] : ["106%", "100%", "0%"],
-  );
-
-  const opacity = useTransform(
-    scrollYProgress,
-    [Math.max(0, start - 0.02), start, entryEnd],
-    index === 0 ? [1, 1, 1] : [0, 0.15, 1],
-  );
-
-  const scale = useTransform(
-    scrollYProgress,
-    [start, entryEnd],
-    [index === 0 ? 1 : 0.97, 1],
-  );
+  useEffect(() => {
+    if (inView) onActive(index);
+  }, [inView, index, onActive]);
 
   return (
     <motion.article
-      style={{ y, opacity, scale, zIndex: index + 1 }}
-      className="absolute inset-0 rounded-2xl border border-white/10 bg-black/80 backdrop-blur-xl p-7 md:p-10 lg:p-12 overflow-hidden shadow-[0_-30px_80px_-20px_rgba(0,0,0,0.9)]"
+      ref={ref}
+      initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 30 }}
+      whileInView={shouldReduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20% 0px" }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className={cn(
+        "py-2 first:pt-0",
+        !isLast && "pb-20 md:pb-28 mb-20 md:mb-28 border-b border-white/[0.06]",
+      )}
     >
-      {/* Decorative top accent */}
-      <span
-        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-light/40 to-transparent"
-        aria-hidden="true"
-      />
-
-      <div className="flex items-center justify-between mb-7 md:mb-9 pb-5 border-b border-white/[0.06]">
+      <div className="flex items-center justify-between mb-8">
         <span className="font-mono text-[11px] text-primary-light tracking-[0.2em]">
           {item.num}
         </span>
@@ -264,69 +218,21 @@ function PrincipleStackCard({
         </span>
       </div>
 
-      <p className="font-serif italic text-xl md:text-2xl lg:text-[1.625rem] text-foreground/90 leading-snug mb-7 md:mb-9 max-w-2xl">
+      <p className="font-serif italic text-2xl md:text-[1.75rem] text-foreground/90 leading-snug mb-8 max-w-2xl">
         {item.summary}
       </p>
 
-      <div className="space-y-4 md:space-y-5 max-w-2xl">
+      <div className="space-y-5 max-w-2xl">
         {item.body.map((p, i) => (
           <p
             key={i}
-            className="text-[14px] md:text-[15px] text-white/55 leading-relaxed"
+            className="text-[15px] md:text-base text-white/55 leading-relaxed"
           >
             {p}
           </p>
         ))}
       </div>
     </motion.article>
-  );
-}
-
-/** Reduced-motion fallback — plain vertical list. */
-function PrinciplesFallbackList() {
-  return (
-    <section className="py-24 md:py-32 bg-black relative">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-      </div>
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 relative">
-        <div className="mb-16">
-          <p className="tracking-luxury text-muted-dark mb-3">Our Principles</p>
-          <h2 className="heading-luxury text-3xl md:text-4xl text-foreground leading-tight">
-            What guides every engagement
-          </h2>
-        </div>
-        <div className="space-y-16">
-          {principles.map((p, i) => (
-            <article key={p.num}>
-              <p className="font-mono text-[11px] text-primary-light tracking-[0.2em] mb-3">
-                PRINCIPLE {p.num} /{" "}
-                {String(principles.length).padStart(2, "0")}
-              </p>
-              <h3 className="font-serif text-2xl md:text-3xl text-foreground tracking-wide mb-5">
-                {p.title}
-              </h3>
-              <p className="font-serif italic text-xl text-foreground/90 mb-5 max-w-xl leading-snug">
-                {p.summary}
-              </p>
-              <div className="space-y-4 max-w-xl">
-                {p.body.map((para, j) => (
-                  <p
-                    key={j}
-                    className="text-[15px] text-white/55 leading-relaxed"
-                  >
-                    {para}
-                  </p>
-                ))}
-              </div>
-              {i < principles.length - 1 && (
-                <div className="mt-16 h-px bg-white/[0.06]" />
-              )}
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }
 
