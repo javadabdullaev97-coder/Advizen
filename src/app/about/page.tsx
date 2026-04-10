@@ -117,7 +117,7 @@ function PrinciplesPinned() {
     <section
       ref={sectionRef}
       className="relative bg-black"
-      style={{ height: `${N * 60}vh` }}
+      style={{ height: `${N * 50}vh` }}
       aria-label="Our principles"
     >
       <div className="sticky top-0 h-screen overflow-hidden">
@@ -127,7 +127,7 @@ function PrinciplesPinned() {
           <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -right-32 opacity-40" />
         </div>
 
-        <div className="relative h-full flex items-center">
+        <div className="relative h-full flex items-end pb-[10vh] md:pb-[12vh]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
               {/* Left — eyebrow + swapping title + ticks */}
