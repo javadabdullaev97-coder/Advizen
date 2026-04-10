@@ -69,17 +69,31 @@ export default function MagneticButton({
     </span>
   );
 
+  const wrapperClass =
+    "inline-block rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary-light/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+
   if (as === "a" && href) {
-    return <Link href={href} className="inline-block">{btn}</Link>;
+    return (
+      <Link href={href} className={wrapperClass}>
+        {btn}
+      </Link>
+    );
   }
 
   if (as === "button" && type === "submit") {
     return (
-      <button type="submit" className="inline-block bg-transparent border-none p-0 m-0">
+      <button
+        type="submit"
+        className={cn(wrapperClass, "bg-transparent border-none p-0 m-0")}
+      >
         {btn}
       </button>
     );
   }
 
-  return <span className="inline-block">{btn}</span>;
+  return (
+    <button type="button" className={cn(wrapperClass, "bg-transparent border-none p-0 m-0")}>
+      {btn}
+    </button>
+  );
 }

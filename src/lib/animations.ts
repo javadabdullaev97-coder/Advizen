@@ -21,7 +21,7 @@ export const textRevealWord: Variants = {
     y: "0%",
     rotateX: 0,
     opacity: 1,
-    transition: { duration: 0.7, ease: luxuryEase },
+    transition: { duration: 0.6, ease: luxuryEase },
   },
 };
 
@@ -56,11 +56,11 @@ export const fadeIn: Variants = {
 };
 
 export const fadeInSlow: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 32 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 1.2, ease: luxuryEase },
+    transition: { duration: 0.9, ease: luxuryEase },
   },
 };
 

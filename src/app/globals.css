@@ -256,7 +256,7 @@ body::after {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: cosmicTitleIn 3s ease-out forwards, cosmicTitlePulse 6s ease-in-out 3s infinite;
+  animation: cosmicTitleIn 2s ease-out forwards, cosmicTitlePulse 6s ease-in-out 2s infinite;
   opacity: 0;
 }
 
@@ -267,7 +267,7 @@ body::after {
   text-indent: 0.3em;
   text-transform: uppercase;
   color: rgba(245, 245, 245, 0.6);
-  animation: cosmicSubtitleIn 2s ease-out 1s forwards;
+  animation: cosmicSubtitleIn 1.2s ease-out 0.7s forwards;
   opacity: 0;
 }
 
@@ -372,9 +372,25 @@ body::after {
   pointer-events: none;
 }
 
-.glow-card:hover .glow-card-spinner {
+.glow-card:hover .glow-card-spinner,
+.glow-card:focus-within .glow-card-spinner,
+.glow-card:active .glow-card-spinner {
   opacity: 1;
   animation-play-state: running;
+}
+
+/* On touch devices that cannot hover, keep a subtle always-on hint */
+@media (hover: none) {
+  .glow-card .glow-card-spinner {
+    opacity: 0.55;
+    animation-play-state: running;
+  }
+  .glow-card .glow-card-title {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .glow-card .glow-card-desc {
+    color: rgba(255, 255, 255, 0.45);
+  }
 }
 
 /* Backdrop blur overlay behind content */

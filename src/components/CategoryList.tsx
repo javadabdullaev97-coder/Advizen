@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export interface CategoryItem {
@@ -20,41 +20,22 @@ interface CategoryListProps {
   className?: string;
 }
 
-function CategoryRow({ item, index }: { item: CategoryItem; index: number }) {
-  const rowRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(rowRef, { once: true, margin: "-80px" });
-  const [hovered, setHovered] = useState(false);
-
+function CategoryRowInner({ item }: { item: CategoryItem }) {
   return (
-    <motion.div
-      ref={rowRef}
-      initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-      animate={
-        inView
-          ? { opacity: 1, y: 0, filter: "blur(0px)" }
-          : { opacity: 0, y: 40, filter: "blur(8px)" }
-      }
-      transition={{
-        duration: 0.8,
-        delay: index * 0.15,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div
       className={cn(
-        "relative flex items-center justify-between py-8 md:py-10 px-4 md:px-6 cursor-pointer border-b border-white/10 transition-all duration-500",
-        hovered && "bg-white/[0.03] shadow-[inset_0_0_60px_rgba(255,255,255,0.03)]",
+        "relative flex items-center justify-between py-8 md:py-10 px-4 md:px-6 border-b border-white/10 transition-all duration-500",
+        "group-hover:bg-white/[0.03] group-focus-visible:bg-white/[0.03]",
+        "group-hover:shadow-[inset_0_0_60px_rgba(255,255,255,0.03)]",
+        "group-active:bg-white/[0.05]",
       )}
     >
-
       {/* Animated left accent line */}
       <div
-        className="absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-500 ease-out"
+        className="absolute left-0 top-0 bottom-0 w-[2px] opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-visible:opacity-100"
         style={{
-          background: hovered
-            ? "linear-gradient(to bottom, transparent, rgba(122, 26, 26, 0.6), transparent)"
-            : "transparent",
-          opacity: hovered ? 1 : 0,
+          background:
+            "linear-gradient(to bottom, transparent, rgba(122, 26, 26, 0.6), transparent)",
         }}
       />
 
@@ -62,19 +43,17 @@ function CategoryRow({ item, index }: { item: CategoryItem; index: number }) {
       <div className="relative z-10 flex items-center gap-6 md:gap-10">
         {item.icon && (
           <span
-            className={cn(
-              "text-sm w-6 text-right font-mono transition-all duration-300",
-              hovered ? "text-primary" : "text-white/20",
-            )}
+            className="text-sm w-6 text-right font-mono text-white/20 transition-colors duration-300 group-hover:text-primary group-focus-visible:text-primary"
           >
             {item.icon}
           </span>
         )}
         <h3
           className={cn(
-            "font-serif tracking-wide transition-all duration-400 ease-out origin-left",
+            "font-serif tracking-wide text-[#999] origin-left transition-all duration-400 ease-out",
+            "group-hover:text-white group-hover:scale-[1.03] group-hover:translate-x-1",
+            "group-focus-visible:text-white group-focus-visible:scale-[1.03] group-focus-visible:translate-x-1",
             item.featured ? "text-2xl md:text-3xl" : "text-xl md:text-2xl",
-            hovered ? "text-white scale-[1.03] translate-x-1" : "text-[#999]",
           )}
         >
           {item.title}
@@ -84,26 +63,17 @@ function CategoryRow({ item, index }: { item: CategoryItem; index: number }) {
       {/* Right: category + arrow */}
       <div className="relative z-10 flex items-center gap-6 md:gap-8">
         {item.subtitle && (
-          <span
-            className={cn(
-              "hidden sm:block text-sm uppercase tracking-wider transition-all duration-300",
-              hovered ? "text-white/50" : "text-[#999]/60",
-            )}
-          >
+          <span className="hidden sm:block text-sm uppercase tracking-wider text-[#999]/60 transition-colors duration-300 group-hover:text-white/50 group-focus-visible:text-white/50">
             {item.subtitle}
           </span>
         )}
         <svg
-          className={cn(
-            "w-5 h-5 shrink-0 transition-all duration-300",
-            hovered
-              ? "text-primary translate-x-1"
-              : "text-[#999]/40",
-          )}
+          className="w-5 h-5 shrink-0 text-[#999]/40 transition-all duration-300 group-hover:text-primary group-hover:translate-x-1 group-focus-visible:text-primary group-focus-visible:translate-x-1"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
           strokeWidth={1.5}
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -112,24 +82,70 @@ function CategoryRow({ item, index }: { item: CategoryItem; index: number }) {
           />
         </svg>
       </div>
+    </div>
+  );
+}
+
+function CategoryRowMotion({
+  children,
+  index,
+}: {
+  children: ReactNode;
+  index: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduce = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={
+        shouldReduce
+          ? { opacity: 0 }
+          : { opacity: 0, y: 32, filter: "blur(6px)" }
+      }
+      animate={
+        inView
+          ? shouldReduce
+            ? { opacity: 1 }
+            : { opacity: 1, y: 0, filter: "blur(0px)" }
+          : undefined
+      }
+      transition={{
+        duration: shouldReduce ? 0.3 : 0.7,
+        delay: shouldReduce ? 0 : index * 0.1,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+    >
+      {children}
     </motion.div>
   );
 }
 
 export default function CategoryList({ items, className }: CategoryListProps) {
+  const focusRingClass =
+    "block group outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-inset";
+
   return (
     <div className={cn("border-t border-white/10", className)}>
-      {items.map((item, index) =>
-        item.href ? (
-          <Link key={item.id} href={item.href} className="block">
-            <CategoryRow item={item} index={index} />
-          </Link>
-        ) : (
-          <div key={item.id} onClick={item.onClick}>
-            <CategoryRow item={item} index={index} />
-          </div>
-        ),
-      )}
+      {items.map((item, index) => (
+        <CategoryRowMotion key={item.id} index={index}>
+          {item.href ? (
+            <Link href={item.href} className={focusRingClass}>
+              <CategoryRowInner item={item} />
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={item.onClick}
+              className={cn(focusRingClass, "w-full text-left")}
+            >
+              <CategoryRowInner item={item} />
+            </button>
+          )}
+        </CategoryRowMotion>
+      ))}
     </div>
   );
 }

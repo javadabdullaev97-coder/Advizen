@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Shield, Users, Lightbulb, Target, Handshake } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Shield, Users, Lightbulb, Target, Handshake, Mail, Phone } from "lucide-react";
 import Parallax from "@/components/Parallax";
 import { useEffect, useState } from "react";
 import AnimatedSection, {
@@ -83,7 +83,7 @@ const stats = [
   { value: 15, suffix: "+", label: "Industries" },
 ];
 
-function CountUp({ target, suffix, duration = 1.5, delay = 2 }: { target: number; suffix: string; duration?: number; delay?: number }) {
+function CountUp({ target, suffix, duration = 1.2, delay = 1.2 }: { target: number; suffix: string; duration?: number; delay?: number }) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
 
@@ -138,11 +138,11 @@ export default function Home() {
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 2 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.7, delay: 1.2 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
                 className="text-center"
               >
-                <span className="text-4xl md:text-5xl font-extralight text-foreground tracking-wider">
-                  <CountUp target={stat.value} suffix={stat.suffix} delay={2 + i * 0.15} />
+                <span className="text-4xl md:text-5xl font-extralight text-foreground tracking-wider tabular-nums">
+                  <CountUp target={stat.value} suffix={stat.suffix} delay={1.2 + i * 0.12} />
                 </span>
                 <span className="block text-xs text-muted-dark uppercase tracking-[0.2em] mt-2">
                   {stat.label}
@@ -358,11 +358,33 @@ export default function Home() {
                 Whether you are entering Uzbekistan or expanding operations across
                 Central Asia, our team is prepared to advise.
               </p>
-              <div className="flex justify-center">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <MagneticButton variant="primary" as="a" href="/contact">
                   Schedule a consultation
                   <ArrowRight className="w-4 h-4" />
                 </MagneticButton>
+                <MagneticButton variant="outline" as="a" href="/expertise">
+                  Explore our expertise
+                  <ArrowUpRight className="w-4 h-4" />
+                </MagneticButton>
+              </div>
+
+              {/* Direct contact row */}
+              <div className="mt-14 pt-10 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12">
+                <a
+                  href="mailto:info@advizenco.com"
+                  className="group inline-flex items-center gap-3 text-sm text-white/50 hover:text-foreground transition-colors outline-none focus-visible:text-foreground"
+                >
+                  <Mail className="w-4 h-4 text-muted-dark group-hover:text-primary-light transition-colors" />
+                  info@advizenco.com
+                </a>
+                <a
+                  href="tel:+998334884888"
+                  className="group inline-flex items-center gap-3 text-sm text-white/50 hover:text-foreground transition-colors outline-none focus-visible:text-foreground"
+                >
+                  <Phone className="w-4 h-4 text-muted-dark group-hover:text-primary-light transition-colors" />
+                  +998 33 488 4888
+                </a>
               </div>
             </AnimatedSection>
           </Parallax>

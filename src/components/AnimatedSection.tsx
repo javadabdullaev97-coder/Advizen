@@ -1,9 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 import {
-  fadeIn,
   fadeInSlow,
   staggerContainer,
   staggerItem,
@@ -22,12 +21,17 @@ export default function AnimatedSection({
   className = "",
   delay = 0,
 }: Props) {
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+      whileInView={shouldReduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.9, delay, ease: luxuryEase }}
+      transition={{
+        duration: shouldReduce ? 0.3 : 0.7,
+        delay,
+        ease: luxuryEase,
+      }}
       className={className}
     >
       {children}
