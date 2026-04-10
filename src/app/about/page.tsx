@@ -104,14 +104,14 @@ function PrincipleItem({
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className="py-16 md:py-24 first:pt-0 last:pb-0 border-b border-white/[0.06] last:border-b-0"
     >
-      {/* Per-principle header — always visible on mobile, and kept as a
-          small marker on desktop so the right column is never anonymous
-          even mid-transition. */}
+      {/* Per-principle header — on mobile shows num + title; on desktop the
+          overlay owns the title, so we keep only a subtle numbered marker to
+          anchor the column without duplicating the big display text. */}
       <div className="mb-6 flex items-baseline gap-4">
-        <span className="font-mono text-xs text-primary-light tracking-widest">
+        <span className="font-mono text-[11px] text-primary-light tracking-[0.2em]">
           {item.num}
         </span>
-        <h3 className="font-serif text-2xl text-foreground tracking-wide lg:text-lg lg:text-white/60 lg:uppercase lg:tracking-[0.2em]">
+        <h3 className="font-serif text-2xl text-foreground tracking-wide lg:sr-only">
           {item.title}
         </h3>
       </div>
@@ -120,7 +120,7 @@ function PrincipleItem({
       </p>
       <div className="space-y-4 max-w-xl">
         {item.body.map((p, i) => (
-          <p key={i} className="text-white/55 leading-relaxed">
+          <p key={i} className="text-[15px] text-white/55 leading-relaxed">
             {p}
           </p>
         ))}
@@ -206,24 +206,24 @@ function PrinciplesPinned() {
       >
         <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
           <div className="lg:w-5/12 lg:pr-16">
-            <div className="relative h-[360px]">
+            <div className="relative h-[260px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activePrinciple.num}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
+                  exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute inset-0"
                 >
-                  <p className="font-mono text-xs text-primary-light tracking-widest mb-6">
+                  <p className="font-mono text-[11px] text-primary-light tracking-[0.2em] mb-5">
                     PRINCIPLE {activePrinciple.num} /{" "}
                     {String(principles.length).padStart(2, "0")}
                   </p>
-                  <h3 className="font-serif text-[clamp(3rem,7vw,6rem)] leading-[0.95] text-foreground tracking-tight">
+                  <h3 className="font-serif text-[clamp(2.25rem,4.5vw,4rem)] leading-[1] text-foreground tracking-tight">
                     {activePrinciple.title}
                   </h3>
-                  <p className="font-serif italic text-xl text-white/55 mt-6 max-w-md">
+                  <p className="font-serif italic text-base text-white/55 mt-5 max-w-md leading-relaxed">
                     {activePrinciple.summary}
                   </p>
                 </motion.div>
@@ -279,10 +279,10 @@ function StatBlock({
       transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
       className="text-center lg:text-left"
     >
-      <div className="font-serif text-5xl md:text-6xl lg:text-7xl font-extralight text-foreground tabular-nums leading-none">
+      <div className="font-serif text-4xl md:text-5xl font-extralight text-foreground tabular-nums leading-none">
         <CountUp target={value} suffix={suffix} triggerOnView duration={1.4} />
       </div>
-      <p className="mt-4 text-xs uppercase tracking-[0.2em] text-muted-dark">
+      <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-muted-dark">
         {label}
       </p>
     </motion.div>
@@ -322,7 +322,7 @@ export default function AboutPage() {
                   text="Built on expertise, sustained by trust"
                   as="h1"
                   mode="line"
-                  className="heading-luxury text-5xl md:text-7xl text-foreground leading-[1.05] max-w-3xl mb-10"
+                  className="heading-luxury text-4xl md:text-6xl text-foreground leading-[1.05] max-w-3xl mb-10"
                   delay={0.2}
                 />
                 <motion.div
@@ -346,7 +346,7 @@ export default function AboutPage() {
                   className="relative inline-flex flex-col items-start lg:items-end"
                 >
                   <span className="tracking-luxury text-white/40 mb-2">Established</span>
-                  <span className="font-serif text-7xl md:text-8xl text-foreground leading-none tabular-nums">
+                  <span className="font-serif text-5xl md:text-6xl text-foreground leading-none tabular-nums font-light">
                     2024
                   </span>
                   <div className="mt-4 h-px w-24 bg-gradient-to-r from-primary-light/80 to-transparent" />
@@ -522,7 +522,7 @@ export default function AboutPage() {
         <div className="max-w-5xl mx-auto px-6 lg:px-8 relative">
           <AnimatedSection>
             <blockquote className="text-center">
-              <p className="font-serif text-3xl md:text-5xl lg:text-[3.5rem] text-foreground leading-[1.2] font-light italic">
+              <p className="font-serif text-2xl md:text-4xl lg:text-[2.5rem] text-foreground leading-[1.25] font-light italic">
                 &ldquo;Central Asia&apos;s fastest-growing market deserves advisory
                 of the same calibre found in mature economies — delivered by
                 operators who speak its language and bring international
@@ -548,9 +548,9 @@ export default function AboutPage() {
             <TextReveal
               text="Work with us"
               as="h2"
-              className="heading-luxury text-4xl md:text-6xl text-foreground mb-6"
+              className="heading-luxury text-3xl md:text-5xl text-foreground mb-6"
             />
-            <p className="text-lg text-white/60 max-w-xl mx-auto mb-12 leading-relaxed">
+            <p className="text-base md:text-lg text-white/60 max-w-xl mx-auto mb-12 leading-relaxed">
               Whether you are entering the market or scaling existing operations,
               our firm is prepared to advise.
             </p>
