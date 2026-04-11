@@ -12,14 +12,29 @@ import {
 import {
   ArrowRight,
   ArrowUpRight,
+  Bitcoin,
   Calculator,
+  Factory,
+  Gem,
+  GraduationCap,
+  HardHat,
+  HeartPulse,
+  Hotel,
   Landmark,
   LineChart,
+  Luggage,
   Mail,
   Megaphone,
   Phone,
+  PlayCircle,
+  Satellite,
   Scale,
+  ShoppingCart,
+  TrendingUp,
+  Trophy,
   Users,
+  Wheat,
+  Zap,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import TextReveal, { RevealLine } from "@/components/TextReveal";
@@ -93,11 +108,23 @@ const disciplines: {
   { num: "06", title: "Funding & Grants", short: "Funding", blurb: "Access to capital, IFI programmes, and incentives.", icon: Landmark },
 ];
 
-const industries = [
-  "Construction", "Real Estate", "Manufacturing", "FMCG",
-  "Technology", "Agriculture", "Textiles", "Healthcare",
-  "Education", "Media & Advertising", "Interior Design",
-  "Dairy & Food", "Logistics", "Retail", "Legal Services",
+const industries: { name: string; icon: LucideIcon }[] = [
+  { name: "Agriculture", icon: Wheat },
+  { name: "Banking & Finance", icon: Landmark },
+  { name: "Blockchain & Crypto", icon: Bitcoin },
+  { name: "Commerce & Retail", icon: ShoppingCart },
+  { name: "Construction & Real Estate", icon: HardHat },
+  { name: "Education", icon: GraduationCap },
+  { name: "Energy & Natural Resources", icon: Zap },
+  { name: "Healthcare & Pharmaceuticals", icon: HeartPulse },
+  { name: "Hospitality & Tourism", icon: Hotel },
+  { name: "Immigration", icon: Luggage },
+  { name: "IT, Fintech & Telecom", icon: Satellite },
+  { name: "Investment & Venture Funds", icon: TrendingUp },
+  { name: "Manufacture", icon: Factory },
+  { name: "Media & Entertainment", icon: PlayCircle },
+  { name: "Private Equity & Wealth", icon: Gem },
+  { name: "Sports", icon: Trophy },
 ];
 
 /* ── Principles: Pinned scroll-jack with label + content swap ──
@@ -622,30 +649,57 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Industries Marquee */}
-      <section className="py-16 md:py-20 bg-black border-y border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-10">
-          <p className="tracking-luxury text-white/30 text-center">
-            Industries our team has served
-          </p>
-        </div>
-        <div className="relative overflow-hidden">
-          <div className="marquee-track">
-            {[0, 1].map((copy) => (
-              <div key={copy} className="marquee-items" aria-hidden={copy === 1}>
-                {industries.map((name) => (
+      {/* Industries Grid */}
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden border-y border-white/[0.06]">
+        <div className="ambient-glow ambient-glow-warm w-[700px] h-[700px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60" />
+        <div className="ambient-glow ambient-glow-oxblood w-[420px] h-[420px] -top-32 -right-32 opacity-40" />
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+          <AnimatedSection className="mb-14 md:mb-16 text-center">
+            <p className="tracking-luxury text-muted-dark mb-4">Sector Experience</p>
+            <TextReveal
+              text="Industries our team has served"
+              as="h2"
+              className="heading-luxury text-3xl md:text-5xl text-foreground"
+            />
+            <p className="mt-5 text-white/55 max-w-xl mx-auto leading-relaxed">
+              From regulated heavyweights to fast-moving ventures — we&apos;ve
+              advised across the full sweep of sectors shaping Central Asia.
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+            {industries.map((ind, i) => {
+              const IconComp = ind.icon;
+              return (
+                <motion.div
+                  key={ind.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{
+                    duration: 0.6,
+                    delay:
+                      (i % 4) * 0.06 + Math.floor(i / 4) * 0.04,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="group relative aspect-[5/4] rounded-xl border border-white/[0.08] bg-white/[0.015] hover:bg-white/[0.035] hover:border-white/[0.18] transition-all duration-500 flex flex-col items-center justify-center gap-4 p-5 md:p-6 overflow-hidden"
+                >
+                  {/* Hover accent — thin line sliding in from bottom */}
                   <span
-                    key={`${copy}-${name}`}
-                    className="mx-8 md:mx-12 text-sm md:text-base font-light tracking-[0.1em] text-white/30 whitespace-nowrap uppercase select-none"
-                  >
-                    {name}
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-px w-0 bg-gradient-to-r from-transparent via-primary-light to-transparent transition-all duration-700 ease-out group-hover:w-full"
+                    aria-hidden="true"
+                  />
+                  <IconComp
+                    className="w-8 h-8 md:w-9 md:h-9 text-white/70 group-hover:text-primary-light transition-colors duration-500"
+                    strokeWidth={1.25}
+                  />
+                  <span className="text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-white/55 group-hover:text-white/85 text-center leading-tight transition-colors duration-500">
+                    {ind.name}
                   </span>
-                ))}
-              </div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
-          <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
-          <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
         </div>
       </section>
 
