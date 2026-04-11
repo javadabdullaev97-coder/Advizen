@@ -441,6 +441,14 @@ body::after {
   color: rgba(255,255,255,0.55);
 }
 
+.glow-card .glow-card-icon {
+  color: rgba(255,255,255,0.55);
+  transition: color 400ms ease;
+}
+.glow-card:hover .glow-card-icon {
+  color: #ED5863;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   * {

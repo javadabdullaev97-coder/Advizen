@@ -12,29 +12,29 @@ import {
 import {
   ArrowRight,
   ArrowUpRight,
-  Bitcoin,
+  BedDouble,
+  Blocks,
+  BookOpen,
+  Building2,
   Calculator,
+  Cpu,
   Factory,
+  Film,
+  Flame,
   Gem,
-  GraduationCap,
-  HardHat,
-  HeartPulse,
-  Hotel,
+  Globe,
   Landmark,
   LineChart,
-  Luggage,
   Mail,
+  Medal,
   Megaphone,
   Phone,
-  PlayCircle,
-  Satellite,
   Scale,
-  ShoppingCart,
+  Sprout,
+  Stethoscope,
+  Store,
   TrendingUp,
-  Trophy,
   Users,
-  Wheat,
-  Zap,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import TextReveal, { RevealLine } from "@/components/TextReveal";
@@ -109,22 +109,22 @@ const disciplines: {
 ];
 
 const industries: { name: string; icon: LucideIcon }[] = [
-  { name: "Agriculture", icon: Wheat },
+  { name: "Agriculture", icon: Sprout },
   { name: "Banking & Finance", icon: Landmark },
-  { name: "Blockchain & Crypto", icon: Bitcoin },
-  { name: "Commerce & Retail", icon: ShoppingCart },
-  { name: "Construction & Real Estate", icon: HardHat },
-  { name: "Education", icon: GraduationCap },
-  { name: "Energy & Natural Resources", icon: Zap },
-  { name: "Healthcare & Pharmaceuticals", icon: HeartPulse },
-  { name: "Hospitality & Tourism", icon: Hotel },
-  { name: "Immigration", icon: Luggage },
-  { name: "IT, Fintech & Telecom", icon: Satellite },
+  { name: "Blockchain & Crypto", icon: Blocks },
+  { name: "Commerce & Retail", icon: Store },
+  { name: "Construction & Real Estate", icon: Building2 },
+  { name: "Education", icon: BookOpen },
+  { name: "Energy & Natural Resources", icon: Flame },
+  { name: "Healthcare & Pharmaceuticals", icon: Stethoscope },
+  { name: "Hospitality & Tourism", icon: BedDouble },
+  { name: "Immigration", icon: Globe },
+  { name: "IT, Fintech & Telecom", icon: Cpu },
   { name: "Investment & Venture Funds", icon: TrendingUp },
   { name: "Manufacture", icon: Factory },
-  { name: "Media & Entertainment", icon: PlayCircle },
+  { name: "Media & Entertainment", icon: Film },
   { name: "Private Equity & Wealth", icon: Gem },
-  { name: "Sports", icon: Trophy },
+  { name: "Sports", icon: Medal },
 ];
 
 /* ── Principles: Pinned scroll-jack with label + content swap ──
@@ -667,7 +667,7 @@ export default function AboutPage() {
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5">
             {industries.map((ind, i) => {
               const IconComp = ind.icon;
               return (
@@ -682,20 +682,21 @@ export default function AboutPage() {
                       (i % 4) * 0.06 + Math.floor(i / 4) * 0.04,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="group relative aspect-[5/4] rounded-xl border border-white/[0.08] bg-white/[0.015] hover:bg-white/[0.035] hover:border-white/[0.18] transition-all duration-500 flex flex-col items-center justify-center gap-4 p-5 md:p-6 overflow-hidden"
+                  whileHover={{ y: -4, scale: 1.03 }}
+                  className="glow-card aspect-[5/4]"
                 >
-                  {/* Hover accent — thin line sliding in from bottom */}
-                  <span
-                    className="pointer-events-none absolute inset-x-0 bottom-0 h-px w-0 bg-gradient-to-r from-transparent via-primary-light to-transparent transition-all duration-700 ease-out group-hover:w-full"
-                    aria-hidden="true"
-                  />
-                  <IconComp
-                    className="w-8 h-8 md:w-9 md:h-9 text-white/70 group-hover:text-primary-light transition-colors duration-500"
-                    strokeWidth={1.25}
-                  />
-                  <span className="text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-white/55 group-hover:text-white/85 text-center leading-tight transition-colors duration-500">
-                    {ind.name}
-                  </span>
+                  <div className="glow-card-spinner" />
+                  <div className="glow-card-backdrop" />
+                  <div className="glow-card-content flex flex-col items-center justify-center gap-4 p-5 md:p-6">
+                    <div className="glow-card-glow" />
+                    <IconComp
+                      className="relative w-9 h-9 md:w-10 md:h-10 text-white/60 transition-colors duration-500 glow-card-icon"
+                      strokeWidth={1}
+                    />
+                    <span className="relative text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-center leading-tight glow-card-title">
+                      {ind.name}
+                    </span>
+                  </div>
                 </motion.div>
               );
             })}
