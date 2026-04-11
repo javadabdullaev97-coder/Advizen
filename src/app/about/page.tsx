@@ -301,121 +301,112 @@ function DisciplinesIntegration() {
   const Icon = current.icon;
 
   return (
-    <div className="relative mx-auto max-w-3xl rounded-[1.75rem] border border-white/[0.08] bg-[#0A0A0A]/70 backdrop-blur-xl overflow-hidden">
-      {/* Inner ambient wash (behind everything) */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="ambient-glow ambient-glow-warm w-[520px] h-[520px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-70" />
-      </div>
-
-      <div className="relative px-10 md:px-16 py-12 md:py-16">
-        <div className="flex items-start">
-          {/* LEFT — Advizen tile */}
-          <div className="relative z-10 flex flex-col items-center gap-5 shrink-0">
-            <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl border border-white/10 bg-[#0D0D0D] flex items-center justify-center overflow-hidden">
-              <Image
-                src="/logo.png"
-                alt="Advizen"
-                width={56}
-                height={48}
-                className="opacity-95"
-              />
-            </div>
-            <span className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/60">
-              Advizen
-            </span>
+    <div className="relative mx-auto max-w-2xl">
+      <div className="relative flex items-start">
+        {/* LEFT — Advizen tile */}
+        <div className="relative z-10 flex flex-col items-center gap-5 shrink-0">
+          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl border border-white/10 bg-[#0D0D0D] flex items-center justify-center overflow-hidden">
+            <Image
+              src="/logo.png"
+              alt="Advizen"
+              width={160}
+              height={134}
+              className="w-16 h-auto md:w-[72px] opacity-95"
+            />
           </div>
-
-          {/* MIDDLE — beam track.
-              Negative horizontal margin pulls the container under each
-              tile by half-a-tile, so the beam lines start at the left
-              tile's center and end at the right tile's center. Tiles
-              are z-10 with opaque bg, so the pulses are hidden behind
-              them at the endpoints and visually emerge / vanish. */}
-          <div
-            className="relative flex-1 h-28 md:h-32 z-0 -mx-14 md:-mx-16"
-            aria-hidden="true"
-          >
-            {/* 3 static hairlines spanning the full (extended) width */}
-            {[0, 1, 2].map((i) => (
-              <div
-                key={`line-${i}`}
-                className="absolute inset-x-0 h-px bg-white/[0.06]"
-                style={{ top: `calc(50% + ${(i - 1) * 12}px - 0.5px)` }}
-              />
-            ))}
-            {/* Traveling pulses — restart on every `active` change so
-                each cycle is one clean traversal; the last pulse drives
-                the advance, locking icon swap to pulse arrival. */}
-            {!shouldReduce &&
-              [0, 1, 2].map((i) => (
-                <motion.div
-                  key={`pulse-${active}-${i}`}
-                  className="absolute h-px w-20 md:w-24 -ml-10 md:-ml-12"
-                  style={{
-                    top: `calc(50% + ${(i - 1) * 12}px - 0.5px)`,
-                    background:
-                      "linear-gradient(90deg, transparent 0%, rgba(237,88,99,0.95) 50%, transparent 100%)",
-                    boxShadow: "0 0 14px rgba(237,88,99,0.55)",
-                  }}
-                  initial={{ left: "0%" }}
-                  animate={{ left: "100%" }}
-                  transition={{
-                    duration: PULSE_MS / 1000,
-                    ease: [0.42, 0, 0.58, 1],
-                    delay: i * 0.1,
-                  }}
-                  onAnimationComplete={i === 2 ? advance : undefined}
-                />
-              ))}
-          </div>
-
-          {/* RIGHT — cycling service tile */}
-          <div className="relative z-10 flex flex-col items-center gap-5 shrink-0">
-            <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl border border-white/10 bg-[#0D0D0D] flex items-center justify-center overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={active}
-                  initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.7, rotate: 8 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <Icon
-                    className="w-10 h-10 md:w-11 md:h-11 text-primary-light"
-                    strokeWidth={1.25}
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <div className="relative h-5 min-w-[108px] md:min-w-[132px]">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={active}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-x-0 text-center text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/70 whitespace-nowrap"
-                >
-                  {current.short}
-                </motion.span>
-              </AnimatePresence>
-            </div>
-          </div>
+          <span className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/60">
+            Advizen
+          </span>
         </div>
 
-        {/* Discipline progress ticks */}
-        <div className="mt-10 flex items-center justify-center gap-2">
-          {disciplines.map((_, j) => (
-            <span
-              key={j}
-              className={cn(
-                "h-px transition-all duration-500 ease-out",
-                active === j ? "w-10 bg-primary-light" : "w-5 bg-white/15",
-              )}
+        {/* MIDDLE — beam track.
+            Negative horizontal margin pulls the container under each
+            tile by half-a-tile, so the beam lines start at the left
+            tile's center and end at the right tile's center. Tiles
+            are z-10 with opaque bg, so the pulses are hidden behind
+            them at the endpoints and visually emerge / vanish. */}
+        <div
+          className="relative flex-1 h-28 md:h-32 z-0 -mx-14 md:-mx-16"
+          aria-hidden="true"
+        >
+          {/* 3 static hairlines spanning the full (extended) width */}
+          {[0, 1, 2].map((i) => (
+            <div
+              key={`line-${i}`}
+              className="absolute inset-x-0 h-px bg-white/[0.06]"
+              style={{ top: `calc(50% + ${(i - 1) * 12}px - 0.5px)` }}
             />
           ))}
+          {/* Traveling pulses — all three move in sync; the last one
+              drives the advance, locking icon swap to pulse arrival. */}
+          {!shouldReduce &&
+            [0, 1, 2].map((i) => (
+              <motion.div
+                key={`pulse-${active}-${i}`}
+                className="absolute h-px w-20 md:w-24 -ml-10 md:-ml-12"
+                style={{
+                  top: `calc(50% + ${(i - 1) * 12}px - 0.5px)`,
+                  background:
+                    "linear-gradient(90deg, transparent 0%, rgba(237,88,99,0.95) 50%, transparent 100%)",
+                  boxShadow: "0 0 14px rgba(237,88,99,0.55)",
+                }}
+                initial={{ left: "0%" }}
+                animate={{ left: "100%" }}
+                transition={{
+                  duration: PULSE_MS / 1000,
+                  ease: [0.42, 0, 0.58, 1],
+                }}
+                onAnimationComplete={i === 2 ? advance : undefined}
+              />
+            ))}
         </div>
+
+        {/* RIGHT — cycling service tile */}
+        <div className="relative z-10 flex flex-col items-center gap-5 shrink-0">
+          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl border border-white/10 bg-[#0D0D0D] flex items-center justify-center overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 0.7, rotate: 8 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Icon
+                  className="w-16 h-16 md:w-[72px] md:h-[72px] text-primary-light"
+                  strokeWidth={1.15}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="relative h-5 min-w-[108px] md:min-w-[132px]">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={active}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-x-0 text-center text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/70 whitespace-nowrap"
+              >
+                {current.short}
+              </motion.span>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+
+      {/* Discipline progress ticks */}
+      <div className="mt-12 flex items-center justify-center gap-2">
+        {disciplines.map((_, j) => (
+          <span
+            key={j}
+            className={cn(
+              "h-px transition-all duration-500 ease-out",
+              active === j ? "w-10 bg-primary-light" : "w-5 bg-white/15",
+            )}
+          />
+        ))}
       </div>
     </div>
   );
