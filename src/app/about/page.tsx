@@ -363,14 +363,15 @@ function DisciplinesIntegration() {
 
         {/* RIGHT — cycling service tile */}
         <div className="relative z-10 flex flex-col items-center gap-5 shrink-0">
-          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl border border-white/10 bg-[#0D0D0D] flex items-center justify-center overflow-hidden">
-            <AnimatePresence mode="wait">
+          <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl border border-white/10 bg-[#0D0D0D] overflow-hidden">
+            <AnimatePresence initial={false}>
               <motion.div
                 key={active}
-                initial={{ opacity: 0, scale: 0.7, rotate: -8 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 0.7, rotate: 8 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, x: "-70%" }}
+                animate={{ opacity: 1, x: "0%" }}
+                exit={{ opacity: 0, x: "70%" }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-0 flex items-center justify-center"
               >
                 <Icon
                   className="w-16 h-16 md:w-[72px] md:h-[72px] text-primary-light"
