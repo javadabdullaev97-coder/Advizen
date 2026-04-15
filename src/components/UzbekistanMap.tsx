@@ -57,21 +57,19 @@ export default function UzbekistanMap() {
       className="relative w-full max-w-2xl mx-auto select-none"
       onPointerLeave={() => setHovered(null)}
     >
-      {/* Region name — shown on hover only */}
+      {/* Region name — shown on hover and auto-cycle */}
       <div className="h-6 flex items-center justify-center mb-2">
         <AnimatePresence mode="wait">
-          {hovered && (
-            <motion.p
-              key={regionName}
-              className="text-xs tracking-[0.2em] uppercase text-white/55"
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.15 }}
-            >
-              {regionName}
-            </motion.p>
-          )}
+          <motion.p
+            key={regionName}
+            className="text-xs tracking-[0.2em] uppercase text-white/55"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.15 }}
+          >
+            {regionName}
+          </motion.p>
         </AnimatePresence>
       </div>
 
