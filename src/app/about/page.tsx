@@ -131,26 +131,6 @@ const industries: { name: string; icon: LucideIcon }[] = [
   { name: "Sports", icon: Medal },
 ];
 
-const team = [
-  {
-    initials: "JD",
-    name: "Partner Name",
-    role: "Managing Partner",
-    bio: "20+ years advising multinational and local businesses across Central Asia. Former Big Four. Leads tax, legal, and market-entry mandates.",
-  },
-  {
-    initials: "AK",
-    name: "Partner Name",
-    role: "Partner, Finance & Operations",
-    bio: "IFRS specialist with deep experience in banking, fintech, and energy. Oversees finance, accounting, and compliance engagements.",
-  },
-  {
-    initials: "SM",
-    name: "Partner Name",
-    role: "Partner, Strategy & Growth",
-    bio: "Background in venture capital and IFI advisory. Leads funding, marketing, and HR practice areas for international clients entering Uzbekistan.",
-  },
-];
 
 const caseStudies = [
   {
@@ -173,32 +153,6 @@ const caseStudies = [
   },
 ];
 
-const credentials = [
-  "Member, American Chamber of Commerce in Uzbekistan",
-  "ACCA-qualified finance practitioners",
-  "Registered tax advisory licence, Republic of Uzbekistan",
-  "IFRS implementation partner",
-  "IFI programme consultants (ADB, EBRD, IFC)",
-  "ISO 9001-aligned internal processes",
-];
-
-const howWeWork = [
-  {
-    num: "01",
-    title: "Discovery",
-    desc: "We map your regulatory exposure, commercial objectives, and operational reality in a focused scoping session.",
-  },
-  {
-    num: "02",
-    title: "Strategy",
-    desc: "Our team builds an integrated plan across every relevant discipline with clear deliverables and timelines.",
-  },
-  {
-    num: "03",
-    title: "Execution",
-    desc: "We deliver, implement, and stay accountable through the outcome. One point of contact, no handoff gaps.",
-  },
-];
 
 /* ── Disciplines Integration Panel ───────────────────── */
 function DisciplinesIntegration() {
@@ -659,94 +613,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ====== LEADERSHIP (NEW) ====== */}
-      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection className="mb-14 md:mb-16 text-center">
-            <p className="tracking-luxury text-white/50 mb-4">Leadership</p>
-            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
-              The partners behind Advizen
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {team.map((member, i) => (
-              <motion.div
-                key={member.initials}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{
-                  duration: 0.5,
-                  delay: i * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-8 md:p-10"
-              >
-                {/* Placeholder avatar — swap for real photo */}
-                <div className="w-16 h-16 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center mb-6">
-                  <span className="font-mono text-sm text-white/50 tracking-wider">
-                    {member.initials}
-                  </span>
-                </div>
-                <h3 className="font-serif text-xl text-foreground mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-xs tracking-[0.16em] uppercase text-primary-light/80 mb-5">
-                  {member.role}
-                </p>
-                <p className="text-sm text-white/50 leading-relaxed">
-                  {member.bio}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ====== HOW WE WORK (NEW) ====== */}
-      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection className="mb-14 md:mb-16 text-center">
-            <p className="tracking-luxury text-white/50 mb-4">Engagement Model</p>
-            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
-              How we work
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12 max-w-4xl mx-auto">
-            {howWeWork.map((step, i) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{
-                  duration: 0.5,
-                  delay: i * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="text-center md:text-left"
-              >
-                <span className="font-mono text-xs text-primary-light tracking-[0.2em]">
-                  {step.num}
-                </span>
-                <h3 className="font-serif text-2xl text-foreground mt-3 mb-4">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-white/50 leading-relaxed">
-                  {step.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
       {/* ====== CASE STUDIES (TEMPLATE) ====== */}
       <section className="py-24 md:py-32 bg-black relative overflow-hidden border-y border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
@@ -793,40 +659,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* ====== CREDENTIALS & AFFILIATIONS (TEMPLATE) ====== */}
-      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection className="mb-14 md:mb-16 text-center">
-            <p className="tracking-luxury text-white/50 mb-4">Credentials</p>
-            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
-              Affiliations and qualifications
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6 max-w-3xl mx-auto">
-            {credentials.map((item, i) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{
-                  duration: 0.4,
-                  delay: i * 0.04,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="flex items-start gap-3 py-3 border-b border-white/[0.06]"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-primary-light/60 mt-1.5 shrink-0" />
-                <span className="text-sm text-white/60 leading-relaxed">{item}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
 
       {/* ====== GEOGRAPHY ====== */}
       <section className="py-24 md:py-32 bg-black relative overflow-hidden">
