@@ -1,14 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type ComponentType, type SVGProps } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import AnimatedSection, {
-  HorizontalLine,
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/AnimatedSection";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BedDouble,
+  BookOpen,
+  Building2,
+  Cpu,
+  Factory,
+  Film,
+  Flame,
+  Gem,
+  Globe,
+  Landmark,
+  Medal,
+  Sprout,
+  Stethoscope,
+  Store,
+  TrendingUp,
+} from "lucide-react";
+import AnimatedSection from "@/components/AnimatedSection";
 import TextReveal, { RevealLine } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
@@ -16,12 +30,48 @@ import { servicesData } from "@/lib/services";
 import AuroraBackground from "@/components/AuroraBackground";
 
 type Category = "all" | "Advisory" | "Operations" | "Growth";
+type LucideIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
-const industries = [
-  "Construction", "Real Estate", "Manufacturing", "FMCG",
-  "Technology", "Agriculture", "Textiles", "Healthcare",
-  "Education", "Media & Advertising", "Interior Design", "Furniture",
-  "Dairy & Food", "Logistics", "Retail", "Legal Services",
+/* Custom angular Bitcoin glyph */
+function BitcoinSquare(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1}
+      strokeLinecap="square"
+      strokeLinejoin="miter"
+      {...props}
+    >
+      <path d="M7 4 V20" />
+      <path d="M7 4 H15 L17 6 V10 L15 12 H7" />
+      <path d="M7 12 H16 L18 14 V18 L16 20 H7" />
+      <path d="M10 2 V4" />
+      <path d="M14 2 V4" />
+      <path d="M10 20 V22" />
+      <path d="M14 20 V22" />
+    </svg>
+  );
+}
+
+const industries: { name: string; icon: LucideIcon }[] = [
+  { name: "Agriculture", icon: Sprout },
+  { name: "Banking & Finance", icon: Landmark },
+  { name: "Blockchain & Crypto", icon: BitcoinSquare },
+  { name: "Commerce & Retail", icon: Store },
+  { name: "Construction & Real Estate", icon: Building2 },
+  { name: "Education", icon: BookOpen },
+  { name: "Energy & Natural Resources", icon: Flame },
+  { name: "Healthcare & Pharmaceuticals", icon: Stethoscope },
+  { name: "Hospitality & Tourism", icon: BedDouble },
+  { name: "Immigration", icon: Globe },
+  { name: "IT, Fintech & Telecom", icon: Cpu },
+  { name: "Investment & Venture Funds", icon: TrendingUp },
+  { name: "Manufacture", icon: Factory },
+  { name: "Media & Entertainment", icon: Film },
+  { name: "Private Equity & Wealth", icon: Gem },
+  { name: "Sports", icon: Medal },
 ];
 
 const filters: { label: string; value: Category }[] = [
@@ -132,30 +182,55 @@ export default function ExpertisePage() {
       </section>
 
       {/* Industries */}
-      <section className="py-24 md:py-32 bg-background">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-4">Industries Served</p>
-            <TextReveal
-              text="15+ sectors, one standard of excellence"
-              as="h2"
-              className="heading-luxury text-3xl md:text-4xl text-foreground mb-16"
-            />
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden border-y border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+          <AnimatedSection className="mb-14 md:mb-16 text-center">
+            <p className="tracking-luxury text-white/50 mb-4">Sector Experience</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+              Industries we serve
+            </h2>
+            <p className="mt-5 text-white/55 max-w-xl mx-auto leading-relaxed">
+              From regulated heavyweights to fast-moving ventures across
+              Central Asia.
+            </p>
           </AnimatedSection>
 
-          <HorizontalLine className="mb-0" />
-
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-0">
-            {industries.map((ind) => (
-              <StaggerItem key={ind}>
-                <div className="py-6 px-4 border-b border-r border-white/[0.06] hover:bg-surface transition-colors group cursor-default">
-                  <span className="text-sm text-muted group-hover:text-foreground transition-colors">
-                    {ind}
-                  </span>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5" role="list">
+            {industries.map((ind, i) => {
+              const IconComp = ind.icon;
+              return (
+                <motion.button
+                  key={ind.name}
+                  role="listitem"
+                  tabIndex={0}
+                  aria-label={ind.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{
+                    duration: 0.5,
+                    delay: (i % 4) * 0.04 + Math.floor(i / 4) * 0.03,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ y: -4, scale: 1.03 }}
+                  className="glow-card aspect-[5/4] cursor-default"
+                >
+                  <div className="glow-card-spinner" />
+                  <div className="glow-card-backdrop" />
+                  <div className="glow-card-content flex flex-col items-center justify-center gap-4 p-5 md:p-6">
+                    <div className="glow-card-glow" />
+                    <IconComp
+                      className="relative w-9 h-9 md:w-10 md:h-10 text-white/60 transition-colors duration-500 glow-card-icon"
+                      strokeWidth={1}
+                    />
+                    <span className="relative text-xs tracking-[0.14em] uppercase text-center leading-tight glow-card-title">
+                      {ind.name}
+                    </span>
+                  </div>
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
