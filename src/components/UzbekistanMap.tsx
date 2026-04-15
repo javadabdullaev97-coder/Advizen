@@ -26,6 +26,9 @@ const ARAL_D = "m 134.41007,7.1297222 -3.4,6.4199998 -1,3.43 -0.61,3.82 2.02,2.8
 
 const TASHKENT = { cx: 612, cy: 264 };
 
+/* Geographic sweep: west to east */
+const CYCLE_ORDER = ["UZ-QR", "UZ-XO", "UZ-NW", "UZ-BU", "UZ-SA", "UZ-QA", "UZ-SU", "UZ-JI", "UZ-SI", "UZ-TO", "UZ-NG", "UZ-FA", "UZ-AN"];
+
 export default function UzbekistanMap() {
   const reduced = useReducedMotion();
   const [hovered, setHovered] = useState<string | null>(null);
@@ -39,18 +42,21 @@ export default function UzbekistanMap() {
       return;
     }
     intervalRef.current = setInterval(() => {
-      setCycleIdx(p => (p + 1) % REGIONS.length);
+      setCycleIdx(p => (p + 1) % CYCLE_ORDER.length);
     }, 1400);
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [reduced, hovered]);
 
-  const activeId = hovered ?? REGIONS[cycleIdx].id;
+  const activeId = hovered ?? CYCLE_ORDER[cycleIdx];
   const regionName = REGIONS.find(r => r.id === activeId)?.name ?? "";
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto select-none">
+    <div
+      className="relative w-full max-w-2xl mx-auto select-none"
+      onPointerLeave={() => setHovered(null)}
+    >
       {/* Region name — shown on hover only */}
       <div className="h-6 flex items-center justify-center mb-2">
         <AnimatePresence mode="wait">
@@ -73,7 +79,7 @@ export default function UzbekistanMap() {
         viewBox={`0 0 ${W} ${H}`}
         className="w-full h-auto"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ display: "block", overflow: "visible" }}
+        style={{ display: "block", overflow: "hidden" }}
       >
         <defs>
           <filter id="uz-region-glow" x="-30%" y="-30%" width="160%" height="160%">
@@ -90,95 +96,108 @@ export default function UzbekistanMap() {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          {/* Clip to SVG bounds */}
+          <clipPath id="uz-clip">
+            <rect x="0" y="0" width={W} height={H} />
+          </clipPath>
         </defs>
 
-        {/* Aral Sea */}
-        <path
-          d={ARAL_D}
-          fill="rgba(99,13,13,0.10)"
-          stroke="rgba(99,13,13,0.22)"
-          strokeWidth={0.5}
-          style={{ pointerEvents: "none" }}
-        />
+        <g clipPath="url(#uz-clip)">
+          {/* Invisible rect to capture pointer events outside paths */}
+          <rect
+            x="0" y="0" width={W} height={H}
+            fill="transparent"
+            onPointerEnter={() => setHovered(null)}
+            style={{ pointerEvents: "all" }}
+          />
 
-        {/* Region paths — CSS transitions only */}
-        {REGIONS.map((r) => {
-          const active = r.id === activeId;
-          const isHovered = r.id === hovered;
-          return (
-            <path
-              key={r.id}
-              d={r.d}
-              onPointerEnter={() => setHovered(r.id)}
-              onPointerLeave={() => setHovered(null)}
-              style={{
-                fill: active ? "rgba(122,26,26,0.50)" : "rgba(255,255,255,0.03)",
-                stroke: active ? "rgba(200,60,60,0.75)" : "rgba(255,255,255,0.10)",
-                strokeWidth: 0.7,
-                filter: active ? "url(#uz-region-glow)" : "none",
-                transform: isHovered ? "scale(1.025)" : "scale(1)",
-                transformOrigin: "center",
-                transformBox: "fill-box",
-                transition: "fill 280ms ease, stroke 280ms ease, transform 280ms ease",
-                cursor: "default",
-                pointerEvents: "all",
-              }}
-            />
-          );
-        })}
+          {/* Aral Sea */}
+          <path
+            d={ARAL_D}
+            fill="rgba(99,13,13,0.10)"
+            stroke="rgba(99,13,13,0.22)"
+            strokeWidth={0.5}
+            style={{ pointerEvents: "none" }}
+          />
 
-        {/* Tashkent outer pulse — bigger, more visible */}
-        {!reduced && (
-          <>
-            <motion.circle
-              cx={TASHKENT.cx}
-              cy={TASHKENT.cy}
-              r={12}
-              fill="none"
-              stroke="rgba(237,88,99,0.5)"
-              strokeWidth={1.2}
-              initial={{ scale: 0.6, opacity: 0.7 }}
-              animate={{ scale: 3.5, opacity: 0 }}
-              transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut" }}
-              style={{ transformOrigin: `${TASHKENT.cx}px ${TASHKENT.cy}px`, pointerEvents: "none" }}
-            />
-            <motion.circle
-              cx={TASHKENT.cx}
-              cy={TASHKENT.cy}
-              r={8}
-              fill="none"
-              stroke="rgba(237,88,99,0.3)"
-              strokeWidth={0.8}
-              initial={{ scale: 0.8, opacity: 0.5 }}
-              animate={{ scale: 2.8, opacity: 0 }}
-              transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: 0.8 }}
-              style={{ transformOrigin: `${TASHKENT.cx}px ${TASHKENT.cy}px`, pointerEvents: "none" }}
-            />
-          </>
-        )}
+          {/* Region paths */}
+          {REGIONS.map((r) => {
+            const active = r.id === activeId;
+            const isHovered = r.id === hovered;
+            return (
+              <path
+                key={r.id}
+                d={r.d}
+                onPointerEnter={() => setHovered(r.id)}
+                style={{
+                  fill: active ? "rgba(122,26,26,0.50)" : "rgba(255,255,255,0.03)",
+                  stroke: active ? "rgba(200,60,60,0.75)" : "rgba(255,255,255,0.10)",
+                  strokeWidth: 0.7,
+                  filter: active ? "url(#uz-region-glow)" : "none",
+                  transform: isHovered ? "scale(1.025)" : "scale(1)",
+                  transformOrigin: "center",
+                  transformBox: "fill-box",
+                  transition: "fill 280ms ease, stroke 280ms ease, transform 280ms ease",
+                  cursor: "default",
+                  pointerEvents: "all",
+                }}
+              />
+            );
+          })}
 
-        {/* Tashkent dot */}
-        <circle
-          cx={TASHKENT.cx}
-          cy={TASHKENT.cy}
-          r={4.5}
-          fill="rgba(237,88,99,1)"
-          filter="url(#uz-dot-glow)"
-          style={{ pointerEvents: "none" }}
-        />
+          {/* Tashkent pulse rings */}
+          {!reduced && (
+            <>
+              <motion.circle
+                cx={TASHKENT.cx}
+                cy={TASHKENT.cy}
+                r={12}
+                fill="none"
+                stroke="rgba(237,88,99,0.5)"
+                strokeWidth={1.2}
+                initial={{ scale: 0.6, opacity: 0.7 }}
+                animate={{ scale: 3.5, opacity: 0 }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut" }}
+                style={{ transformOrigin: `${TASHKENT.cx}px ${TASHKENT.cy}px`, pointerEvents: "none" }}
+              />
+              <motion.circle
+                cx={TASHKENT.cx}
+                cy={TASHKENT.cy}
+                r={8}
+                fill="none"
+                stroke="rgba(237,88,99,0.3)"
+                strokeWidth={0.8}
+                initial={{ scale: 0.8, opacity: 0.5 }}
+                animate={{ scale: 2.8, opacity: 0 }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: 0.8 }}
+                style={{ transformOrigin: `${TASHKENT.cx}px ${TASHKENT.cy}px`, pointerEvents: "none" }}
+              />
+            </>
+          )}
 
-        {/* Tashkent label */}
-        <text
-          x={TASHKENT.cx + 10}
-          y={TASHKENT.cy - 8}
-          fontSize={11}
-          fill="rgba(245,245,245,0.65)"
-          fontFamily="Inter, system-ui, sans-serif"
-          letterSpacing="0.14em"
-          style={{ pointerEvents: "none" }}
-        >
-          TASHKENT
-        </text>
+          {/* Tashkent dot */}
+          <circle
+            cx={TASHKENT.cx}
+            cy={TASHKENT.cy}
+            r={4.5}
+            fill="rgba(237,88,99,1)"
+            filter="url(#uz-dot-glow)"
+            style={{ pointerEvents: "none" }}
+          />
+
+          {/* Tashkent label */}
+          <text
+            x={TASHKENT.cx + 10}
+            y={TASHKENT.cy - 8}
+            fontSize={11}
+            fill="rgba(245,245,245,0.65)"
+            fontFamily="Inter, system-ui, sans-serif"
+            letterSpacing="0.14em"
+            style={{ pointerEvents: "none" }}
+          >
+            TASHKENT
+          </text>
+        </g>
       </svg>
     </div>
   );
