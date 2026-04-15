@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -39,6 +40,7 @@ const flagship = {
 type FilterTag = "All" | "Tax" | "HR" | "Legal" | "Market" | "Compliance";
 
 const publications: {
+  slug: string;
   tag: string;
   category: FilterTag;
   title: string;
@@ -49,6 +51,7 @@ const publications: {
   hasRead?: boolean;
 }[] = [
   {
+    slug: "uzbekistan-tax-landscape-2024",
     tag: "Tax Briefing",
     category: "Tax",
     title: "Uzbekistan Tax Landscape 2024–2025",
@@ -59,6 +62,7 @@ const publications: {
     hasRead: true,
   },
   {
+    slug: "employer-of-record-central-asia",
     tag: "HR Insight",
     category: "HR",
     title: "Employer of Record in Central Asia",
@@ -69,6 +73,7 @@ const publications: {
     hasRead: true,
   },
   {
+    slug: "foreign-investment-protection",
     tag: "Legal Brief",
     category: "Legal",
     title: "Foreign Investment Protection in Uzbekistan",
@@ -80,6 +85,7 @@ const publications: {
     hasDownload: true,
   },
   {
+    slug: "agriculture-agribusiness-opportunities",
     tag: "Market Report",
     category: "Market",
     title: "Agriculture & Agribusiness Opportunities",
@@ -90,6 +96,7 @@ const publications: {
     hasRead: true,
   },
   {
+    slug: "ifrs-adoption-uzbekistan",
     tag: "Compliance Guide",
     category: "Compliance",
     title: "IFRS Adoption in Uzbekistan",
@@ -101,6 +108,7 @@ const publications: {
     hasDownload: true,
   },
   {
+    slug: "payroll-social-contributions",
     tag: "HR Guide",
     category: "HR",
     title: "Payroll & Social Contributions",
@@ -350,18 +358,8 @@ export default function LibraryPage() {
                 exit={{ opacity: 0, transition: { duration: 0.15 } }}
                 variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
               >
-                {filtered.map((pub) => (
-                  <motion.div
-                    key={pub.title}
-                    variants={{
-                      hidden: { opacity: 0, y: 28 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-                      },
-                    }}
-                  >
+                {filtered.map((pub) => {
+                  const cardContent = (
                     <motion.div
                       whileHover={{ y: -5, scale: 1.015 }}
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -383,7 +381,7 @@ export default function LibraryPage() {
                         </div>
 
                         {/* Title */}
-                        <h3 className="font-serif text-xl text-foreground mb-4 leading-snug tracking-wide group-hover:text-primary-light transition-colors duration-300 line-clamp-2">
+                        <h3 className="font-serif text-xl text-foreground mb-4 leading-snug tracking-wide line-clamp-2">
                           {pub.title}
                         </h3>
 
@@ -396,20 +394,24 @@ export default function LibraryPage() {
                         <div className="mt-auto pt-6 border-t border-white/[0.06] flex items-center justify-between">
                           <div className="flex items-center gap-4">
                             {pub.hasRead && (
-                              <div className="flex items-center gap-2 text-white/40 hover:text-foreground transition-colors duration-200 group/rd">
-                                <BookOpen className="w-3.5 h-3.5 group-hover/rd:text-primary-light transition-colors duration-200" />
+                              <div className="flex items-center gap-2 text-white/40">
+                                <BookOpen className="w-3.5 h-3.5" />
                                 <span className="text-xs uppercase tracking-[0.15em]">
                                   Read
                                 </span>
                               </div>
                             )}
                             {pub.hasDownload && (
-                              <div className="flex items-center gap-2 text-white/40 hover:text-foreground transition-colors duration-200 group/dl">
+                              <a
+                                href={`/downloads/${pub.slug}.pdf`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="relative z-10 flex items-center gap-2 text-white/40 hover:text-foreground transition-colors duration-200 group/dl"
+                              >
                                 <Download className="w-3.5 h-3.5 group-hover/dl:text-primary-light transition-colors duration-200" />
                                 <span className="text-xs uppercase tracking-[0.15em]">
                                   PDF
                                 </span>
-                              </div>
+                              </a>
                             )}
                           </div>
                           <span className="font-mono text-xs text-white/25">
@@ -418,8 +420,30 @@ export default function LibraryPage() {
                         </div>
                       </div>
                     </motion.div>
-                  </motion.div>
-                ))}
+                  );
+
+                  return (
+                    <motion.div
+                      key={pub.title}
+                      variants={{
+                        hidden: { opacity: 0, y: 28 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+                        },
+                      }}
+                    >
+                      {pub.hasRead ? (
+                        <Link href={`/library/${pub.slug}`} className="block h-full">
+                          {cardContent}
+                        </Link>
+                      ) : (
+                        cardContent
+                      )}
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             )}
           </AnimatePresence>
