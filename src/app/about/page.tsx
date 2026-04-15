@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, type ComponentType, type ReactNode, type SVGProps } from "react";
+import { useEffect, useRef, useState, type ComponentType, type SVGProps } from "react";
 import Image from "next/image";
 import {
   AnimatePresence,
   motion,
-  useMotionValueEvent,
   useReducedMotion,
-  useScroll,
 } from "framer-motion";
 import {
   ArrowRight,
@@ -29,6 +27,7 @@ import {
   Megaphone,
   Phone,
   Scale,
+  Search,
   Sprout,
   Stethoscope,
   Store,
@@ -40,59 +39,42 @@ import TextReveal, { RevealLine } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import AuroraBackground from "@/components/AuroraBackground";
 import CountUp from "@/components/CountUp";
+import UzbekistanMap from "@/components/UzbekistanMap";
 import { cn } from "@/lib/utils";
 
 /* ── Data ─────────────────────────────────────────────── */
 
 const metrics = [
-  { value: 8, suffix: "+", label: "Years Combined Expertise" },
-  { value: 6, suffix: "", label: "Integrated Disciplines" },
+  { value: 8, suffix: "+", label: "Years in Uzbekistan Market" },
+  { value: 6, suffix: "", label: "Practice Areas" },
   { value: 15, suffix: "+", label: "Industries Served" },
-  { value: 3, suffix: "", label: "Working Languages" },
+  { value: 3, suffix: "", label: "Languages: EN / RU / UZ" },
 ];
 
 const principles = [
   {
     num: "01",
-    title: "Integration",
-    summary: "One partner, every discipline.",
-    body: [
-      "Most firms compartmentalise. A tax question goes to one advisor, a legal one to another, HR to a third — and the client spends more time coordinating than receiving counsel.",
-      "We reject that model. At Advizen every discipline — legal, tax, finance, accounting, HR, and marketing — works in concert, on a shared view of your business. No silos, no gaps, no dropped context.",
-    ],
+    title: "Precision",
+    summary: "Meticulous where it matters.",
+    body: "Central Asia's regulatory environment rewards attention to detail and punishes assumptions. Every recommendation we make is backed by the relevant statute, the specific market nuance, and a clear path to execution.",
   },
   {
     num: "02",
-    title: "Precision",
-    summary: "Meticulous where it matters.",
-    body: [
-      "Central Asia's regulatory environment rewards attention to detail and punishes assumptions. Our engagements are defined by meticulous technical work paired with commercial judgment.",
-      "We don't trade in generalities. Every recommendation is backed by the relevant statute, the specific market nuance, and a clear path to execution.",
-    ],
+    title: "Partnership",
+    summary: "Embedded, not transactional.",
+    body: "Our best engagements feel like an extension of your leadership team. Present in the room when decisions are made, accountable for outcomes, and invested in the long arc of your business.",
   },
   {
     num: "03",
-    title: "Partnership",
-    summary: "Embedded, not transactional.",
-    body: [
-      "We are not a call-centre for compliance. Our best engagements feel like an extension of your leadership team — present in the room when decisions are made, accountable for outcomes, and invested in the long arc of your business.",
-      "Your challenges become ours. Your wins are the only metric that matters.",
-    ],
-  },
-  {
-    num: "04",
     title: "Local Mastery",
     summary: "International calibre, local fluency.",
-    body: [
-      "Uzbekistan is not a market you can consult on from abroad. It requires first-hand understanding of the legal code, the bureaucratic rhythm, and the unwritten norms that shape how business actually gets done.",
-      "Our operators have spent years building that fluency — then paired it with international standards honed in mature markets. That combination is Advizen's edge.",
-    ],
+    body: "Uzbekistan is not a market you can consult on from abroad. Our operators have spent years building first-hand fluency with the legal code, bureaucratic rhythm, and unwritten norms, then paired it with international standards.",
   },
 ];
 
 type LucideIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
-/* Custom angular Bitcoin glyph — straight lines, no curves */
+/* Custom angular Bitcoin glyph */
 function BitcoinSquare(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -149,208 +131,105 @@ const industries: { name: string; icon: LucideIcon }[] = [
   { name: "Sports", icon: Medal },
 ];
 
-/* ── Principles: Pinned scroll-jack with label + content swap ──
+const team = [
+  {
+    initials: "JD",
+    name: "Partner Name",
+    role: "Managing Partner",
+    bio: "20+ years advising multinational and local businesses across Central Asia. Former Big Four. Leads tax, legal, and market-entry mandates.",
+  },
+  {
+    initials: "AK",
+    name: "Partner Name",
+    role: "Partner, Finance & Operations",
+    bio: "IFRS specialist with deep experience in banking, fintech, and energy. Oversees finance, accounting, and compliance engagements.",
+  },
+  {
+    initials: "SM",
+    name: "Partner Name",
+    role: "Partner, Strategy & Growth",
+    bio: "Background in venture capital and IFI advisory. Leads funding, marketing, and HR practice areas for international clients entering Uzbekistan.",
+  },
+];
 
-   How it works:
-   - The section is N * 100vh tall; a sticky child fills the viewport
-     and stays pinned for the full scroll distance.
-   - useScroll tracks progress (0 → 1) through the section.
-   - Active index is derived from progress (floor(v * N)).
-   - Both the left label title AND the right principle content swap
-     via AnimatePresence as the active index changes. The left stays
-     in place; only the text swaps. The right shows exactly ONE
-     principle at a time, sliding in from below and out upward.
-   - No cards, no borders, no chrome. Pure content.
-   - Reduced motion falls through to a plain vertical list. */
+const caseStudies = [
+  {
+    sector: "Fintech",
+    headline: "Market-entry structuring for a European fintech",
+    result: "Operational in 90 days",
+    disciplines: ["Tax", "Legal", "HR"],
+  },
+  {
+    sector: "Agriculture",
+    headline: "Cross-border supply chain advisory for a major exporter",
+    result: "30% reduction in compliance overhead",
+    disciplines: ["Tax", "Finance", "Legal"],
+  },
+  {
+    sector: "Energy",
+    headline: "IFI grant programme navigation for a renewables venture",
+    result: "$2.5M in secured funding",
+    disciplines: ["Funding", "Legal", "Finance"],
+  },
+];
 
-function PrinciplesPinned() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const shouldReduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-  const [active, setActive] = useState(0);
-  const N = principles.length;
+const credentials = [
+  "Member, American Chamber of Commerce in Uzbekistan",
+  "ACCA-qualified finance practitioners",
+  "Registered tax advisory licence, Republic of Uzbekistan",
+  "IFRS implementation partner",
+  "IFI programme consultants (ADB, EBRD, IFC)",
+  "ISO 9001-aligned internal processes",
+];
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.max(0, Math.min(N - 1, Math.floor(v * N)));
-    setActive((prev) => (prev === idx ? prev : idx));
-  });
+const howWeWork = [
+  {
+    num: "01",
+    title: "Discovery",
+    desc: "We map your regulatory exposure, commercial objectives, and operational reality in a focused scoping session.",
+  },
+  {
+    num: "02",
+    title: "Strategy",
+    desc: "Our team builds an integrated plan across every relevant discipline with clear deliverables and timelines.",
+  },
+  {
+    num: "03",
+    title: "Execution",
+    desc: "We deliver, implement, and stay accountable through the outcome. One point of contact, no handoff gaps.",
+  },
+];
 
-  if (shouldReduce) return <PrinciplesFallbackList />;
-
-  const current = principles[active];
-
-  return (
-    <section
-      ref={sectionRef}
-      className="relative bg-black"
-      style={{ height: `${N * 50}vh` }}
-      aria-label="Our principles"
-    >
-      <div className="sticky top-[20vh] h-[60vh] overflow-hidden">
-        {/* Ambient glows */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="ambient-glow ambient-glow-warm w-[700px] h-[700px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-          <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -right-32 opacity-40" />
-        </div>
-
-        <div className="relative h-full flex items-center">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
-              {/* Left — eyebrow + swapping title + ticks */}
-              <div className="lg:col-span-5">
-                <p className="tracking-luxury text-muted-dark mb-6">Our Principles</p>
-                <div className="relative min-h-[56px] md:min-h-[72px] mb-8">
-                  <AnimatePresence mode="wait">
-                    <motion.h3
-                      key={active}
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -12 }}
-                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute inset-x-0 font-serif text-3xl md:text-4xl text-foreground tracking-tight leading-[1.05]"
-                    >
-                      {current.title}
-                    </motion.h3>
-                  </AnimatePresence>
-                </div>
-                <div className="flex items-center gap-3">
-                  {principles.map((_, j) => (
-                    <span
-                      key={j}
-                      className={cn(
-                        "h-px transition-all duration-500 ease-out",
-                        active === j
-                          ? "w-12 bg-primary-light"
-                          : "w-6 bg-white/15",
-                      )}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Right — active principle content, one at a time */}
-              <div className="lg:col-span-7 relative min-h-[320px] md:min-h-[360px]">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={active}
-                    initial={{ opacity: 0, y: 32 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -24 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute inset-0"
-                  >
-                    <div className="flex items-center justify-between mb-8">
-                      <span className="font-mono text-[11px] text-primary-light tracking-[0.2em]">
-                        {current.num}
-                      </span>
-                      <span className="font-mono text-[11px] text-white/30 tracking-[0.2em]">
-                        {String(active + 1).padStart(2, "0")} /{" "}
-                        {String(N).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <p className="font-serif italic text-xl md:text-2xl lg:text-[1.625rem] text-foreground/90 leading-snug mb-8 max-w-2xl">
-                      {current.summary}
-                    </p>
-                    <div className="space-y-5 max-w-2xl">
-                      {current.body.map((p, i) => (
-                        <p
-                          key={i}
-                          className="text-[15px] md:text-base text-white/55 leading-relaxed"
-                        >
-                          {p}
-                        </p>
-                      ))}
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/** Reduced-motion fallback — plain vertical list. */
-function PrinciplesFallbackList() {
-  return (
-    <section className="py-24 md:py-32 bg-black relative">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-      </div>
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 relative">
-        <div className="mb-16">
-          <p className="tracking-luxury text-muted-dark mb-3">Our Principles</p>
-          <h2 className="heading-luxury text-3xl md:text-4xl text-foreground leading-tight">
-            What guides every engagement
-          </h2>
-        </div>
-        <div className="space-y-16">
-          {principles.map((p, i) => (
-            <article key={p.num}>
-              <p className="font-mono text-[11px] text-primary-light tracking-[0.2em] mb-3">
-                PRINCIPLE {p.num} /{" "}
-                {String(principles.length).padStart(2, "0")}
-              </p>
-              <h3 className="font-serif text-2xl md:text-3xl text-foreground tracking-wide mb-5">
-                {p.title}
-              </h3>
-              <p className="font-serif italic text-xl text-foreground/90 mb-5 max-w-xl leading-snug">
-                {p.summary}
-              </p>
-              <div className="space-y-4 max-w-xl">
-                {p.body.map((para, j) => (
-                  <p
-                    key={j}
-                    className="text-[15px] text-white/55 leading-relaxed"
-                  >
-                    {para}
-                  </p>
-                ))}
-              </div>
-              {i < principles.length - 1 && (
-                <div className="mt-16 h-px bg-white/[0.06]" />
-              )}
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── Disciplines Integration Panel ─────────────────────
-   Left: Advizen mark. Right: auto-cycling discipline icon + label.
-   Middle: three horizontal beams with red pulses that emerge from
-   behind the Advizen tile and travel into the service tile. The
-   LAST pulse's onAnimationComplete advances the active discipline,
-   so the swap is perfectly synced with the pulse arrival. */
+/* ── Disciplines Integration Panel ───────────────────── */
 function DisciplinesIntegration() {
   const [active, setActive] = useState(0);
   const shouldReduce = useReducedMotion();
+  const [hovered, setHovered] = useState(false);
   const N = disciplines.length;
-  const PULSE_MS = 2600;
+  const PULSE_MS = 1000;
 
-  // Reduced-motion fallback: plain interval cycling, no pulses.
   useEffect(() => {
-    if (!shouldReduce) return;
+    if (!shouldReduce && !hovered) return;
+    if (hovered) return;
     const id = setInterval(() => {
       setActive((p) => (p + 1) % N);
     }, PULSE_MS);
     return () => clearInterval(id);
-  }, [shouldReduce, N]);
+  }, [shouldReduce, hovered, N]);
 
-  const advance = () => setActive((p) => (p + 1) % N);
+  const advance = () => {
+    if (!hovered) setActive((p) => (p + 1) % N);
+  };
 
   const current = disciplines[active];
   const Icon = current.icon;
 
   return (
-    <div className="relative mx-auto max-w-2xl">
+    <div
+      className="relative mx-auto max-w-2xl"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <div className="relative flex items-start">
         {/* LEFT — Advizen tile */}
         <div className="relative z-10 flex flex-col items-center gap-5 shrink-0">
@@ -363,22 +242,16 @@ function DisciplinesIntegration() {
               className="w-16 h-auto md:w-[72px] opacity-95"
             />
           </div>
-          <span className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/60">
+          <span className="text-xs tracking-[0.22em] uppercase text-white/50">
             Advizen
           </span>
         </div>
 
-        {/* MIDDLE — beam track.
-            Negative horizontal margin pulls the container under each
-            tile by half-a-tile, so the beam lines start at the left
-            tile's center and end at the right tile's center. Tiles
-            are z-10 with opaque bg, so the pulses are hidden behind
-            them at the endpoints and visually emerge / vanish. */}
+        {/* MIDDLE — beam track */}
         <div
           className="relative flex-1 h-28 md:h-32 z-0 -mx-14 md:-mx-16"
           aria-hidden="true"
         >
-          {/* 3 static hairlines spanning the full (extended) width */}
           {[0, 1, 2].map((i) => (
             <div
               key={`line-${i}`}
@@ -386,9 +259,8 @@ function DisciplinesIntegration() {
               style={{ top: `calc(50% + ${(i - 1) * 12}px - 0.5px)` }}
             />
           ))}
-          {/* Traveling pulses — all three move in sync; the last one
-              drives the advance, locking icon swap to pulse arrival. */}
           {!shouldReduce &&
+            !hovered &&
             [0, 1, 2].map((i) => (
               <motion.div
                 key={`pulse-${active}-${i}`}
@@ -419,7 +291,7 @@ function DisciplinesIntegration() {
                 initial={{ opacity: 0, x: "-70%" }}
                 animate={{ opacity: 1, x: "0%" }}
                 exit={{ opacity: 0, x: "70%" }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <Icon
@@ -436,25 +308,30 @@ function DisciplinesIntegration() {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-x-0 text-center text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/70 whitespace-nowrap"
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-x-0 text-center text-xs tracking-[0.22em] uppercase text-white/60 whitespace-nowrap"
               >
                 {current.short}
               </motion.span>
             </AnimatePresence>
+            <span className="sr-only" aria-live="polite">
+              Current discipline: {current.title}
+            </span>
           </div>
         </div>
       </div>
 
       {/* Discipline progress ticks */}
       <div className="mt-12 flex items-center justify-center gap-2">
-        {disciplines.map((_, j) => (
-          <span
+        {disciplines.map((d, j) => (
+          <button
             key={j}
+            onClick={() => setActive(j)}
             className={cn(
-              "h-px transition-all duration-500 ease-out",
-              active === j ? "w-10 bg-primary-light" : "w-5 bg-white/15",
+              "h-px transition-all duration-500 ease-out cursor-pointer",
+              active === j ? "w-10 bg-primary-light" : "w-5 bg-white/15 hover:bg-white/30",
             )}
+            aria-label={`Show ${d.title}`}
           />
         ))}
       </div>
@@ -462,7 +339,7 @@ function DisciplinesIntegration() {
   );
 }
 
-/* ── Section Wrappers ─────────────────────────────────── */
+/* ── Helpers ──────────────────────────────────────────── */
 
 function SectionDivider() {
   return (
@@ -486,50 +363,42 @@ function StatBlock({
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
       className="text-center lg:text-left"
     >
       <div className="font-serif text-4xl md:text-5xl font-extralight text-foreground tabular-nums leading-none">
         <CountUp target={value} suffix={suffix} triggerOnView duration={1.4} />
       </div>
-      <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-muted-dark">
+      <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/50">
         {label}
       </p>
     </motion.div>
   );
 }
 
-function Chip({ children }: { children: ReactNode }) {
-  return (
-    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-[11px] tracking-[0.18em] uppercase text-white/70 font-light">
-      <span className="w-1 h-1 rounded-full bg-primary-light" aria-hidden="true" />
-      {children}
-    </span>
-  );
-}
-
 /* ── Page ─────────────────────────────────────────────── */
 
 export default function AboutPage() {
+  const [activePrinciple, setActivePrinciple] = useState(0);
+
   return (
     <>
-      {/* Hero — split layout */}
+      {/* ====== HERO — clean, with CTA ====== */}
       <AuroraBackground>
-        <section className="relative pt-36 pb-28 md:pt-44 md:pb-40">
+        <section className="relative pt-36 pb-24 md:pt-44 md:pb-32">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-end">
-              {/* Left — Headline + chips */}
               <div className="lg:col-span-8">
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.7, delay: 0.1 }}
-                  className="tracking-luxury text-muted-dark mb-6"
+                  transition={{ duration: 0.5, delay: 0.05 }}
+                  className="tracking-luxury text-white/50 mb-6"
                 >
                   About the Firm
                 </motion.p>
                 <TextReveal
-                  text="Built on expertise, sustained by trust"
+                  text="Advisory built for Central Asia's most complex market"
                   as="h1"
                   mode="line"
                   className="heading-luxury text-4xl md:text-6xl text-foreground leading-[1.05] max-w-3xl mb-10"
@@ -538,30 +407,34 @@ export default function AboutPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-wrap gap-3"
+                  transition={{ duration: 0.4, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-wrap gap-4"
                 >
-                  <Chip>8+ yrs combined expertise</Chip>
-                  <Chip>6 integrated disciplines</Chip>
-                  <Chip>15+ industries</Chip>
+                  <MagneticButton variant="primary" as="a" href="/contact">
+                    Schedule a consultation
+                    <ArrowRight className="w-4 h-4" />
+                  </MagneticButton>
+                  <MagneticButton variant="outline" as="a" href="/expertise">
+                    Our expertise
+                    <ArrowUpRight className="w-4 h-4" />
+                  </MagneticButton>
                 </motion.div>
               </div>
 
-              {/* Right — Editorial "Est. 2024" stamp */}
               <div className="lg:col-span-4 flex lg:justify-end">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="relative inline-flex flex-col items-start lg:items-end"
                 >
-                  <span className="tracking-luxury text-white/40 mb-2">Established</span>
+                  <span className="tracking-luxury text-white/50 mb-2">Since</span>
                   <span className="font-serif text-5xl md:text-6xl text-foreground leading-none tabular-nums font-light">
                     2024
                   </span>
                   <div className="mt-4 h-px w-24 bg-gradient-to-r from-primary-light/80 to-transparent" />
-                  <span className="mt-3 text-xs text-white/40 tracking-[0.2em] uppercase">
-                    Tashkent · Uzbekistan
+                  <span className="mt-3 text-xs text-white/50 tracking-[0.2em] uppercase">
+                    Tashkent, Uzbekistan
                   </span>
                 </motion.div>
               </div>
@@ -570,9 +443,8 @@ export default function AboutPage() {
         </section>
       </AuroraBackground>
 
-      {/* Metrics Strip */}
+      {/* ====== METRICS — refined labels ====== */}
       <section className="py-20 md:py-28 bg-black border-y border-white/[0.06] relative overflow-hidden">
-        <div className="ambient-glow ambient-glow-warm w-[600px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-14 gap-x-8">
             {metrics.map((m, i) => (
@@ -581,58 +453,44 @@ export default function AboutPage() {
                 value={m.value}
                 suffix={m.suffix}
                 label={m.label}
-                delay={i * 0.08}
+                delay={i * 0.06}
               />
             ))}
           </div>
         </div>
       </section>
 
-      {/* The Thesis */}
-      <section className="py-28 md:py-40 bg-black relative overflow-hidden">
+      {/* ====== THE THESIS — tightened, 2 paragraphs ====== */}
+      <section className="py-28 md:py-36 bg-black relative overflow-hidden">
         <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -bottom-32 -left-32 opacity-40" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <AnimatedSection className="lg:col-span-5">
-              <p className="tracking-luxury text-muted-dark mb-4">The Thesis</p>
-              <TextReveal
-                text="A modern mandate for a rapidly evolving market"
-                as="h2"
-                className="heading-luxury text-3xl md:text-4xl text-foreground leading-tight"
-              />
+              <p className="tracking-luxury text-white/50 mb-4">The Thesis</p>
+              <h2 className="heading-luxury text-3xl md:text-4xl text-foreground leading-tight">
+                A modern mandate for a rapidly evolving market
+              </h2>
             </AnimatedSection>
 
-            <AnimatedSection delay={0.15} className="lg:col-span-7">
+            <AnimatedSection delay={0.1} className="lg:col-span-7">
               <div className="space-y-6">
                 <RevealLine>
                   <p className="text-white/60 text-lg leading-relaxed">
                     Uzbekistan is among the fastest-growing economies in Central
-                    Asia — and among the most complex to operate in. Regulation
-                    evolves quickly. Markets reward those who read the signals
-                    early. Missteps are costly and rarely obvious.
+                    Asia and among the most complex to operate in. For years,
+                    businesses navigated this environment through a patchwork of
+                    specialists. A tax firm here, a law firm there, an HR vendor
+                    somewhere else. The cost of coordination often exceeded the
+                    value of the advice.
                   </p>
                 </RevealLine>
-                <RevealLine delay={0.1}>
+                <RevealLine delay={0.08}>
                   <p className="text-white/55 leading-relaxed">
-                    For years we watched businesses — multinational and local alike —
-                    navigate this environment through a patchwork of specialists.
-                    A tax firm here, a law firm there, an HR vendor somewhere else.
-                    The cost of coordination often exceeded the value of the advice.
-                  </p>
-                </RevealLine>
-                <RevealLine delay={0.2}>
-                  <p className="text-white/55 leading-relaxed">
-                    Advizen was founded on a simple thesis: Central Asia&apos;s fastest-growing
-                    market deserves advisory of the same calibre found in mature economies —
-                    delivered by operators who speak its language, understand its rules,
-                    and bring international standards to every engagement.
-                  </p>
-                </RevealLine>
-                <RevealLine delay={0.3}>
-                  <p className="font-serif italic text-white/70 leading-relaxed pt-4">
-                    One firm. Six disciplines. One point of contact. That is the
-                    mandate we set for ourselves in 2024.
+                    Advizen was founded to change that. One firm covering every
+                    discipline your business depends on, staffed by operators who
+                    understand Uzbekistan&apos;s legal code, bureaucratic rhythm,
+                    and unwritten norms. Every engagement held to
+                    international standards.
                   </p>
                 </RevealLine>
               </div>
@@ -643,25 +501,102 @@ export default function AboutPage() {
 
       <SectionDivider />
 
-      {/* Principles — Pinned Split */}
-      <PrinciplesPinned />
+      {/* ====== PRINCIPLES — click-driven tabs, no scroll-jack ====== */}
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+          <AnimatedSection>
+            <p className="tracking-luxury text-white/50 mb-8">Our Principles</p>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
+            {/* Left — tab buttons */}
+            <div className="lg:col-span-5">
+              <AnimatedSection>
+                <div className="space-y-1">
+                  {principles.map((p, i) => (
+                    <button
+                      key={p.num}
+                      onClick={() => setActivePrinciple(i)}
+                      className={cn(
+                        "w-full text-left px-5 py-4 rounded-lg transition-all duration-300 flex items-center gap-4 group",
+                        activePrinciple === i
+                          ? "bg-white/[0.04]"
+                          : "hover:bg-white/[0.02]",
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "font-mono text-xs tracking-[0.2em] transition-colors duration-300",
+                          activePrinciple === i ? "text-primary-light" : "text-white/50",
+                        )}
+                      >
+                        {p.num}
+                      </span>
+                      <span
+                        className={cn(
+                          "font-serif text-xl md:text-2xl tracking-tight transition-colors duration-300",
+                          activePrinciple === i ? "text-foreground" : "text-white/40 group-hover:text-white/60",
+                        )}
+                      >
+                        {p.title}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                {/* Progress ticks */}
+                <div className="flex items-center gap-3 mt-8 ml-5">
+                  {principles.map((_, j) => (
+                    <span
+                      key={j}
+                      className={cn(
+                        "h-px transition-all duration-500 ease-out",
+                        activePrinciple === j
+                          ? "w-12 bg-primary-light"
+                          : "w-6 bg-white/15",
+                      )}
+                    />
+                  ))}
+                </div>
+              </AnimatedSection>
+            </div>
+
+            {/* Right — active principle content */}
+            <div className="lg:col-span-7 relative min-h-[220px] md:min-h-[240px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activePrinciple}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0"
+                >
+                  <p className="text-xl md:text-2xl text-foreground/90 leading-snug mb-6 max-w-2xl font-light tracking-tight">
+                    {principles[activePrinciple].summary}
+                  </p>
+                  <p className="text-[15px] md:text-base text-white/55 leading-relaxed max-w-2xl">
+                    {principles[activePrinciple].body}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <SectionDivider />
 
-      {/* Disciplines Integration Showcase */}
+      {/* ====== DISCIPLINES — faster pulse, pause-on-hover ====== */}
       <section className="py-24 md:py-32 bg-black relative overflow-hidden">
         <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -left-32 opacity-40" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <AnimatedSection className="mb-14 md:mb-16 text-center">
-            <p className="tracking-luxury text-muted-dark mb-4">Integrated Coverage</p>
-            <TextReveal
-              text="Six disciplines, one mandate"
-              as="h2"
-              className="heading-luxury text-3xl md:text-5xl text-foreground"
-            />
+            <p className="tracking-luxury text-white/50 mb-4">Integrated Coverage</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+              One partner, every discipline
+            </h2>
             <p className="mt-5 text-white/55 max-w-xl mx-auto leading-relaxed">
-              One partner, rendering every service your business depends on — in concert.
+              Tax, legal, finance, HR, marketing, and funding. Working in
+              concert on a shared view of your business.
             </p>
           </AnimatedSection>
 
@@ -671,41 +606,39 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Industries Grid */}
+      {/* ====== INDUSTRIES — min 12px labels ====== */}
       <section className="py-24 md:py-32 bg-black relative overflow-hidden border-y border-white/[0.06]">
-        <div className="ambient-glow ambient-glow-warm w-[700px] h-[700px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60" />
-        <div className="ambient-glow ambient-glow-oxblood w-[420px] h-[420px] -top-32 -right-32 opacity-40" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
           <AnimatedSection className="mb-14 md:mb-16 text-center">
-            <p className="tracking-luxury text-muted-dark mb-4">Sector Experience</p>
-            <TextReveal
-              text="Industries our team has served"
-              as="h2"
-              className="heading-luxury text-3xl md:text-5xl text-foreground"
-            />
+            <p className="tracking-luxury text-white/50 mb-4">Sector Experience</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+              Industries we serve
+            </h2>
             <p className="mt-5 text-white/55 max-w-xl mx-auto leading-relaxed">
-              From regulated heavyweights to fast-moving ventures — we&apos;ve
-              advised across the full sweep of sectors shaping Central Asia.
+              From regulated heavyweights to fast-moving ventures across
+              Central Asia.
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5" role="list">
             {industries.map((ind, i) => {
               const IconComp = ind.icon;
               return (
-                <motion.div
+                <motion.button
                   key={ind.name}
+                  role="listitem"
+                  tabIndex={0}
+                  aria-label={ind.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{
-                    duration: 0.6,
-                    delay:
-                      (i % 4) * 0.06 + Math.floor(i / 4) * 0.04,
+                    duration: 0.5,
+                    delay: (i % 4) * 0.04 + Math.floor(i / 4) * 0.03,
                     ease: [0.16, 1, 0.3, 1],
                   }}
                   whileHover={{ y: -4, scale: 1.03 }}
-                  className="glow-card aspect-[5/4]"
+                  className="glow-card aspect-[5/4] cursor-default"
                 >
                   <div className="glow-card-spinner" />
                   <div className="glow-card-backdrop" />
@@ -715,55 +648,223 @@ export default function AboutPage() {
                       className="relative w-9 h-9 md:w-10 md:h-10 text-white/60 transition-colors duration-500 glow-card-icon"
                       strokeWidth={1}
                     />
-                    <span className="relative text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-center leading-tight glow-card-title">
+                    <span className="relative text-xs tracking-[0.14em] uppercase text-center leading-tight glow-card-title">
                       {ind.name}
                     </span>
                   </div>
-                </motion.div>
+                </motion.button>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Editorial Pull Quote */}
-      <section className="py-32 md:py-44 bg-black relative overflow-hidden">
-        <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -right-32 opacity-40" />
+      {/* ====== LEADERSHIP (NEW) ====== */}
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+          <AnimatedSection className="mb-14 md:mb-16 text-center">
+            <p className="tracking-luxury text-white/50 mb-4">Leadership</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+              The partners behind Advizen
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {team.map((member, i) => (
+              <motion.div
+                key={member.initials}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.08,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-8 md:p-10"
+              >
+                {/* Placeholder avatar — swap for real photo */}
+                <div className="w-16 h-16 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center mb-6">
+                  <span className="font-mono text-sm text-white/50 tracking-wider">
+                    {member.initials}
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl text-foreground mb-1">
+                  {member.name}
+                </h3>
+                <p className="text-xs tracking-[0.16em] uppercase text-primary-light/80 mb-5">
+                  {member.role}
+                </p>
+                <p className="text-sm text-white/50 leading-relaxed">
+                  {member.bio}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ====== HOW WE WORK (NEW) ====== */}
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+          <AnimatedSection className="mb-14 md:mb-16 text-center">
+            <p className="tracking-luxury text-white/50 mb-4">Engagement Model</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+              How we work
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12 max-w-4xl mx-auto">
+            {howWeWork.map((step, i) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.08,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="text-center md:text-left"
+              >
+                <span className="font-mono text-xs text-primary-light tracking-[0.2em]">
+                  {step.num}
+                </span>
+                <h3 className="font-serif text-2xl text-foreground mt-3 mb-4">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-white/50 leading-relaxed">
+                  {step.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ====== CASE STUDIES (TEMPLATE) ====== */}
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden border-y border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+          <AnimatedSection className="mb-14 md:mb-16 text-center">
+            <p className="tracking-luxury text-white/50 mb-4">Track Record</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+              Selected engagements
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {caseStudies.map((cs, i) => (
+              <motion.div
+                key={cs.sector}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.06,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-8 md:p-10 flex flex-col"
+              >
+                <span className="text-xs tracking-[0.2em] uppercase text-primary-light/80 mb-4">
+                  {cs.sector}
+                </span>
+                <h3 className="text-lg text-foreground mb-4 leading-snug font-light">
+                  {cs.headline}
+                </h3>
+                <p className="text-sm text-white/50 mb-6">{cs.result}</p>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  {cs.disciplines.map((d) => (
+                    <span
+                      key={d}
+                      className="text-xs tracking-[0.12em] uppercase text-white/50 border border-white/[0.08] rounded-full px-3 py-1"
+                    >
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ====== CREDENTIALS & AFFILIATIONS (TEMPLATE) ====== */}
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative">
+          <AnimatedSection className="mb-14 md:mb-16 text-center">
+            <p className="tracking-luxury text-white/50 mb-4">Credentials</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+              Affiliations and qualifications
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6 max-w-3xl mx-auto">
+            {credentials.map((item, i) => (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.4,
+                  delay: i * 0.04,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="flex items-start gap-3 py-3 border-b border-white/[0.06]"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-primary-light/60 mt-1.5 shrink-0" />
+                <span className="text-sm text-white/60 leading-relaxed">{item}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* ====== GEOGRAPHY ====== */}
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+        <div className="ambient-glow ambient-glow-oxblood w-[600px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40" />
         <div className="max-w-5xl mx-auto px-6 lg:px-8 relative">
           <AnimatedSection>
-            <blockquote className="text-center">
-              <p className="font-serif text-2xl md:text-4xl lg:text-[2.5rem] text-foreground leading-[1.25] font-light italic">
-                &ldquo;Central Asia&apos;s fastest-growing market deserves advisory
-                of the same calibre found in mature economies — delivered by
-                operators who speak its language and bring international
-                standards.&rdquo;
+            <div className="text-center mb-12">
+              <p className="tracking-luxury text-white/50 mb-4">Where We Operate</p>
+              <h2 className="heading-luxury text-3xl md:text-5xl text-foreground mb-6">
+                Based in Tashkent, serving all of Uzbekistan
+              </h2>
+              <p className="text-white/55 max-w-2xl mx-auto leading-relaxed">
+                Our primary office is located in Tashkent. We serve clients across
+                all regions of Uzbekistan, with additional reach into neighbouring
+                Central Asian markets including Kazakhstan, Kyrgyzstan, and Tajikistan.
               </p>
-              <cite className="block mt-10 tracking-luxury text-muted-dark not-italic">
-                The Advizen Thesis
-              </cite>
-            </blockquote>
+            </div>
+
+            {/* Animated map */}
+            <UzbekistanMap />
           </AnimatedSection>
         </div>
       </section>
 
       <SectionDivider />
 
-      {/* CTA */}
+      {/* ====== CTA — stronger copy ====== */}
       <section className="py-28 md:py-36 bg-black relative overflow-hidden">
         <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -bottom-32 -right-32 opacity-40" />
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <p className="tracking-luxury text-muted-dark mb-6">Next Step</p>
-            <TextReveal
-              text="Work with us"
-              as="h2"
-              className="heading-luxury text-3xl md:text-5xl text-foreground mb-6"
-            />
+            <p className="tracking-luxury text-white/50 mb-6">Next Step</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground mb-6">
+              Work with us
+            </h2>
             <p className="text-base md:text-lg text-white/60 max-w-xl mx-auto mb-12 leading-relaxed">
-              Whether you are entering the market or scaling existing operations,
-              our firm is prepared to advise.
+              Whether you are entering the Uzbekistan market or scaling existing
+              operations, our firm is built to advise.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <MagneticButton variant="primary" as="a" href="/contact">
@@ -782,14 +883,14 @@ export default function AboutPage() {
                 href="mailto:info@advizenco.com"
                 className="group inline-flex items-center gap-3 text-sm text-white/50 hover:text-foreground transition-colors outline-none focus-visible:text-foreground"
               >
-                <Mail className="w-4 h-4 text-muted-dark group-hover:text-primary-light transition-colors" />
+                <Mail className="w-4 h-4 text-white/50 group-hover:text-primary-light transition-colors" />
                 info@advizenco.com
               </a>
               <a
                 href="tel:+998334884888"
                 className="group inline-flex items-center gap-3 text-sm text-white/50 hover:text-foreground transition-colors outline-none focus-visible:text-foreground"
               >
-                <Phone className="w-4 h-4 text-muted-dark group-hover:text-primary-light transition-colors" />
+                <Phone className="w-4 h-4 text-white/50 group-hover:text-primary-light transition-colors" />
                 +998 33 488 4888
               </a>
             </div>
