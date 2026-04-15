@@ -81,6 +81,27 @@ const filters: { label: string; value: Category }[] = [
   { label: "Growth", value: "Growth" },
 ];
 
+const caseStudies = [
+  {
+    sector: "Fintech",
+    headline: "Market-entry structuring for a European fintech",
+    result: "Operational in 90 days",
+    disciplines: ["Tax", "Legal", "HR"],
+  },
+  {
+    sector: "Agriculture",
+    headline: "Cross-border supply chain advisory for a major exporter",
+    result: "30% reduction in compliance overhead",
+    disciplines: ["Tax", "Finance", "Legal"],
+  },
+  {
+    sector: "Energy",
+    headline: "IFI grant programme navigation for a renewables venture",
+    result: "$2.5M in secured funding",
+    disciplines: ["Funding", "Legal", "Finance"],
+  },
+];
+
 const serviceShortNames: Record<string, string> = {
   tax: "Tax",
   legal: "Legal",
@@ -323,6 +344,53 @@ export default function ExpertisePage() {
                 </motion.button>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ====== TRACK RECORD ====== */}
+      <section className="py-24 md:py-32 bg-black relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+          <AnimatedSection className="mb-14 md:mb-16 text-center">
+            <p className="tracking-luxury text-white/50 mb-4">Track Record</p>
+            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+              Selected engagements
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {caseStudies.map((cs, i) => (
+              <motion.div
+                key={cs.sector}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.06,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-8 md:p-10 flex flex-col"
+              >
+                <span className="text-xs tracking-[0.2em] uppercase text-primary-light/80 mb-4">
+                  {cs.sector}
+                </span>
+                <h3 className="text-lg text-foreground mb-4 leading-snug font-light">
+                  {cs.headline}
+                </h3>
+                <p className="text-sm text-white/50 mb-6">{cs.result}</p>
+                <div className="mt-auto flex flex-wrap gap-2">
+                  {cs.disciplines.map((d) => (
+                    <span
+                      key={d}
+                      className="text-xs tracking-[0.12em] uppercase text-white/50 border border-white/[0.08] rounded-full px-3 py-1"
+                    >
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
