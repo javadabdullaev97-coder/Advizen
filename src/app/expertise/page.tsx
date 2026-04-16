@@ -380,17 +380,14 @@ export default function ExpertisePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
 
           <AnimatedSection className="mb-14 md:mb-16">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-              <div>
-                <p className="tracking-luxury text-white/50 mb-4">Track Record</p>
-                <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
-                  Selected engagements
-                </h2>
-              </div>
-              <p className="text-xs text-white/28 max-w-xs leading-relaxed md:text-right">
-                Projects reflect our leadership team's collective experience —
-                not all were conducted under the Advizen name.
-              </p>
+            <div>
+              <p className="tracking-luxury text-white/50 mb-4">Track Record</p>
+              <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+                Selected engagements{" "}
+                <span className="font-sans text-xl md:text-2xl text-white/30 font-light tracking-normal">
+                  of our team members
+                </span>
+              </h2>
             </div>
           </AnimatedSection>
 
