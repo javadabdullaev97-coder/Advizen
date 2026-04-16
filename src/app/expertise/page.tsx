@@ -397,7 +397,7 @@ export default function ExpertisePage() {
                   </div>
 
                   {/* Sector */}
-                  <span className="inline-block text-[10px] tracking-[0.18em] uppercase text-primary-light/55 mb-3">
+                  <span className="inline-block text-[10px] tracking-[0.18em] uppercase text-primary-light border border-primary-light/30 rounded-full px-2.5 py-0.5 mb-4 w-fit">
                     {deal.sector}
                   </span>
 
