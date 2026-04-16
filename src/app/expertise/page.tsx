@@ -70,40 +70,20 @@ const filters: { label: string; value: Category }[] = [
   { label: "Growth", value: "Growth" },
 ];
 
-const featuredDeals = [
-  {
-    sector: "Energy",
-    headline: "Tax structuring of a nuclear power plant construction for a Russian enterprise",
-    amount: "$10B+",
-    label: "Project budget",
-    disciplines: ["Tax", "Finance"],
-  },
-  {
-    sector: "FMCG",
-    headline: "M&A of a large Uzbek bottler company",
-    amount: "$250M",
-    label: "Transaction",
-    disciplines: ["Tax", "Legal"],
-  },
-  {
-    sector: "Fintech",
-    headline: "Two major restructuring projects of an international digital bank in its Uzbek subsidiaries",
-    amount: "$200M",
-    label: "Transaction",
-    disciplines: ["Tax", "Legal"],
-  },
-];
-
-const engagements = [
-  { sector: "Manufacturing", headline: "M&A and corporate restructuring of a large Uzbek cement producer", result: "~$20M", disciplines: ["Tax", "Legal", "Finance"] },
-  { sector: "Technology", headline: "Tax structuring and ad-hoc consulting of a major Russian IT company during market launch in Uzbekistan", result: "~$5M", disciplines: ["Tax", "Legal"] },
-  { sector: "Retail", headline: "M&A and structuring for a major local retailer", result: "~$5M", disciplines: ["Tax", "Legal", "Finance"] },
-  { sector: "Public Sector", headline: "Reorganization project of an Uzbek state-owned investment fund", result: "Restructuring", disciplines: ["Legal", "Finance"] },
-  { sector: "Pharmaceuticals", headline: "Advising several international pharmaceutical companies on structuring Uzbek trading activities", result: "Compliance", disciplines: ["Tax", "Legal"] },
-  { sector: "Capital Markets", headline: "Advising a major international management consulting firm on capital market legislation development", result: "Legislative", disciplines: ["Legal", "Finance"] },
-  { sector: "Banking", headline: "Advising a major international financial institution on banking legislation, derivatives and REPO transactions", result: "Regulatory", disciplines: ["Legal", "Finance"] },
-  { sector: "Islamic Finance", headline: "Advising a major international consulting firm on integration of Islamic finance tools to Uzbek legislation", result: "Integration", disciplines: ["Legal", "Finance"] },
-  { sector: "Cross-Industry", headline: "Advising multiple international companies from various industries on incorporation in Uzbekistan", result: "Market entry", disciplines: ["Tax", "Legal", "HR"] },
+const allEngagements = [
+  { sector: "Energy",         metric: "$10B+",       metricLabel: "Project budget",       headline: "Tax structuring of a nuclear power plant construction for a Russian enterprise",                                                              disciplines: ["Tax", "Finance"] },
+  { sector: "FMCG",          metric: "$250M",        metricLabel: "Transaction",          headline: "M&A of a large Uzbek bottler company",                                                                                                         disciplines: ["Tax", "Legal"] },
+  { sector: "Fintech",       metric: "$200M",        metricLabel: "Transaction",          headline: "Two major restructuring projects of an international digital bank in its Uzbek subsidiaries",                                                   disciplines: ["Tax", "Legal"] },
+  { sector: "Manufacturing", metric: "$20M",         metricLabel: "Transaction",          headline: "M&A and corporate restructuring of a large Uzbek cement producer",                                                                             disciplines: ["Tax", "Legal", "Finance"] },
+  { sector: "Technology",    metric: "$5M",          metricLabel: "Investment",           headline: "Tax structuring and ad-hoc consulting of a major Russian IT company during its market launch in Uzbekistan",                                   disciplines: ["Tax", "Legal"] },
+  { sector: "Retail",        metric: "$5M",          metricLabel: "Transaction",          headline: "M&A and structuring for a major local retailer",                                                                                                disciplines: ["Tax", "Legal", "Finance"] },
+  { sector: "Public Sector", metric: "Legal & Tax",  metricLabel: "Structuring",          headline: "Reorganization and legal & tax structuring of an Uzbek state-owned investment fund",                                                           disciplines: ["Legal", "Tax"] },
+  { sector: "Pharma",        metric: "Compliance",   metricLabel: "Advisory",             headline: "Advising several international pharmaceutical companies on local compliance and Uzbek trading structures",                                       disciplines: ["Tax", "Legal"] },
+  { sector: "Capital Markets",metric: "Legislation", metricLabel: "Development",          headline: "Advising a major international management consulting firm on capital market legislation development in Uzbekistan",                              disciplines: ["Legal", "Finance"] },
+  { sector: "Banking",       metric: "Legislation",  metricLabel: "Development",          headline: "Advising a major international financial institution on banking legislation, including derivatives and REPO transactions",                       disciplines: ["Legal", "Finance"] },
+  { sector: "Islamic Finance",metric: "Legislation", metricLabel: "Development",          headline: "Advising a major international consulting firm on integration of Islamic finance tools into Uzbek legislation",                                  disciplines: ["Legal", "Finance"] },
+  { sector: "Cross-Industry",metric: "100+",         metricLabel: "Companies registered", headline: "End-to-end incorporation advisory for international companies across multiple industries in Uzbekistan",                                         disciplines: ["Tax", "Legal", "HR"] },
+  { sector: "Due Diligence", metric: "30+",          metricLabel: "Tax & Legal DDs",      headline: "Tax and legal due diligence across renewable energy, mining, oil & gas, FMCG, and manufacturing sectors",                                       disciplines: ["Tax", "Legal"] },
 ];
 
 const heroStats = [
@@ -388,15 +368,15 @@ export default function ExpertisePage() {
             </div>
           </AnimatedSection>
 
-          {/* Featured 3 — glow cards */}
-          <div className="grid md:grid-cols-3 gap-5 mb-5">
-            {featuredDeals.map((deal, i) => (
+          {/* All engagements — uniform glow cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {allEngagements.map((deal, i) => (
               <motion.div
-                key={deal.amount}
+                key={deal.headline}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -4 }}
                 className="glow-card"
               >
@@ -405,23 +385,23 @@ export default function ExpertisePage() {
                 <div className="glow-card-content p-7 md:p-8 flex flex-col h-full">
                   <div className="glow-card-glow" />
 
-                  {/* Amount */}
+                  {/* Metric */}
                   <div className="mb-6">
-                    <span className="font-serif text-4xl md:text-5xl text-foreground/85 tracking-tight leading-none glow-card-title">
-                      {deal.amount}
+                    <span className="font-serif text-3xl md:text-4xl text-foreground/85 tracking-tight leading-none glow-card-title">
+                      {deal.metric}
                     </span>
                     <p className="text-[10px] tracking-[0.16em] uppercase text-white/25 mt-2">
-                      {deal.label}
+                      {deal.metricLabel}
                     </p>
                   </div>
 
-                  {/* Sector tag */}
+                  {/* Sector */}
                   <span className="inline-block text-[10px] tracking-[0.18em] uppercase text-primary-light/55 mb-3">
                     {deal.sector}
                   </span>
 
                   {/* Headline */}
-                  <p className="text-[15px] text-foreground/65 leading-snug font-light mb-6 flex-1 glow-card-desc">
+                  <p className="text-[14px] text-foreground/60 leading-snug font-light mb-6 flex-1 glow-card-desc">
                     {deal.headline}
                   </p>
 
@@ -437,58 +417,6 @@ export default function ExpertisePage() {
               </motion.div>
             ))}
           </div>
-
-          {/* Remaining — editorial table */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-xl border border-white/[0.06] bg-white/[0.012] overflow-hidden"
-          >
-            {/* Table header */}
-            <div className="hidden md:grid grid-cols-[1.5rem_7rem_1fr_6rem_9rem] gap-6 px-8 py-3 border-b border-white/[0.04] bg-white/[0.02]">
-              <span className="text-[10px] tracking-[0.14em] uppercase text-white/20">#</span>
-              <span className="text-[10px] tracking-[0.14em] uppercase text-white/20">Sector</span>
-              <span className="text-[10px] tracking-[0.14em] uppercase text-white/20">Engagement</span>
-              <span className="text-[10px] tracking-[0.14em] uppercase text-white/20">Scale</span>
-              <span className="text-[10px] tracking-[0.14em] uppercase text-white/20">Disciplines</span>
-            </div>
-
-            {engagements.map((eng, i) => (
-              <motion.div
-                key={eng.headline}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: "-10px" }}
-                transition={{ duration: 0.35, delay: i * 0.025, ease: "easeOut" }}
-                className={cn(
-                  "group flex flex-col md:grid md:grid-cols-[1.5rem_7rem_1fr_6rem_9rem] md:items-center gap-2 md:gap-6 px-6 md:px-8 py-4 md:py-4 hover:bg-white/[0.025] transition-colors duration-200",
-                  i < engagements.length - 1 && "border-b border-white/[0.04]",
-                )}
-              >
-                <span className="font-mono text-[11px] text-white/15 tabular-nums hidden md:block">
-                  {String(i + 4).padStart(2, "0")}
-                </span>
-                <span className="text-[10px] tracking-[0.13em] uppercase text-primary-light/50 shrink-0">
-                  {eng.sector}
-                </span>
-                <p className="text-sm text-foreground/65 leading-snug group-hover:text-foreground/80 transition-colors duration-200 min-w-0">
-                  {eng.headline}
-                </p>
-                <span className="font-mono text-[11px] text-white/30 md:text-right hidden md:block">
-                  {eng.result}
-                </span>
-                <div className="hidden lg:flex flex-wrap gap-1.5">
-                  {eng.disciplines.map((d) => (
-                    <span key={d} className="text-[10px] tracking-[0.1em] uppercase text-white/22 border border-white/[0.05] rounded-full px-2 py-0.5">
-                      {d}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
         </div>
       </section>
 
