@@ -124,79 +124,85 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
       {/* ── Hero ─────────────────────────────────────── */}
       <AuroraBackground>
         <section className="relative pt-36 pb-20 md:pt-44 md:pb-28">
-          <div className="max-w-4xl mx-auto px-6 lg:px-8 relative">
-            {/* Breadcrumb */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex items-center gap-3 mb-10"
-            >
-              <Link
-                href="/library"
-                className="group inline-flex items-center gap-2 text-sm text-white/50 hover:text-foreground transition-colors cursor-pointer"
-              >
-                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-                Library
-              </Link>
-              <span className="text-white/15">/</span>
-              <span className="tracking-luxury text-white/40">
-                {article.tag}
-              </span>
-            </motion.div>
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+            {/* Same grid as body so hero content aligns with article column */}
+            <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-20">
+              <div className="hidden lg:block" />
+              <div className="max-w-3xl">
+                {/* Breadcrumb */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="flex items-center gap-3 mb-10"
+                >
+                  <Link
+                    href="/library"
+                    className="group inline-flex items-center gap-2 text-sm text-white/50 hover:text-foreground transition-colors cursor-pointer"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                    Library
+                  </Link>
+                  <span className="text-white/15">/</span>
+                  <span className="tracking-luxury text-white/40">
+                    {article.tag}
+                  </span>
+                </motion.div>
 
-            {/* Category pill */}
-            <motion.span
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="inline-block text-xs tracking-[0.2em] uppercase text-white/50 border border-white/[0.12] rounded-full px-3.5 py-1 mb-8"
-            >
-              {article.category}
-            </motion.span>
+                {/* Category pill */}
+                <motion.span
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="inline-block text-xs tracking-[0.2em] uppercase text-white/50 border border-white/[0.12] rounded-full px-3.5 py-1 mb-8"
+                >
+                  {article.category}
+                </motion.span>
 
-            {/* Title */}
-            <TextReveal
-              text={article.title}
-              as="h1"
-              mode="line"
-              className="heading-luxury text-4xl md:text-5xl lg:text-6xl text-foreground leading-[1.08] max-w-3xl"
-              delay={0.4}
-            />
+                {/* Title */}
+                <TextReveal
+                  text={article.title}
+                  as="h1"
+                  mode="line"
+                  className="heading-luxury text-4xl md:text-5xl lg:text-6xl text-foreground leading-[1.08]"
+                  delay={0.4}
+                />
 
-            {/* Subtitle */}
-            {article.subtitle && (
-              <RevealLine delay={0.6}>
-                <p className="text-lg text-white/50 mt-6 max-w-xl leading-relaxed">
-                  {article.subtitle}
-                </p>
-              </RevealLine>
-            )}
-
-            {/* Meta row */}
-            <RevealLine delay={0.7}>
-              <div className="flex flex-wrap items-center gap-6 mt-10 pt-8 border-t border-white/[0.06]">
-                {article.author && (
-                  <div className="flex items-center gap-2 text-white/40">
-                    <User className="w-3.5 h-3.5" />
-                    <span className="text-sm">{article.author}</span>
-                  </div>
+                {/* Subtitle */}
+                {article.subtitle && (
+                  <RevealLine delay={0.6}>
+                    <p className="text-lg text-white/50 mt-6 max-w-xl leading-relaxed">
+                      {article.subtitle}
+                    </p>
+                  </RevealLine>
                 )}
-                {article.readTime && (
-                  <div className="flex items-center gap-2 text-white/40">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span className="text-sm">{article.readTime}</span>
+
+                {/* Meta row */}
+                <RevealLine delay={0.7}>
+                  <div className="flex flex-wrap items-center gap-6 mt-10 pt-8 border-t border-white/[0.06]">
+                    {article.author && (
+                      <div className="flex items-center gap-2 text-white/40">
+                        <User className="w-3.5 h-3.5" />
+                        <span className="text-sm">{article.author}</span>
+                      </div>
+                    )}
+                    {article.readTime && (
+                      <div className="flex items-center gap-2 text-white/40">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span className="text-sm">{article.readTime}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2 text-white/40">
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span className="text-sm">{article.pages} pages</span>
+                    </div>
+                    <span className="font-mono text-xs text-white/25 tabular-nums">
+                      {article.year}
+                    </span>
                   </div>
-                )}
-                <div className="flex items-center gap-2 text-white/40">
-                  <BookOpen className="w-3.5 h-3.5" />
-                  <span className="text-sm">{article.pages} pages</span>
-                </div>
-                <span className="font-mono text-xs text-white/25 tabular-nums">
-                  {article.year}
-                </span>
+                </RevealLine>
               </div>
-            </RevealLine>
+            </div>
           </div>
         </section>
       </AuroraBackground>
