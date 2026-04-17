@@ -1,7 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,6 +16,7 @@ import MagneticButton from "@/components/MagneticButton";
 import AnimatedSection, { HorizontalLine } from "@/components/AnimatedSection";
 import AuroraBackground from "@/components/AuroraBackground";
 import { getArticleBySlug, publications } from "@/lib/publications";
+import { servicesData } from "@/lib/services";
 
 const luxuryEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -34,7 +36,6 @@ function ReadingProgress() {
     damping: 30,
     restDelta: 0.001,
   });
-
   return (
     <motion.div
       style={{ scaleX }}
@@ -46,8 +47,42 @@ function ReadingProgress() {
 /* ── Page ─────────────────────────────────────────────── */
 
 export default function ArticlePageClient({ slug }: { slug: string }) {
+  /* Hooks must be declared before any early return */
+  const [activeSection, setActiveSection] = useState<string>("");
+
   const article = getArticleBySlug(slug);
 
+  /* Build TOC whether or not article exists (keeps hook deps stable) */
+  const toc =
+    article?.content
+      .filter((b) => b.type === "h2" && b.text)
+      .map((b) => ({ id: slugify(b.text!), text: b.text! })) ?? [];
+
+  /* ── Scroll-spy via IntersectionObserver ─────────────── */
+  useEffect(() => {
+    if (toc.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      /* Fires when heading crosses the upper-third of the viewport */
+      { rootMargin: "-5% 0% -60% 0%", threshold: 0 }
+    );
+
+    toc.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [toc]);
+
+  /* ── Not found ───────────────────────────────────────── */
   if (!article) {
     return (
       <section className="min-h-screen flex items-center justify-center bg-background">
@@ -66,11 +101,6 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
     );
   }
 
-  /* ── Table of contents ─────────────────────────────── */
-  const toc = article.content
-    .filter((b) => b.type === "h2" && b.text)
-    .map((b) => ({ id: slugify(b.text!), text: b.text! }));
-
   /* ── Adjacent articles ─────────────────────────────── */
   const readablePublications = publications.filter((p) => p.hasRead);
   const currentIndex = readablePublications.findIndex((p) => p.slug === slug);
@@ -80,13 +110,12 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
       ? readablePublications[currentIndex + 1]
       : null;
 
-  /* ── Track h2 index for section numbering ──────────── */
+  /* ── Counters reset each render ─────────────────────── */
   let h2Counter = 0;
+  const firstParagraphIndex = article.content.findIndex((b) => b.type === "p");
 
-  /* ── First paragraph index for drop cap ────────────── */
-  const firstParagraphIndex = article.content.findIndex(
-    (b) => b.type === "p"
-  );
+  /* ── Related services (first 5) ─────────────────────── */
+  const relatedServices = servicesData.slice(0, 5);
 
   return (
     <>
@@ -175,46 +204,117 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
       {/* Gradient divider */}
       <div className="h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
 
-      {/* ── Article Body + TOC ───────────────────────── */}
+      {/* ── Article Body + Sidebar ───────────────────── */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-[200px_1fr] gap-12 lg:gap-20">
-            {/* ── Sidebar TOC ──────────────────────── */}
-            {toc.length > 0 && (
-              <aside className="hidden lg:block">
-                <motion.div
-                  className="sticky top-28"
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.7, delay: 0.3, ease: luxuryEase }}
-                >
-                  <p className="tracking-luxury text-white/25 mb-5">
-                    Contents
+          <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-20">
+
+            {/* ── Sidebar ──────────────────────────── */}
+            <aside className="hidden lg:block">
+              <motion.div
+                className="sticky top-28 space-y-10"
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.3, ease: luxuryEase }}
+              >
+                {/* Contents */}
+                {toc.length > 0 && (
+                  <div>
+                    <p className="tracking-luxury text-white/40 mb-5">
+                      Contents
+                    </p>
+                    <nav className="space-y-0.5">
+                      {toc.map((item, i) => {
+                        const isActive = activeSection === item.id;
+                        return (
+                          <a
+                            key={item.id}
+                            href={`#${item.id}`}
+                            className="group relative flex items-start gap-2.5 rounded-sm px-2 py-2 text-[13px] leading-snug transition-colors duration-200"
+                            style={{
+                              color: isActive
+                                ? "rgba(245,245,245,0.90)"
+                                : "rgba(245,245,245,0.40)",
+                            }}
+                          >
+                            {/* Active left accent */}
+                            <motion.span
+                              className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 rounded-full bg-white/60 origin-center"
+                              animate={{
+                                height: isActive ? "60%" : "0%",
+                                opacity: isActive ? 1 : 0,
+                              }}
+                              transition={{ duration: 0.3, ease: luxuryEase }}
+                            />
+
+                            {/* Hover / active bg */}
+                            <AnimatePresence>
+                              {isActive && (
+                                <motion.span
+                                  className="absolute inset-0 rounded-sm bg-white/[0.04]"
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                  transition={{ duration: 0.2 }}
+                                />
+                              )}
+                            </AnimatePresence>
+
+                            <span
+                              className="relative font-mono text-[10px] mt-0.5 shrink-0 tabular-nums transition-colors duration-200"
+                              style={{
+                                color: isActive
+                                  ? "rgba(245,245,245,0.45)"
+                                  : "rgba(245,245,245,0.22)",
+                              }}
+                            >
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span className="relative">{item.text}</span>
+                          </a>
+                        );
+                      })}
+                    </nav>
+                  </div>
+                )}
+
+                {/* Divider */}
+                <div className="h-px bg-white/[0.07]" />
+
+                {/* Related Services */}
+                <div>
+                  <p className="tracking-luxury text-white/40 mb-5">
+                    Our Services
                   </p>
-                  <nav className="space-y-3">
-                    {toc.map((item, i) => (
-                      <a
-                        key={item.id}
-                        href={`#${item.id}`}
-                        className="group flex items-start gap-2.5 text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 leading-snug"
+                  <nav className="space-y-0.5">
+                    {relatedServices.map((service) => (
+                      <Link
+                        key={service.slug}
+                        href={`/expertise/${service.slug}`}
+                        className="group flex items-center justify-between rounded-sm px-2 py-2 text-[13px] text-white/40 hover:text-white/85 hover:bg-white/[0.03] transition-all duration-200"
                       >
-                        <span className="font-mono text-[10px] text-white/20 mt-px shrink-0 tabular-nums">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        {item.text}
-                      </a>
+                        <span>{service.title}</span>
+                        <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 shrink-0" />
+                      </Link>
                     ))}
                   </nav>
-                </motion.div>
-              </aside>
-            )}
 
-            {/* ── Content ──────────────────────────── */}
+                  <Link
+                    href="/expertise"
+                    className="group inline-flex items-center gap-1.5 mt-4 px-2 text-[10px] tracking-luxury text-white/25 hover:text-white/55 transition-colors duration-200"
+                  >
+                    View all services
+                    <ArrowRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 transition-transform duration-200" />
+                  </Link>
+                </div>
+              </motion.div>
+            </aside>
+
+            {/* ── Article content ──────────────────── */}
             <article className="max-w-3xl">
               {article.content.map((block, i) => {
                 const delay = Math.min(i * 0.03, 0.3);
 
-                /* ── H2 ──────────────────────────── */
                 if (block.type === "h2") {
                   h2Counter++;
                   const sectionId = slugify(block.text!);
@@ -235,7 +335,6 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                   );
                 }
 
-                /* ── H3 ──────────────────────────── */
                 if (block.type === "h3") {
                   return (
                     <AnimatedSection key={i} delay={delay}>
@@ -246,7 +345,6 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                   );
                 }
 
-                /* ── Paragraph ───────────────────── */
                 if (block.type === "p") {
                   const isFirst = i === firstParagraphIndex;
                   return (
@@ -264,7 +362,6 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                   );
                 }
 
-                /* ── Unordered list ──────────────── */
                 if (block.type === "ul" && block.items) {
                   return (
                     <AnimatedSection key={i} delay={delay}>
@@ -283,7 +380,6 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                   );
                 }
 
-                /* ── Blockquote ──────────────────── */
                 if (block.type === "blockquote") {
                   return (
                     <AnimatedSection key={i} delay={delay}>
@@ -302,7 +398,6 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                   );
                 }
 
-                /* ── Divider ─────────────────────── */
                 if (block.type === "divider") {
                   return (
                     <div key={i} className="my-14">
