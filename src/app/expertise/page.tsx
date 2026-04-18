@@ -72,6 +72,7 @@ const filters: { label: string; value: Category }[] = [
 
 const allEngagements = [
   { sector: "Energy",         metric: "$10B+",       metricLabel: "Project budget",        headline: "Tax, accounting, and customs structuring of a nuclear power plant construction for a Russian enterprise",                                           disciplines: ["Tax", "Finance"] },
+  { sector: "Energy",         metric: "$2B+",        metricLabel: "Structured investment",  headline: "Tax & legal due diligence, holdings structuring, and transfer pricing documentation for all operations of a Chinese energy group of companies in Uzbekistan", disciplines: ["Tax", "Legal", "Finance"] },
   { sector: "FMCG",          metric: "$250M",        metricLabel: "Transaction",           headline: "M&A of a large Uzbek bottler company",                                                                                                              disciplines: ["Tax", "Legal"] },
   { sector: "Fintech",       metric: "$200M",        metricLabel: "Transaction",           headline: "Two major restructuring projects of an international digital bank in its Uzbek subsidiaries",                                                        disciplines: ["Tax", "Legal"] },
   { sector: "Manufacturing", metric: "$20M",         metricLabel: "Transaction",           headline: "M&A and corporate restructuring of a large Uzbek cement producer",                                                                                  disciplines: ["Tax", "Legal", "Finance"] },
