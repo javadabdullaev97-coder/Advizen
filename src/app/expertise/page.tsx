@@ -207,9 +207,9 @@ function IndustriesSection() {
           </h2>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-[2fr_3fr] gap-0 border border-white/[0.07] rounded-sm overflow-hidden">
+        <div className="grid md:grid-cols-[5fr_7fr] border border-white/[0.07] overflow-hidden">
           {/* Left — industry list */}
-          <div className="border-r border-white/[0.07] divide-y divide-white/[0.04] overflow-y-auto max-h-[520px] md:max-h-none scrollbar-none">
+          <div className="border-r border-white/[0.07] divide-y divide-white/[0.04] overflow-y-auto md:max-h-[640px] scrollbar-none">
             {industries.map((ind, i) => {
               const IconComp = ind.icon;
               const isActive = i === activeIndex;
@@ -219,62 +219,119 @@ function IndustriesSection() {
                   type="button"
                   onClick={() => setActiveIndex(i)}
                   className={cn(
-                    "w-full flex items-center gap-3 px-5 py-3.5 text-left transition-all duration-200",
+                    "relative w-full flex items-center gap-3.5 px-5 py-4 text-left transition-all duration-250 group outline-none",
                     isActive
                       ? "bg-white/[0.04] text-foreground"
-                      : "text-white/40 hover:text-white/70 hover:bg-white/[0.02]"
+                      : "text-white/38 hover:text-white/68 hover:bg-white/[0.02]"
                   )}
                 >
-                  <IconComp
-                    className={cn("w-4 h-4 shrink-0 transition-colors duration-200", isActive ? "text-primary" : "text-white/25")}
-                    strokeWidth={1.5}
+                  {/* Active left border */}
+                  <span
+                    className={cn(
+                      "absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-300",
+                      isActive ? "bg-primary opacity-100" : "opacity-0"
+                    )}
                   />
-                  <span className="text-[12px] tracking-[0.1em] uppercase">{ind.name}</span>
-                  {isActive && (
-                    <span className="ml-auto w-1 h-1 rounded-full bg-primary shrink-0" />
-                  )}
+
+                  {/* Icon box */}
+                  <span
+                    className={cn(
+                      "w-7 h-7 rounded flex items-center justify-center shrink-0 transition-all duration-250",
+                      isActive ? "bg-primary/10" : "bg-white/[0.03] group-hover:bg-white/[0.06]"
+                    )}
+                  >
+                    <IconComp
+                      className={cn("w-3.5 h-3.5 shrink-0 transition-colors duration-250",
+                        isActive ? "text-primary" : "text-white/30 group-hover:text-white/50"
+                      )}
+                      strokeWidth={1.5}
+                    />
+                  </span>
+
+                  <span className={cn("text-[11.5px] tracking-[0.09em] uppercase transition-all duration-250", isActive ? "font-medium" : "")}>
+                    {ind.name}
+                  </span>
+
+                  <ArrowRight
+                    className={cn(
+                      "ml-auto w-3.5 h-3.5 shrink-0 transition-all duration-250",
+                      isActive ? "text-primary opacity-100 translate-x-0" : "opacity-0 -translate-x-1"
+                    )}
+                  />
                 </button>
               );
             })}
           </div>
 
           {/* Right — detail panel */}
-          <div className="relative overflow-hidden">
+          <div className="relative bg-[#080808] overflow-hidden min-h-[480px] md:min-h-0">
+            {/* Static ambient glow — always present */}
+            <div
+              className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
+              style={{ background: "radial-gradient(circle, rgba(99,13,13,0.12) 0%, transparent 70%)" }}
+            />
+
+            {/* Animated watermark icon */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`bg-${active.name}`}
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.1 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute bottom-0 right-0 pointer-events-none translate-x-8 translate-y-8"
+              >
+                <active.icon className="w-64 h-64 text-white/[0.025]" strokeWidth={0.5} />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Content */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.name}
-                initial={{ opacity: 0, x: 16 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -16 }}
-                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                className="p-8 md:p-10 h-full flex flex-col"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="relative p-8 md:p-10"
               >
                 {/* Header */}
-                <div className="flex items-center gap-3 mb-6">
-                  <active.icon className="w-5 h-5 text-primary shrink-0" strokeWidth={1.25} />
-                  <h3 className="font-serif text-xl md:text-2xl text-foreground tracking-wide">
-                    {active.name}
-                  </h3>
+                <div className="flex items-start gap-4 mb-5">
+                  <div className="w-10 h-10 rounded-md border border-primary/25 bg-primary/[0.07] flex items-center justify-center shrink-0 mt-0.5">
+                    <active.icon className="w-5 h-5 text-primary" strokeWidth={1.25} />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl md:text-3xl text-foreground tracking-wide leading-tight">
+                      {active.name}
+                    </h3>
+                    <p className="text-[10px] tracking-[0.16em] uppercase text-white/25 mt-1">
+                      {active.offerings.length} services available
+                    </p>
+                  </div>
                 </div>
 
+                {/* Divider */}
+                <div className="w-full h-px bg-white/[0.05] mb-5" />
+
                 {/* Description */}
-                <p className="text-[14px] text-white/50 leading-relaxed mb-8">
+                <p className="text-[14px] text-white/52 leading-relaxed mb-7">
                   {active.description}
                 </p>
 
                 {/* Offerings */}
-                <div className="mt-auto">
-                  <p className="text-[10px] tracking-[0.18em] uppercase text-white/25 mb-4">
-                    What we offer
-                  </p>
-                  <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2.5">
-                    {active.offerings.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-[13px] text-white/55">
-                        <span className="mt-[5px] w-1 h-1 rounded-full bg-primary/60 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                <p className="text-[10px] tracking-[0.18em] uppercase text-white/25 mb-3.5">
+                  What we offer
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {active.offerings.map((item) => (
+                    <span
+                      key={item}
+                      className="flex items-center gap-2 px-3 py-2 border border-white/[0.07] bg-white/[0.02] text-[12px] text-white/52 hover:border-primary/30 hover:bg-primary/[0.04] hover:text-white/80 transition-all duration-250 cursor-default"
+                    >
+                      <span className="w-[5px] h-[5px] rounded-full bg-primary/50 shrink-0" />
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </motion.div>
             </AnimatePresence>
