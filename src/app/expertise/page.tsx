@@ -323,16 +323,9 @@ function ServicesSection() {
                             <p className="text-[14px] text-white/52 leading-relaxed mb-3">
                               {service.description[0]}
                             </p>
-                            <p className="text-[13px] text-white/32 leading-relaxed mb-7">
+                            <p className="text-[13px] text-white/32 leading-relaxed">
                               {service.description[1]}
                             </p>
-                            <Link
-                              href={`/expertise/${service.slug}`}
-                              className="inline-flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase text-primary/80 hover:text-primary transition-colors group/link"
-                            >
-                              View full practice
-                              <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform duration-250" />
-                            </Link>
                           </motion.div>
 
                           {/* Right: capabilities */}
@@ -588,13 +581,12 @@ export default function ExpertisePage() {
             <RevealLine delay={0.8}>
               <div className="flex flex-wrap gap-2 mt-8">
                 {servicesData.map((s) => (
-                  <Link
+                  <span
                     key={s.slug}
-                    href={`/expertise/${s.slug}`}
-                    className="text-xs tracking-[0.14em] uppercase text-white/35 border border-white/[0.07] rounded-full px-4 py-1.5 hover:text-white/75 hover:border-white/[0.18] transition-all duration-250 cursor-pointer"
+                    className="text-xs tracking-[0.14em] uppercase text-white/35 border border-white/[0.07] rounded-full px-4 py-1.5"
                   >
                     {serviceShortNames[s.slug] ?? s.title}
-                  </Link>
+                  </span>
                 ))}
               </div>
             </RevealLine>
