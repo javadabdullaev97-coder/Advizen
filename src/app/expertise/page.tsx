@@ -266,48 +266,38 @@ export default function ExpertisePage() {
       </section>
 
       {/* ====== INDUSTRIES ====== */}
-      <section className="py-24 md:py-32 bg-black relative overflow-hidden border-y border-white/[0.06]">
+      <section className="py-16 md:py-20 bg-black relative overflow-hidden border-y border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection className="mb-14 md:mb-16 text-center">
-            <p className="tracking-luxury text-white/50 mb-4">Sector Experience</p>
-            <h2 className="heading-luxury text-3xl md:text-5xl text-foreground">
+          <AnimatedSection className="mb-10 md:mb-12">
+            <p className="tracking-luxury text-white/50 mb-3">Sector Experience</p>
+            <h2 className="heading-luxury text-2xl md:text-3xl text-foreground">
               Industries we serve
             </h2>
-            <p className="mt-5 text-white/50 max-w-xl mx-auto leading-relaxed">
-              From regulated heavyweights to fast-moving ventures across Central Asia.
-            </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5" role="list">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2 md:gap-3" role="list">
             {industries.map((ind, i) => {
               const IconComp = ind.icon;
               return (
-                <motion.button
+                <motion.div
                   key={ind.name}
                   role="listitem"
-                  tabIndex={0}
                   aria-label={ind.name}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{
-                    duration: 0.5,
-                    delay: (i % 4) * 0.04 + Math.floor(i / 4) * 0.03,
+                    duration: 0.4,
+                    delay: (i % 8) * 0.03,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  whileHover={{ y: -4, scale: 1.03 }}
-                  className="glow-card aspect-[5/4] cursor-default"
+                  className="group flex flex-col items-center gap-2 p-3 md:p-4 border border-white/[0.05] rounded-sm bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/[0.1] transition-all duration-300 cursor-default"
                 >
-                  <div className="glow-card-spinner" />
-                  <div className="glow-card-backdrop" />
-                  <div className="glow-card-content flex flex-col items-center justify-center gap-4 p-5 md:p-6">
-                    <div className="glow-card-glow" />
-                    <IconComp className="relative w-9 h-9 md:w-10 md:h-10 text-white/60 transition-colors duration-500 glow-card-icon" strokeWidth={1} />
-                    <span className="relative text-xs tracking-[0.14em] uppercase text-center leading-tight glow-card-title">
-                      {ind.name}
-                    </span>
-                  </div>
-                </motion.button>
+                  <IconComp className="w-5 h-5 text-white/35 group-hover:text-white/60 transition-colors duration-300" strokeWidth={1.25} />
+                  <span className="text-[9px] tracking-[0.12em] uppercase text-center leading-tight text-white/30 group-hover:text-white/55 transition-colors duration-300">
+                    {ind.name}
+                  </span>
+                </motion.div>
               );
             })}
           </div>
