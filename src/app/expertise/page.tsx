@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { type ComponentType, type SVGProps } from "react";
-import { motion } from "framer-motion";
+import { useState, type ComponentType, type SVGProps } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -48,23 +48,110 @@ function BitcoinSquare(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-const industries: { name: string; icon: LucideIcon }[] = [
-  { name: "Agriculture", icon: Sprout },
-  { name: "Banking & Finance", icon: Landmark },
-  { name: "Blockchain & Crypto", icon: BitcoinSquare },
-  { name: "Commerce & Retail", icon: Store },
-  { name: "Construction & Real Estate", icon: Building2 },
-  { name: "Education", icon: BookOpen },
-  { name: "Energy & Natural Resources", icon: Flame },
-  { name: "Healthcare & Pharmaceuticals", icon: Stethoscope },
-  { name: "Hospitality & Tourism", icon: BedDouble },
-  { name: "Immigration", icon: Globe },
-  { name: "IT, Fintech & Telecom", icon: Cpu },
-  { name: "Investment & Venture Funds", icon: TrendingUp },
-  { name: "Manufacture", icon: Factory },
-  { name: "Media & Entertainment", icon: Film },
-  { name: "Private Equity & Wealth", icon: Gem },
-  { name: "Sports", icon: Medal },
+interface Industry {
+  name: string;
+  icon: LucideIcon;
+  description: string;
+  offerings: string[];
+}
+
+const industries: Industry[] = [
+  {
+    name: "Agriculture",
+    icon: Sprout,
+    description: "Uzbekistan's agri-sector is undergoing rapid liberalisation. We help producers, exporters, and agro-processors navigate evolving tax incentives, export regulations, and workforce compliance.",
+    offerings: ["Tax structuring for agro-exporters", "Regulatory & licensing compliance", "HR & payroll for seasonal labour", "Land use and property advisory", "Foreign investment structuring"],
+  },
+  {
+    name: "Banking & Finance",
+    icon: Landmark,
+    description: "We serve banks, NBFIs, and payment institutions operating in or entering Uzbekistan — advising on licensing, governance, IFRS reporting, and cross-border transaction structures.",
+    offerings: ["Licensing and regulatory compliance", "Corporate governance advisory", "IFRS & NAS financial reporting", "M&A and restructuring support", "Transfer pricing documentation"],
+  },
+  {
+    name: "Blockchain & Crypto",
+    icon: BitcoinSquare,
+    description: "As Uzbekistan builds out its digital asset regulatory framework, we advise exchanges, funds, and Web3 businesses on the legal and tax treatment of crypto operations in the jurisdiction.",
+    offerings: ["Tax treatment of digital assets", "Legal entity structuring for Web3", "Regulatory framework navigation", "Licensing advisory", "Compliance monitoring"],
+  },
+  {
+    name: "Commerce & Retail",
+    icon: Store,
+    description: "From market entry to multi-location expansion, we support retailers and FMCG operators with structuring, HR at scale, payroll optimisation, and consumer-facing compliance.",
+    offerings: ["Market entry and entity formation", "M&A and expansion structuring", "Payroll and HR outsourcing", "Franchise and distribution agreements", "Marketing compliance"],
+  },
+  {
+    name: "Construction & Real Estate",
+    icon: Building2,
+    description: "Large-scale construction and property projects demand careful tax and legal planning from the outset. We advise developers, contractors, and investors on project structuring and compliance.",
+    offerings: ["Project tax optimisation", "Contract architecture and review", "Labour law and workforce compliance", "Permitting advisory", "Investment structuring for developers"],
+  },
+  {
+    name: "Education",
+    icon: BookOpen,
+    description: "We support private schools, universities, EdTech ventures, and training centres with entity formation, licensing, and the HR infrastructure needed to operate at scale.",
+    offerings: ["Entity formation and licensing", "HR and payroll management", "Tax compliance and reporting", "Foreign staff work permits", "Operational compliance monitoring"],
+  },
+  {
+    name: "Energy & Natural Resources",
+    icon: Flame,
+    description: "With deep experience in Uzbekistan's energy sector — including nuclear, renewables, and oil & gas — we provide tax, customs, and legal advisory for large infrastructure projects and their investors.",
+    offerings: ["Tax and customs structuring for projects", "Transfer pricing documentation", "Holdings and investment structuring", "Due diligence for energy assets", "Regulatory compliance advisory"],
+  },
+  {
+    name: "Healthcare & Pharmaceuticals",
+    icon: Stethoscope,
+    description: "International pharma companies and healthcare operators rely on us for smooth market entry, ongoing compliance, and the HR frameworks needed to manage clinical and administrative teams.",
+    offerings: ["Market entry and product registration", "Regulatory compliance advisory", "HR, payroll, and EOR services", "Contract and distribution structuring", "Tax planning for pharma imports"],
+  },
+  {
+    name: "Hospitality & Tourism",
+    icon: BedDouble,
+    description: "Hotels, resorts, travel agencies, and tourism platforms operating in Central Asia benefit from our integrated advisory on entity setup, HR, tax, and operational compliance.",
+    offerings: ["Entity formation and licensing", "HR management and payroll", "Tax planning and compliance", "Franchise and management agreement review", "Expatriate work permits"],
+  },
+  {
+    name: "Immigration",
+    icon: Globe,
+    description: "We manage the full lifecycle of work authorisations and residency applications for expatriate personnel, enabling foreign companies to deploy talent into Uzbekistan without friction.",
+    offerings: ["Work permit and visa administration", "Residency and accreditation advisory", "Expatriate HR compliance", "Employer obligations and reporting", "Legal support for relocations"],
+  },
+  {
+    name: "IT, Fintech & Telecom",
+    icon: Cpu,
+    description: "Tech companies entering Uzbekistan's growing digital market rely on us for tax structuring, licensing, and legal frameworks that support rapid scaling and cross-border operations.",
+    offerings: ["Tax structuring for tech market entry", "Software and IP licensing advisory", "Fintech regulatory compliance", "Investment and shareholder structuring", "HR for engineering teams"],
+  },
+  {
+    name: "Investment & Venture Funds",
+    icon: TrendingUp,
+    description: "We advise venture funds, family offices, and institutional investors on fund structuring, due diligence, and the legal and tax frameworks governing investments in Central Asian assets.",
+    offerings: ["Fund and SPV structuring", "Tax advisory for fund operations", "Legal documentation and governance", "Tax and legal due diligence", "Portfolio company advisory"],
+  },
+  {
+    name: "Manufacture",
+    icon: Factory,
+    description: "Manufacturers operating in Uzbekistan's growing industrial base need rigorous tax, customs, and HR compliance. We provide end-to-end advisory from greenfield setup through ongoing operations.",
+    offerings: ["Tax and customs optimisation", "HR and payroll at scale", "M&A and corporate restructuring", "Free economic zone advisory", "Regulatory and labour compliance"],
+  },
+  {
+    name: "Media & Entertainment",
+    icon: Film,
+    description: "Content creators, production companies, and media platforms benefit from our IP, contract, and HR advisory — ensuring that creative and commercial interests are properly protected.",
+    offerings: ["Intellectual property structuring", "Content and production contracts", "HR and talent agreements", "Tax planning for royalties", "Event and sponsorship structuring"],
+  },
+  {
+    name: "Private Equity & Wealth",
+    icon: Gem,
+    description: "PE funds and high-net-worth individuals investing in Uzbekistan trust us to structure holdings efficiently, manage compliance, and provide the reporting frameworks their stakeholders require.",
+    offerings: ["Holding and fund structure design", "Tax advisory and optimisation", "Legal compliance and governance", "Financial reporting (IFRS)", "Asset protection structuring"],
+  },
+  {
+    name: "Sports",
+    icon: Medal,
+    description: "Sports clubs, federations, and athlete management firms call on us to handle the contractual, HR, and tax complexities that arise in professional sports operating across Central Asian markets.",
+    offerings: ["Athlete and club contracts", "IP and sponsorship licensing", "HR and payroll for sports entities", "Event and tournament structuring", "Tax planning for prize and licensing income"],
+  },
 ];
 
 const serviceIcons: Record<string, LucideIcon> = {
@@ -105,6 +192,98 @@ const serviceShortNames: Record<string, string> = {
   tax: "Tax", legal: "Legal", finance: "Finance",
   hr: "HR", marketing: "Marketing", funding: "Funding",
 };
+
+function IndustriesSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = industries[activeIndex];
+
+  return (
+    <section className="py-20 md:py-28 bg-black relative overflow-hidden border-y border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <AnimatedSection className="mb-10 md:mb-12">
+          <p className="tracking-luxury text-white/50 mb-3">Sector Experience</p>
+          <h2 className="heading-luxury text-2xl md:text-3xl text-foreground">
+            Industries we serve
+          </h2>
+        </AnimatedSection>
+
+        <div className="grid md:grid-cols-[2fr_3fr] gap-0 border border-white/[0.07] rounded-sm overflow-hidden">
+          {/* Left — industry list */}
+          <div className="border-r border-white/[0.07] divide-y divide-white/[0.04] overflow-y-auto max-h-[520px] md:max-h-none scrollbar-none">
+            {industries.map((ind, i) => {
+              const IconComp = ind.icon;
+              const isActive = i === activeIndex;
+              return (
+                <button
+                  key={ind.name}
+                  type="button"
+                  onClick={() => setActiveIndex(i)}
+                  className={cn(
+                    "w-full flex items-center gap-3 px-5 py-3.5 text-left transition-all duration-200",
+                    isActive
+                      ? "bg-white/[0.04] text-foreground"
+                      : "text-white/40 hover:text-white/70 hover:bg-white/[0.02]"
+                  )}
+                >
+                  <IconComp
+                    className={cn("w-4 h-4 shrink-0 transition-colors duration-200", isActive ? "text-primary" : "text-white/25")}
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-[12px] tracking-[0.1em] uppercase">{ind.name}</span>
+                  {isActive && (
+                    <span className="ml-auto w-1 h-1 rounded-full bg-primary shrink-0" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right — detail panel */}
+          <div className="relative overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active.name}
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -16 }}
+                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                className="p-8 md:p-10 h-full flex flex-col"
+              >
+                {/* Header */}
+                <div className="flex items-center gap-3 mb-6">
+                  <active.icon className="w-5 h-5 text-primary shrink-0" strokeWidth={1.25} />
+                  <h3 className="font-serif text-xl md:text-2xl text-foreground tracking-wide">
+                    {active.name}
+                  </h3>
+                </div>
+
+                {/* Description */}
+                <p className="text-[14px] text-white/50 leading-relaxed mb-8">
+                  {active.description}
+                </p>
+
+                {/* Offerings */}
+                <div className="mt-auto">
+                  <p className="text-[10px] tracking-[0.18em] uppercase text-white/25 mb-4">
+                    What we offer
+                  </p>
+                  <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2.5">
+                    {active.offerings.map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-[13px] text-white/55">
+                        <span className="mt-[5px] w-1 h-1 rounded-full bg-primary/60 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function ExpertisePage() {
 
@@ -266,43 +445,7 @@ export default function ExpertisePage() {
       </section>
 
       {/* ====== INDUSTRIES ====== */}
-      <section className="py-16 md:py-20 bg-black relative overflow-hidden border-y border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection className="mb-10 md:mb-12">
-            <p className="tracking-luxury text-white/50 mb-3">Sector Experience</p>
-            <h2 className="heading-luxury text-2xl md:text-3xl text-foreground">
-              Industries we serve
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2 md:gap-3" role="list">
-            {industries.map((ind, i) => {
-              const IconComp = ind.icon;
-              return (
-                <motion.div
-                  key={ind.name}
-                  role="listitem"
-                  aria-label={ind.name}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{
-                    duration: 0.4,
-                    delay: (i % 8) * 0.03,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="group flex flex-col items-center gap-2 p-3 md:p-4 border border-white/[0.05] rounded-sm bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/[0.1] transition-all duration-300 cursor-default"
-                >
-                  <IconComp className="w-5 h-5 text-white/35 group-hover:text-white/60 transition-colors duration-300" strokeWidth={1.25} />
-                  <span className="text-[9px] tracking-[0.12em] uppercase text-center leading-tight text-white/30 group-hover:text-white/55 transition-colors duration-300">
-                    {ind.name}
-                  </span>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <IndustriesSection />
 
       {/* ====== TRACK RECORD ====== */}
       <section className="py-24 md:py-32 bg-black relative overflow-hidden">
