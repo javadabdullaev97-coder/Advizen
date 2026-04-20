@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type ComponentType, type SVGProps } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { type ComponentType, type SVGProps } from "react";
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
   BedDouble,
   BookOpen,
   Building2,
+  Calculator,
   Cpu,
   Factory,
   Film,
@@ -16,11 +17,15 @@ import {
   Gem,
   Globe,
   Landmark,
+  LineChart,
   Medal,
+  Megaphone,
+  Scale,
   Sprout,
   Stethoscope,
   Store,
   TrendingUp,
+  Users,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import TextReveal, { RevealLine } from "@/components/TextReveal";
@@ -29,7 +34,6 @@ import { servicesData } from "@/lib/services";
 import AuroraBackground from "@/components/AuroraBackground";
 import { cn } from "@/lib/utils";
 
-type Category = "all" | "Advisory" | "Operations" | "Growth";
 type LucideIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
 function BitcoinSquare(props: SVGProps<SVGSVGElement>) {
@@ -63,12 +67,14 @@ const industries: { name: string; icon: LucideIcon }[] = [
   { name: "Sports", icon: Medal },
 ];
 
-const filters: { label: string; value: Category }[] = [
-  { label: "All", value: "all" },
-  { label: "Advisory", value: "Advisory" },
-  { label: "Operations", value: "Operations" },
-  { label: "Growth", value: "Growth" },
-];
+const serviceIcons: Record<string, LucideIcon> = {
+  tax: Calculator,
+  legal: Scale,
+  finance: LineChart,
+  hr: Users,
+  marketing: Megaphone,
+  funding: Landmark,
+};
 
 const allEngagements = [
   { sector: "Energy",         metric: "$10B+",       metricLabel: "Project budget",        headline: "Tax, accounting, and customs structuring of a nuclear power plant construction for a Russian enterprise",                                           disciplines: ["Tax", "Finance"] },
@@ -100,19 +106,7 @@ const serviceShortNames: Record<string, string> = {
   hr: "HR", marketing: "Marketing", funding: "Funding",
 };
 
-const categoryColor: Record<string, string> = {
-  Advisory: "text-amber-400/60",
-  Operations: "text-sky-400/60",
-  Growth: "text-emerald-400/60",
-};
-
 export default function ExpertisePage() {
-  const [activeFilter, setActiveFilter] = useState<Category>("all");
-
-  const filtered =
-    activeFilter === "all"
-      ? servicesData
-      : servicesData.filter((s) => s.category === activeFilter);
 
   return (
     <>
@@ -193,117 +187,81 @@ export default function ExpertisePage() {
         <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -left-32 opacity-[0.18]" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
 
-          {/* Heading + filter */}
           <AnimatedSection className="mb-14 md:mb-16">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-              <div>
-                <p className="tracking-luxury text-white/50 mb-4">Practice Areas</p>
-                <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
-                  Six disciplines, one team
-                </h2>
-              </div>
-
-              <div className="flex items-center gap-1 bg-white/[0.03] border border-white/[0.06] rounded-full p-1 w-fit shrink-0">
-                {filters.map((f) => (
-                  <button
-                    key={f.value}
-                    onClick={() => setActiveFilter(f.value)}
-                    className="relative px-5 py-2 rounded-full text-xs uppercase tracking-[0.14em] transition-colors duration-200 cursor-pointer"
-                  >
-                    {activeFilter === f.value && (
-                      <motion.div
-                        layoutId="filter-pill"
-                        className="absolute inset-0 rounded-full bg-primary"
-                        transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                      />
-                    )}
-                    <span className={cn(
-                      "relative z-10 transition-colors duration-200",
-                      activeFilter === f.value ? "text-white" : "text-white/40 hover:text-white/65",
-                    )}>
-                      {f.label}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
+            <p className="tracking-luxury text-white/50 mb-4">Practice Areas</p>
+            <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
+              Six disciplines, one team
+            </h2>
+            <p className="mt-5 text-white/45 max-w-2xl leading-relaxed">
+              From regulatory compliance to strategic growth — integrated advisory built for the complexities of Central Asian markets.
+            </p>
           </AnimatedSection>
 
-          {/* Top border */}
-          <div className="h-px bg-white/[0.06] mb-0" />
-
-          {/* Service list */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeFilter}
-              initial="hidden"
-              animate="visible"
-              exit={{ opacity: 0, transition: { duration: 0.1 } }}
-              variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
-            >
-              {filtered.map((service, idx) => (
+          <div className="grid md:grid-cols-2 gap-5">
+            {servicesData.map((service, i) => {
+              const Icon = serviceIcons[service.slug] ?? ArrowUpRight;
+              return (
                 <motion.div
                   key={service.num}
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
-                  }}
-                  className="border-b border-white/[0.06]"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: (i % 2) * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <Link href={`/expertise/${service.slug}`} className="group relative flex items-start gap-6 md:gap-10 py-8 md:py-10 pl-5 cursor-pointer overflow-hidden">
-                    {/* Hover background sweep */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                  <Link href={`/expertise/${service.slug}`} className="group glow-card block h-full cursor-pointer">
+                    <div className="glow-card-spinner" />
+                    <div className="glow-card-backdrop" />
+                    <div className="glow-card-content p-8 md:p-10 flex flex-col h-full min-h-[320px]">
+                      <div className="glow-card-glow" />
 
-                    {/* Left accent bar */}
-                    <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary-light/80 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
-
-                    {/* Large number */}
-                    <span className="relative font-serif text-[3.5rem] md:text-[5rem] leading-none text-white/[0.05] group-hover:text-white/[0.1] transition-colors duration-500 shrink-0 w-14 md:w-20 tabular-nums select-none -mt-1">
-                      {service.num}
-                    </span>
-
-                    {/* Main content */}
-                    <div className="relative flex-1 min-w-0 flex flex-col md:flex-row md:items-start md:gap-8">
-                      <div className="flex-1 min-w-0">
-                        <span className={cn(
-                          "inline-block text-[10px] tracking-[0.18em] uppercase mb-2.5 transition-colors duration-300",
-                          categoryColor[service.category] ?? "text-primary-light/60",
-                        )}>
-                          {service.category}
+                      {/* Header: icon + number */}
+                      <div className="flex items-start justify-between mb-8">
+                        <div className="w-11 h-11 rounded-lg border border-white/[0.08] bg-white/[0.02] flex items-center justify-center shrink-0 transition-colors duration-400 group-hover:border-primary/30 group-hover:bg-primary/[0.05]">
+                          <Icon
+                            className="w-5 h-5 text-white/35 glow-card-icon transition-colors duration-400"
+                            strokeWidth={1.25}
+                          />
+                        </div>
+                        <span className="font-mono text-xs tracking-[0.2em] text-white/15 tabular-nums mt-1 glow-card-title">
+                          {service.num}
                         </span>
-                        <h3 className="font-serif text-2xl md:text-[1.85rem] text-foreground/80 tracking-wide leading-snug group-hover:text-foreground transition-colors duration-300 mb-3">
-                          {service.title}
-                        </h3>
-                        <p className="text-white/38 text-[15px] leading-relaxed max-w-xl line-clamp-2 group-hover:text-white/55 transition-colors duration-300">
-                          {service.description[0]}
-                        </p>
                       </div>
 
-                      {/* Capability tags — hidden on small, right-rail on md+ */}
-                      <div className="hidden md:flex flex-col items-end gap-2 shrink-0 w-56 pt-7">
-                        <div className="flex flex-wrap gap-1.5 justify-end">
+                      {/* Title */}
+                      <h3 className="font-serif text-2xl md:text-3xl text-foreground/65 leading-snug mb-4 glow-card-title tracking-wide">
+                        {service.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-[14px] text-white/30 leading-relaxed flex-1 glow-card-desc line-clamp-3">
+                        {service.description[0]}
+                      </p>
+
+                      {/* Footer: capabilities + arrow */}
+                      <div className="mt-7 pt-6 border-t border-white/[0.05] flex items-end justify-between gap-4">
+                        <div className="flex flex-wrap gap-1.5">
                           {service.capabilities.slice(0, 3).map((cap) => (
-                            <span key={cap}
-                              className="text-[11px] text-white/25 border border-white/[0.05] rounded px-2 py-0.5 group-hover:text-white/40 group-hover:border-white/[0.09] transition-colors duration-300">
+                            <span
+                              key={cap}
+                              className="text-[10px] text-white/20 border border-white/[0.05] rounded-sm px-2 py-0.5 group-hover:text-white/38 group-hover:border-white/[0.09] transition-colors duration-300"
+                            >
                               {cap}
                             </span>
                           ))}
-                          <span className="text-[11px] text-white/15 px-2 py-0.5">
-                            +{service.capabilities.length - 3}
-                          </span>
+                          {service.capabilities.length > 3 && (
+                            <span className="text-[10px] text-white/12 px-1 py-0.5">
+                              +{service.capabilities.length - 3}
+                            </span>
+                          )}
                         </div>
+                        <ArrowUpRight className="w-4 h-4 shrink-0 text-white/10 group-hover:text-white/55 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-250" />
                       </div>
-                    </div>
-
-                    {/* Arrow */}
-                    <div className="relative shrink-0 self-center">
-                      <ArrowUpRight className="w-5 h-5 text-white/10 group-hover:text-white/60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-250" />
                     </div>
                   </Link>
                 </motion.div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+              );
+            })}
+          </div>
         </div>
       </section>
 
