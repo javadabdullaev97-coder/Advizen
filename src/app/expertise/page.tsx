@@ -211,39 +211,39 @@ export default function ExpertisePage() {
                   <Link href={`/expertise/${service.slug}`} className="group glow-card block h-full cursor-pointer">
                     <div className="glow-card-spinner" />
                     <div className="glow-card-backdrop" />
-                    <div className="glow-card-content p-8 md:p-10 flex flex-col h-full min-h-[320px]">
+                    <div className="glow-card-content p-6 md:p-7 flex flex-col h-full">
                       <div className="glow-card-glow" />
 
                       {/* Header: icon + number */}
-                      <div className="flex items-start justify-between mb-8">
-                        <div className="w-11 h-11 rounded-lg border border-white/[0.08] bg-white/[0.02] flex items-center justify-center shrink-0 transition-colors duration-400 group-hover:border-primary/30 group-hover:bg-primary/[0.05]">
+                      <div className="flex items-center justify-between mb-5">
+                        <div className="w-9 h-9 rounded-md border border-white/[0.08] bg-white/[0.02] flex items-center justify-center shrink-0 transition-colors duration-400 group-hover:border-primary/30 group-hover:bg-primary/[0.05]">
                           <Icon
-                            className="w-5 h-5 text-white/35 glow-card-icon transition-colors duration-400"
+                            className="w-4 h-4 text-white/35 glow-card-icon transition-colors duration-400"
                             strokeWidth={1.25}
                           />
                         </div>
-                        <span className="font-mono text-xs tracking-[0.2em] text-white/15 tabular-nums mt-1 glow-card-title">
+                        <span className="font-mono text-[10px] tracking-[0.2em] text-white/15 tabular-nums glow-card-title">
                           {service.num}
                         </span>
                       </div>
 
                       {/* Title */}
-                      <h3 className="font-serif text-2xl md:text-3xl text-foreground/65 leading-snug mb-4 glow-card-title tracking-wide">
+                      <h3 className="font-serif text-xl md:text-2xl text-foreground/65 leading-snug mb-3 glow-card-title tracking-wide">
                         {service.title}
                       </h3>
 
                       {/* Description */}
-                      <p className="text-[14px] text-white/30 leading-relaxed flex-1 glow-card-desc line-clamp-3">
+                      <p className="text-[13px] text-white/30 leading-relaxed flex-1 glow-card-desc line-clamp-2">
                         {service.description[0]}
                       </p>
 
                       {/* Footer: capabilities + arrow */}
-                      <div className="mt-7 pt-6 border-t border-white/[0.05] flex items-end justify-between gap-4">
-                        <div className="flex flex-wrap gap-1.5">
+                      <div className="mt-5 pt-4 border-t border-white/[0.05] flex items-end justify-between gap-3">
+                        <div className="flex flex-wrap gap-1">
                           {service.capabilities.slice(0, 3).map((cap) => (
                             <span
                               key={cap}
-                              className="text-[10px] text-white/20 border border-white/[0.05] rounded-sm px-2 py-0.5 group-hover:text-white/38 group-hover:border-white/[0.09] transition-colors duration-300"
+                              className="text-[10px] text-white/20 border border-white/[0.05] rounded-sm px-1.5 py-0.5 group-hover:text-white/38 group-hover:border-white/[0.09] transition-colors duration-300"
                             >
                               {cap}
                             </span>

@@ -37,7 +37,7 @@ export const servicesData: ServiceData[] = [
     category: "Advisory",
     headline: "Full-spectrum legal\ncounsel & protection",
     description: [
-      "Our legal team provides end-to-end counsel for businesses operating in Uzbekistan — from entity formation and contract architecture to regulatory compliance and dispute resolution.",
+      "Our legal team provides end-to-end counsel for businesses operating in Uzbekistan — from entity formation and contract architecture to regulatory compliance and corporate structuring.",
       "We protect your interests with the rigour and attention to detail that complex, multi-jurisdictional operations demand.",
     ],
     capabilities: [
@@ -45,7 +45,6 @@ export const servicesData: ServiceData[] = [
       "Contract drafting & review",
       "Corporate governance",
       "Regulatory compliance",
-      "Dispute resolution",
       "Intellectual property",
       "Labour law advisory",
       "Merger & acquisition support",
