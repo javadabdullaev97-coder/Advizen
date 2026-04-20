@@ -20,7 +20,6 @@ import {
   LineChart,
   Medal,
   Megaphone,
-  Plus,
   Scale,
   Sprout,
   Stethoscope,
@@ -272,34 +271,6 @@ function ServicesSection() {
                   >
                     {service.title}
                   </h3>
-
-                  {/* Capabilities count badge — visible when collapsed */}
-                  <span
-                    className={cn(
-                      "hidden md:block text-[10px] tracking-[0.12em] uppercase transition-all duration-300 shrink-0",
-                      isExpanded ? "text-white/20" : "text-white/18 group-hover:text-white/35"
-                    )}
-                  >
-                    {service.capabilities.length} capabilities
-                  </span>
-
-                  {/* Expand indicator: + rotates to × */}
-                  <span
-                    className={cn(
-                      "w-8 h-8 flex items-center justify-center shrink-0 border rounded-full transition-all duration-400",
-                      isExpanded
-                        ? "border-primary/30 bg-primary/[0.06] rotate-45"
-                        : "border-white/[0.08] group-hover:border-white/[0.2]"
-                    )}
-                  >
-                    <Plus
-                      className={cn(
-                        "w-3.5 h-3.5 transition-colors duration-300",
-                        isExpanded ? "text-primary" : "text-white/25 group-hover:text-white/50"
-                      )}
-                      strokeWidth={1.5}
-                    />
-                  </span>
                 </button>
 
                 {/* Expandable detail panel */}
@@ -334,10 +305,10 @@ function ServicesSection() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.16, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                           >
-                            <p className="text-[10px] tracking-[0.18em] uppercase text-white/25 mb-3.5">
+                            <p className="text-[10px] tracking-[0.18em] uppercase text-white/30 mb-4">
                               Capabilities
                             </p>
-                            <div className="space-y-2">
+                            <div className="space-y-2.5">
                               {service.capabilities.map((cap, ci) => (
                                 <motion.div
                                   key={cap}
@@ -348,9 +319,9 @@ function ServicesSection() {
                                     duration: 0.3,
                                     ease: [0.16, 1, 0.3, 1],
                                   }}
-                                  className="flex items-center gap-2.5 text-[12px] text-white/48"
+                                  className="flex items-center gap-2.5 text-[13px] text-white/65"
                                 >
-                                  <span className="w-[5px] h-[5px] rounded-full bg-primary/45 shrink-0" />
+                                  <span className="w-[5px] h-[5px] rounded-full bg-primary/60 shrink-0" />
                                   {cap}
                                 </motion.div>
                               ))}
