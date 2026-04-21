@@ -53,102 +53,136 @@ interface Industry {
   icon: LucideIcon;
   description: string;
   offerings: string[];
+  accent: string;
+  image?: string;
 }
 
 const industries: Industry[] = [
   {
     name: "Agriculture",
     icon: Sprout,
+    accent: "46,125,50",
+    image: "/industries/agriculture.jpg",
     description: "Uzbekistan's agri-sector is undergoing rapid liberalisation. We help producers, exporters, and agro-processors navigate evolving tax incentives, export regulations, and workforce compliance.",
     offerings: ["Tax structuring for agro-exporters", "Regulatory & licensing compliance", "HR & payroll for seasonal labour", "Land use and property advisory", "Foreign investment structuring"],
   },
   {
     name: "Banking & Finance",
     icon: Landmark,
+    accent: "30,64,138",
+    image: "/industries/banking.jpg",
     description: "We serve banks, NBFIs, and payment institutions operating in or entering Uzbekistan — advising on licensing, governance, IFRS reporting, and cross-border transaction structures.",
     offerings: ["Licensing and regulatory compliance", "Corporate governance advisory", "IFRS & NAS financial reporting", "M&A and restructuring support", "Transfer pricing documentation"],
   },
   {
     name: "Blockchain & Crypto",
     icon: BitcoinSquare,
+    accent: "88,28,135",
+    image: "/industries/blockchain.jpg",
     description: "As Uzbekistan builds out its digital asset regulatory framework, we advise exchanges, funds, and Web3 businesses on the legal and tax treatment of crypto operations in the jurisdiction.",
     offerings: ["Tax treatment of digital assets", "Legal entity structuring for Web3", "Regulatory framework navigation", "Licensing advisory", "Compliance monitoring"],
   },
   {
     name: "Commerce & Retail",
     icon: Store,
+    accent: "180,83,9",
+    image: "/industries/commerce.jpg",
     description: "From market entry to multi-location expansion, we support retailers and FMCG operators with structuring, HR at scale, payroll optimisation, and consumer-facing compliance.",
     offerings: ["Market entry and entity formation", "M&A and expansion structuring", "Payroll and HR outsourcing", "Franchise and distribution agreements", "Marketing compliance"],
   },
   {
     name: "Construction & Real Estate",
     icon: Building2,
+    accent: "71,85,105",
+    image: "/industries/construction.jpg",
     description: "Large-scale construction and property projects demand careful tax and legal planning from the outset. We advise developers, contractors, and investors on project structuring and compliance.",
     offerings: ["Project tax optimisation", "Contract architecture and review", "Labour law and workforce compliance", "Permitting advisory", "Investment structuring for developers"],
   },
   {
     name: "Education",
     icon: BookOpen,
+    accent: "30,58,138",
+    image: "/industries/education.jpg",
     description: "We support private schools, universities, EdTech ventures, and training centres with entity formation, licensing, and the HR infrastructure needed to operate at scale.",
     offerings: ["Entity formation and licensing", "HR and payroll management", "Tax compliance and reporting", "Foreign staff work permits", "Operational compliance monitoring"],
   },
   {
     name: "Energy & Natural Resources",
     icon: Flame,
+    accent: "194,65,12",
+    image: "/industries/energy.jpg",
     description: "With deep experience in Uzbekistan's energy sector — including nuclear, renewables, and oil & gas — we provide tax, customs, and legal advisory for large infrastructure projects and their investors.",
     offerings: ["Tax and customs structuring for projects", "Transfer pricing documentation", "Holdings and investment structuring", "Due diligence for energy assets", "Regulatory compliance advisory"],
   },
   {
     name: "Healthcare & Pharmaceuticals",
     icon: Stethoscope,
+    accent: "13,148,136",
+    image: "/industries/healthcare.jpg",
     description: "International pharma companies and healthcare operators rely on us for smooth market entry, ongoing compliance, and the HR frameworks needed to manage clinical and administrative teams.",
     offerings: ["Market entry and product registration", "Regulatory compliance advisory", "HR, payroll, and EOR services", "Contract and distribution structuring", "Tax planning for pharma imports"],
   },
   {
     name: "Hospitality & Tourism",
     icon: BedDouble,
+    accent: "161,98,7",
+    image: "/industries/hospitality.jpg",
     description: "Hotels, resorts, travel agencies, and tourism platforms operating in Central Asia benefit from our integrated advisory on entity setup, HR, tax, and operational compliance.",
     offerings: ["Entity formation and licensing", "HR management and payroll", "Tax planning and compliance", "Franchise and management agreement review", "Expatriate work permits"],
   },
   {
     name: "Immigration",
     icon: Globe,
+    accent: "14,116,144",
+    image: "/industries/immigration.jpg",
     description: "We manage the full lifecycle of work authorisations and residency applications for expatriate personnel, enabling foreign companies to deploy talent into Uzbekistan without friction.",
     offerings: ["Work permit and visa administration", "Residency and accreditation advisory", "Expatriate HR compliance", "Employer obligations and reporting", "Legal support for relocations"],
   },
   {
     name: "IT, Fintech & Telecom",
     icon: Cpu,
+    accent: "37,99,235",
+    image: "/industries/it.jpg",
     description: "Tech companies entering Uzbekistan's growing digital market rely on us for tax structuring, licensing, and legal frameworks that support rapid scaling and cross-border operations.",
     offerings: ["Tax structuring for tech market entry", "Software and IP licensing advisory", "Fintech regulatory compliance", "Investment and shareholder structuring", "HR for engineering teams"],
   },
   {
     name: "Investment & Venture Funds",
     icon: TrendingUp,
+    accent: "21,128,61",
+    image: "/industries/investment.jpg",
     description: "We advise venture funds, family offices, and institutional investors on fund structuring, due diligence, and the legal and tax frameworks governing investments in Central Asian assets.",
     offerings: ["Fund and SPV structuring", "Tax advisory for fund operations", "Legal documentation and governance", "Tax and legal due diligence", "Portfolio company advisory"],
   },
   {
     name: "Manufacture",
     icon: Factory,
+    accent: "82,82,91",
+    image: "/industries/manufacture.jpg",
     description: "Manufacturers operating in Uzbekistan's growing industrial base need rigorous tax, customs, and HR compliance. We provide end-to-end advisory from greenfield setup through ongoing operations.",
     offerings: ["Tax and customs optimisation", "HR and payroll at scale", "M&A and corporate restructuring", "Free economic zone advisory", "Regulatory and labour compliance"],
   },
   {
     name: "Media & Entertainment",
     icon: Film,
+    accent: "126,34,206",
+    image: "/industries/media.jpg",
     description: "Content creators, production companies, and media platforms benefit from our IP, contract, and HR advisory — ensuring that creative and commercial interests are properly protected.",
     offerings: ["Intellectual property structuring", "Content and production contracts", "HR and talent agreements", "Tax planning for royalties", "Event and sponsorship structuring"],
   },
   {
     name: "Private Equity & Wealth",
     icon: Gem,
+    accent: "99,13,13",
+    image: "/industries/pe.jpg",
     description: "PE funds and high-net-worth individuals investing in Uzbekistan trust us to structure holdings efficiently, manage compliance, and provide the reporting frameworks their stakeholders require.",
     offerings: ["Holding and fund structure design", "Tax advisory and optimisation", "Legal compliance and governance", "Financial reporting (IFRS)", "Asset protection structuring"],
   },
   {
     name: "Sports",
     icon: Medal,
+    accent: "22,163,74",
+    image: "/industries/sports.jpg",
     description: "Sports clubs, federations, and athlete management firms call on us to handle the contractual, HR, and tax complexities that arise in professional sports operating across Central Asian markets.",
     offerings: ["Athlete and club contracts", "IP and sponsorship licensing", "HR and payroll for sports entities", "Event and tournament structuring", "Tax planning for prize and licensing income"],
   },
@@ -408,27 +442,7 @@ function IndustriesSection() {
           </div>
 
           {/* Right — detail panel */}
-          <div className="relative bg-[#080808] overflow-hidden min-h-[480px] md:min-h-0">
-            {/* Static ambient glow — always present */}
-            <div
-              className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
-              style={{ background: "radial-gradient(circle, rgba(99,13,13,0.12) 0%, transparent 70%)" }}
-            />
-
-            {/* Animated watermark icon */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`bg-${active.name}`}
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.1 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute bottom-0 right-0 pointer-events-none translate-x-8 translate-y-8"
-              >
-                <active.icon className="w-64 h-64 text-white/[0.025]" strokeWidth={0.5} />
-              </motion.div>
-            </AnimatePresence>
-
+          <div className="relative bg-[#080808] overflow-hidden">
             {/* Content */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -437,28 +451,42 @@ function IndustriesSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="relative p-8 md:p-10"
+                className="relative p-6 md:p-8"
               >
-                {/* Header */}
-                <div className="flex items-start gap-4 mb-5">
-                  <div className="w-10 h-10 rounded-md border border-primary/25 bg-primary/[0.07] flex items-center justify-center shrink-0 mt-0.5">
-                    <active.icon className="w-5 h-5 text-primary" strokeWidth={1.25} />
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-2xl md:text-3xl text-foreground tracking-wide leading-tight">
-                      {active.name}
-                    </h3>
-                    <p className="text-[10px] tracking-[0.16em] uppercase text-white/25 mt-1">
-                      {active.offerings.length} services available
-                    </p>
+                {/* Industry image */}
+                <div
+                  className="relative w-full h-44 md:h-52 rounded-xl overflow-hidden mb-6"
+                  style={{
+                    background: `linear-gradient(145deg, rgba(${active.accent},0.2) 0%, #0d0d0d 55%, rgba(${active.accent},0.06) 100%)`,
+                  }}
+                >
+                  {active.image && (
+                    <img
+                      src={active.image}
+                      alt={active.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                    />
+                  )}
+                  {/* Fallback icon — visible when image hasn't loaded */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <active.icon className="w-14 h-14 text-white/[0.06]" strokeWidth={0.6} />
                   </div>
                 </div>
 
-                {/* Divider */}
-                <div className="w-full h-px bg-white/[0.05] mb-5" />
+                {/* Header */}
+                <div className="flex items-center gap-3 mb-4">
+                  <active.icon
+                    className="w-5 h-5 text-primary shrink-0"
+                    strokeWidth={1.25}
+                  />
+                  <h3 className="font-serif text-2xl md:text-3xl text-foreground tracking-wide leading-tight">
+                    {active.name}
+                  </h3>
+                </div>
 
                 {/* Description */}
-                <p className="text-[14px] text-white/52 leading-relaxed mb-7">
+                <p className="text-[14px] text-white/52 leading-relaxed mb-6">
                   {active.description}
                 </p>
 
