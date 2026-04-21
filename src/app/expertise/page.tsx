@@ -520,32 +520,24 @@ export default function ExpertisePage() {
             </RevealLine>
 
             {/* Stats */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 mt-14 border border-white/[0.07] bg-white/[0.04]"
-              initial="hidden"
-              animate="visible"
-              variants={{
-                visible: { transition: { staggerChildren: 0.12, delayChildren: 0.6 } },
-              }}
-            >
-              {heroStats.map((s) => (
+            <div className="mt-12 pt-10 border-t border-white/[0.08] flex flex-wrap gap-x-12 gap-y-6">
+              {heroStats.map((s, i) => (
                 <motion.div
                   key={s.label}
-                  variants={{
-                    hidden: { opacity: 0, y: 18 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-                  }}
-                  className="bg-black px-7 py-8 md:px-9 md:py-10 flex flex-col gap-2.5 border-r border-b border-white/[0.07] last:border-r-0 [&:nth-child(2)]:border-r-0 md:[&:nth-child(2)]:border-r md:[&:nth-child(4)]:border-r-0"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.65 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-col gap-1.5"
                 >
                   <span className="font-serif text-4xl md:text-5xl text-foreground font-light tabular-nums leading-none">
                     {s.value}
                   </span>
-                  <span className="text-[10px] tracking-[0.2em] uppercase text-white/40 mt-1">
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-white/45">
                     {s.label}
                   </span>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </section>
       </AuroraBackground>
