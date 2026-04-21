@@ -243,7 +243,7 @@ function RegionInfoPanel({ activeId }: { activeId: string | null }) {
                   {region.industries.map((s) => (
                     <span
                       key={s}
-                      className="text-[11px] text-primary/75 border border-primary/20 bg-primary/[0.04] px-2.5 py-1 rounded"
+                      className="text-[11px] text-white/55 border border-white/[0.08] bg-white/[0.02] px-2.5 py-1 rounded"
                     >
                       {s}
                     </span>
