@@ -188,10 +188,6 @@ const heroStats = [
   { value: "$10B+", label: "Deals advised" },
 ];
 
-const serviceShortNames: Record<string, string> = {
-  tax: "Tax", legal: "Legal", finance: "Finance",
-  hr: "HR", marketing: "Marketing", funding: "Funding",
-};
 
 function ServicesSection() {
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null);
@@ -497,15 +493,6 @@ export default function ExpertisePage() {
       {/* ====== HERO ====== */}
       <AuroraBackground>
         <section className="relative pt-36 pb-24 md:pt-44 md:pb-32">
-          {/* Big watermark */}
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.025 }}
-            transition={{ duration: 2.5, delay: 0.6 }}
-            className="absolute top-8 right-0 md:right-8 font-serif text-[18rem] md:text-[26rem] leading-none text-foreground select-none pointer-events-none"
-          >
-            06
-          </motion.span>
 
           <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
             <motion.p
@@ -533,34 +520,32 @@ export default function ExpertisePage() {
             </RevealLine>
 
             {/* Stats */}
-            <RevealLine delay={0.65}>
-              <div className="flex flex-wrap items-center gap-x-10 gap-y-5 mt-12 pt-10 border-t border-white/[0.06]">
-                {heroStats.map((s) => (
-                  <div key={s.label} className="flex items-baseline gap-2.5">
-                    <span className="font-serif text-2xl md:text-3xl text-foreground font-light tabular-nums">
-                      {s.value}
-                    </span>
-                    <span className="text-[10px] tracking-[0.18em] uppercase text-white/35">
-                      {s.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </RevealLine>
-
-            {/* Quick-links */}
-            <RevealLine delay={0.8}>
-              <div className="flex flex-wrap gap-2 mt-8">
-                {servicesData.map((s) => (
-                  <span
-                    key={s.slug}
-                    className="text-xs tracking-[0.14em] uppercase text-white/35 border border-white/[0.07] rounded-full px-4 py-1.5"
-                  >
-                    {serviceShortNames[s.slug] ?? s.title}
+            <motion.div
+              className="grid grid-cols-2 md:grid-cols-4 mt-14 border border-white/[0.07] bg-white/[0.04]"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: { transition: { staggerChildren: 0.12, delayChildren: 0.6 } },
+              }}
+            >
+              {heroStats.map((s) => (
+                <motion.div
+                  key={s.label}
+                  variants={{
+                    hidden: { opacity: 0, y: 18 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+                  }}
+                  className="bg-black px-7 py-8 md:px-9 md:py-10 flex flex-col gap-2.5 border-r border-b border-white/[0.07] last:border-r-0 [&:nth-child(2)]:border-r-0 md:[&:nth-child(2)]:border-r md:[&:nth-child(4)]:border-r-0"
+                >
+                  <span className="font-serif text-4xl md:text-5xl text-foreground font-light tabular-nums leading-none">
+                    {s.value}
                   </span>
-                ))}
-              </div>
-            </RevealLine>
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-white/40 mt-1">
+                    {s.label}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </section>
       </AuroraBackground>
