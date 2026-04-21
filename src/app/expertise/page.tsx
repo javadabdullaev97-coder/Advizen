@@ -291,7 +291,7 @@ function IndustriesSection() {
           </h2>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-[5fr_7fr] border border-white/[0.07] overflow-hidden md:h-[600px]">
+        <div className="grid md:grid-cols-[5fr_7fr] border border-white/[0.07] overflow-hidden md:h-[760px]">
           {/* Left — industry list */}
           <div className="border-r border-white/[0.07] divide-y divide-white/[0.04] flex flex-col h-full">
             {industryGroups.map((ind, i) => {
@@ -348,16 +348,16 @@ function IndustriesSection() {
           </div>
 
           {/* Right — detail panel */}
-          <div className="relative bg-[#080808] overflow-y-auto h-full scrollbar-none">
-            {/* Content */}
+          <div className="relative bg-[#080808] h-full overflow-hidden">
+            {/* Content — absolute so it never drives the container height */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.name}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="relative p-6 md:p-8"
+                className="absolute inset-0 p-6 md:p-8"
               >
                 {/* Industry image */}
                 <div
