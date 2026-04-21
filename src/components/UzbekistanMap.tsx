@@ -117,8 +117,8 @@ export default function UzbekistanMap({ onActiveChange }: { onActiveChange?: (id
                 d={r.d}
                 onPointerEnter={() => setHovered(r.id)}
                 style={{
-                  fill: active ? "rgba(80,10,10,0.65)" : "rgba(255,255,255,0.06)",
-                  stroke: active ? "rgba(140,25,25,0.95)" : "rgba(255,255,255,0.18)",
+                  fill: active ? "rgb(80,10,10)" : "rgba(255,255,255,0.06)",
+                  stroke: active ? "rgb(140,25,25)" : "rgba(255,255,255,0.08)",
                   strokeWidth: active ? 1.5 : 1,
                   filter: active ? "url(#uz-region-glow)" : "none",
                   transition: "fill 280ms ease, stroke 280ms ease, stroke-width 280ms ease",
