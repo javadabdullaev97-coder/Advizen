@@ -18,7 +18,7 @@ const footerLinks = {
   ],
   Firm: [
     { label: "Store", href: "/store" },
-    { label: "The Library", href: "/library" },
+    { label: "Insights", href: "/library" },
     { label: "Contact", href: "/contact" },
   ],
 };

@@ -71,7 +71,7 @@ export default function LibraryPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="tracking-luxury text-white/50 mb-6"
             >
-              The Library
+              Insights
             </motion.p>
             <TextReveal
               text="Knowledge that empowers decisions"
