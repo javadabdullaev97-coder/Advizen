@@ -37,7 +37,7 @@ export default function Navbar() {
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20 relative">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
           <Image
@@ -51,8 +51,8 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Nav — centered */}
-        <div className="hidden md:flex items-center gap-8 flex-1 justify-center">
+        {/* Desktop Nav — absolutely centred on the viewport */}
+        <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (

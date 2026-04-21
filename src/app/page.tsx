@@ -372,10 +372,6 @@ export default function Home() {
               </AnimatedSection>
               <AnimatedSection delay={0.3}>
                 <p className="text-white/30 text-sm mb-8 italic">Tap a node to explore our core values →</p>
-                <MagneticButton variant="outline" as="a" href="/contact">
-                  Get in touch
-                  <ArrowRight className="w-4 h-4" />
-                </MagneticButton>
               </AnimatedSection>
             </div>
             <div>
@@ -447,24 +443,6 @@ export default function Home() {
               </StaggerItem>
             ))}
           </StaggerContainer>
-        </div>
-      </section>
-
-      <div className="w-full max-w-7xl mx-auto h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-
-      {/* ── Editorial Quote ── */}
-      <section className="py-32 md:py-44 bg-black relative overflow-hidden">
-        <div className="ambient-glow ambient-glow-warm w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -left-32 opacity-40" />
-        <div className="max-w-5xl mx-auto px-6 lg:px-8 relative">
-          <AnimatedSection>
-            <blockquote className="text-center">
-              <p className="font-serif text-3xl md:text-5xl lg:text-6xl text-foreground leading-[1.2] font-light italic">
-                &ldquo;One partner, one point of contact&nbsp;&mdash; complete coverage for your entire operation.&rdquo;
-              </p>
-              <cite className="block mt-10 tracking-luxury text-muted-dark not-italic">The Advizen Promise</cite>
-            </blockquote>
-          </AnimatedSection>
         </div>
       </section>
 
