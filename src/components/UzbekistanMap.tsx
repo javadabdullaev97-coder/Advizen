@@ -61,21 +61,7 @@ export default function UzbekistanMap({ onActiveChange }: { onActiveChange?: (id
       className="relative w-full max-w-2xl mx-auto select-none"
       onPointerLeave={() => setHovered(null)}
     >
-      {/* Region name — shown on hover and auto-cycle */}
-      <div className="h-6 flex items-center justify-center mb-2">
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={regionName}
-            className="text-xs tracking-[0.2em] uppercase text-white/55"
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.15 }}
-          >
-            {regionName}
-          </motion.p>
-        </AnimatePresence>
-      </div>
+      {/* Region name label removed — shown in the side panel instead */}
 
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -136,10 +122,7 @@ export default function UzbekistanMap({ onActiveChange }: { onActiveChange?: (id
                   stroke: active ? "rgba(200,60,60,0.75)" : "rgba(255,255,255,0.10)",
                   strokeWidth: 0.5,
                   filter: active ? "url(#uz-region-glow)" : "none",
-                  transform: isHovered ? "scale(1.025)" : "scale(1)",
-                  transformOrigin: "center",
-                  transformBox: "fill-box",
-                  transition: "fill 280ms ease, stroke 280ms ease, transform 280ms ease",
+                  transition: "fill 280ms ease, stroke 280ms ease",
                   cursor: "default",
                   pointerEvents: "all",
                 }}
