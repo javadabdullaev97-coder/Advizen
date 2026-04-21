@@ -105,18 +105,18 @@ const REGION_DATA: Record<string, RegionData> = {
     industries: ["Gold & Uranium Mining", "Chemicals", "Heavy Industry", "Logistics"],
   },
   "UZ-QA": {
-    name: "Qarakalpakstan",
-    population: "1.9M",
-    gdp: "~$2.0B",
-    sezs: ["Muynoq Development Zone"],
-    industries: ["Agriculture", "Oil & Gas", "Fishing", "Cotton", "Tourism"],
-  },
-  "UZ-QR": {
     name: "Qashqadaryo",
     population: "3.5M",
     gdp: "~$6.0B",
     sezs: ["Karshi SEZ"],
     industries: ["Natural Gas", "Chemicals", "Petrochemicals", "Agriculture"],
+  },
+  "UZ-QR": {
+    name: "Qarakalpakstan",
+    population: "1.9M",
+    gdp: "~$2.0B",
+    sezs: ["Muynoq Development Zone"],
+    industries: ["Agriculture", "Oil & Gas", "Fishing", "Cotton", "Tourism"],
   },
   "UZ-SA": {
     name: "Samarkand",
