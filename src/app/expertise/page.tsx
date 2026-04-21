@@ -6,25 +6,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
-  BedDouble,
-  BookOpen,
   Building2,
   Calculator,
   Cpu,
-  Factory,
-  Film,
   Flame,
-  Gem,
-  Globe,
   Landmark,
   LineChart,
-  Medal,
   Megaphone,
   Scale,
-  Sprout,
   Stethoscope,
   Store,
-  TrendingUp,
   Users,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -36,155 +27,70 @@ import { cn } from "@/lib/utils";
 
 type LucideIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
-function BitcoinSquare(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1}
-      strokeLinecap="square" strokeLinejoin="miter" {...props}>
-      <path d="M7 4 V20" /><path d="M7 4 H15 L17 6 V10 L15 12 H7" />
-      <path d="M7 12 H16 L18 14 V18 L16 20 H7" />
-      <path d="M10 2 V4" /><path d="M14 2 V4" />
-      <path d="M10 20 V22" /><path d="M14 20 V22" />
-    </svg>
-  );
-}
-
-interface Industry {
+interface IndustryGroup {
   name: string;
   icon: LucideIcon;
-  description: string;
-  offerings: string[];
   accent: string;
   image?: string;
+  description: string;
+  sectors: string[];
+  offerings: string[];
 }
 
-const industries: Industry[] = [
+const industryGroups: IndustryGroup[] = [
   {
-    name: "Agriculture",
-    icon: Sprout,
-    accent: "46,125,50",
-    image: "/industries/agriculture.jpg",
-    description: "Uzbekistan's agri-sector is undergoing rapid liberalisation. We help producers, exporters, and agro-processors navigate evolving tax incentives, export regulations, and workforce compliance.",
-    offerings: ["Tax structuring for agro-exporters", "Regulatory & licensing compliance", "HR & payroll for seasonal labour", "Land use and property advisory", "Foreign investment structuring"],
-  },
-  {
-    name: "Banking & Finance",
+    name: "Financial Services",
     icon: Landmark,
     accent: "30,64,138",
-    image: "/industries/banking.jpg",
-    description: "We serve banks, NBFIs, and payment institutions operating in or entering Uzbekistan — advising on licensing, governance, IFRS reporting, and cross-border transaction structures.",
-    offerings: ["Licensing and regulatory compliance", "Corporate governance advisory", "IFRS & NAS financial reporting", "M&A and restructuring support", "Transfer pricing documentation"],
+    image: "/industries/financial-services.jpg",
+    description: "Banks, investment funds, PE firms, and digital asset operators across Central Asia rely on Advizen for licensing, regulatory compliance, fund structuring, and cross-border transaction advisory.",
+    sectors: ["Banking & Finance", "Investment & Venture Funds", "Private Equity & Wealth", "Capital Markets", "Blockchain & Crypto"],
+    offerings: ["Licensing and regulatory compliance", "Corporate governance advisory", "IFRS & NAS financial reporting", "Fund and SPV structuring", "M&A and restructuring support", "Transfer pricing documentation", "Digital asset legal structuring"],
   },
   {
-    name: "Blockchain & Crypto",
-    icon: BitcoinSquare,
-    accent: "88,28,135",
-    image: "/industries/blockchain.jpg",
-    description: "As Uzbekistan builds out its digital asset regulatory framework, we advise exchanges, funds, and Web3 businesses on the legal and tax treatment of crypto operations in the jurisdiction.",
-    offerings: ["Tax treatment of digital assets", "Legal entity structuring for Web3", "Regulatory framework navigation", "Licensing advisory", "Compliance monitoring"],
-  },
-  {
-    name: "Commerce & Retail",
-    icon: Store,
-    accent: "180,83,9",
-    image: "/industries/commerce.jpg",
-    description: "From market entry to multi-location expansion, we support retailers and FMCG operators with structuring, HR at scale, payroll optimisation, and consumer-facing compliance.",
-    offerings: ["Market entry and entity formation", "M&A and expansion structuring", "Payroll and HR outsourcing", "Franchise and distribution agreements", "Marketing compliance"],
-  },
-  {
-    name: "Construction & Real Estate",
-    icon: Building2,
-    accent: "71,85,105",
-    image: "/industries/construction.jpg",
-    description: "Large-scale construction and property projects demand careful tax and legal planning from the outset. We advise developers, contractors, and investors on project structuring and compliance.",
-    offerings: ["Project tax optimisation", "Contract architecture and review", "Labour law and workforce compliance", "Permitting advisory", "Investment structuring for developers"],
-  },
-  {
-    name: "Education",
-    icon: BookOpen,
-    accent: "30,58,138",
-    image: "/industries/education.jpg",
-    description: "We support private schools, universities, EdTech ventures, and training centres with entity formation, licensing, and the HR infrastructure needed to operate at scale.",
-    offerings: ["Entity formation and licensing", "HR and payroll management", "Tax compliance and reporting", "Foreign staff work permits", "Operational compliance monitoring"],
-  },
-  {
-    name: "Energy & Natural Resources",
+    name: "Energy & Industrials",
     icon: Flame,
     accent: "194,65,12",
-    image: "/industries/energy.jpg",
-    description: "With deep experience in Uzbekistan's energy sector — including nuclear, renewables, and oil & gas — we provide tax, customs, and legal advisory for large infrastructure projects and their investors.",
-    offerings: ["Tax and customs structuring for projects", "Transfer pricing documentation", "Holdings and investment structuring", "Due diligence for energy assets", "Regulatory compliance advisory"],
+    image: "/industries/energy-industrials.jpg",
+    description: "From nuclear power and renewables to oil & gas, agri-processing, and heavy manufacturing — we provide tax, customs, and legal advisory for capital-intensive projects and their investors across Uzbekistan.",
+    sectors: ["Energy & Natural Resources", "Oil & Gas", "Manufacturing", "Agriculture & Agro-processing"],
+    offerings: ["Tax and customs structuring for large projects", "Transfer pricing documentation", "Holdings and investment structuring", "Due diligence for energy and industrial assets", "Free economic zone advisory", "HR and payroll at scale"],
   },
   {
-    name: "Healthcare & Pharmaceuticals",
-    icon: Stethoscope,
-    accent: "13,148,136",
-    image: "/industries/healthcare.jpg",
-    description: "International pharma companies and healthcare operators rely on us for smooth market entry, ongoing compliance, and the HR frameworks needed to manage clinical and administrative teams.",
-    offerings: ["Market entry and product registration", "Regulatory compliance advisory", "HR, payroll, and EOR services", "Contract and distribution structuring", "Tax planning for pharma imports"],
-  },
-  {
-    name: "Hospitality & Tourism",
-    icon: BedDouble,
-    accent: "161,98,7",
-    image: "/industries/hospitality.jpg",
-    description: "Hotels, resorts, travel agencies, and tourism platforms operating in Central Asia benefit from our integrated advisory on entity setup, HR, tax, and operational compliance.",
-    offerings: ["Entity formation and licensing", "HR management and payroll", "Tax planning and compliance", "Franchise and management agreement review", "Expatriate work permits"],
-  },
-  {
-    name: "Immigration",
-    icon: Globe,
-    accent: "14,116,144",
-    image: "/industries/immigration.jpg",
-    description: "We manage the full lifecycle of work authorisations and residency applications for expatriate personnel, enabling foreign companies to deploy talent into Uzbekistan without friction.",
-    offerings: ["Work permit and visa administration", "Residency and accreditation advisory", "Expatriate HR compliance", "Employer obligations and reporting", "Legal support for relocations"],
-  },
-  {
-    name: "IT, Fintech & Telecom",
+    name: "Technology & Digital",
     icon: Cpu,
     accent: "37,99,235",
-    image: "/industries/it.jpg",
-    description: "Tech companies entering Uzbekistan's growing digital market rely on us for tax structuring, licensing, and legal frameworks that support rapid scaling and cross-border operations.",
-    offerings: ["Tax structuring for tech market entry", "Software and IP licensing advisory", "Fintech regulatory compliance", "Investment and shareholder structuring", "HR for engineering teams"],
+    image: "/industries/technology.jpg",
+    description: "Tech companies, fintechs, and telecoms entering Uzbekistan's growing digital economy rely on us for tax structuring, regulatory licensing, and the legal frameworks that support rapid scaling.",
+    sectors: ["IT & Software", "Fintech", "Telecom", "Blockchain & Crypto"],
+    offerings: ["Tax structuring for market entry", "Fintech regulatory compliance", "Software and IP licensing advisory", "Investment and shareholder structuring", "Digital asset legal structuring", "HR for engineering teams"],
   },
   {
-    name: "Investment & Venture Funds",
-    icon: TrendingUp,
-    accent: "21,128,61",
-    image: "/industries/investment.jpg",
-    description: "We advise venture funds, family offices, and institutional investors on fund structuring, due diligence, and the legal and tax frameworks governing investments in Central Asian assets.",
-    offerings: ["Fund and SPV structuring", "Tax advisory for fund operations", "Legal documentation and governance", "Tax and legal due diligence", "Portfolio company advisory"],
+    name: "Real Estate & Infrastructure",
+    icon: Building2,
+    accent: "71,85,105",
+    image: "/industries/real-estate.jpg",
+    description: "Large-scale property and infrastructure projects demand careful tax and legal planning from the outset. We advise developers, contractors, and investors on project structuring, permitting, and compliance.",
+    sectors: ["Commercial Real Estate", "Residential Development", "Construction", "Infrastructure"],
+    offerings: ["Project tax optimisation", "Contract architecture and review", "Labour law and workforce compliance", "Permitting and regulatory advisory", "Investment structuring for developers"],
   },
   {
-    name: "Manufacture",
-    icon: Factory,
-    accent: "82,82,91",
-    image: "/industries/manufacture.jpg",
-    description: "Manufacturers operating in Uzbekistan's growing industrial base need rigorous tax, customs, and HR compliance. We provide end-to-end advisory from greenfield setup through ongoing operations.",
-    offerings: ["Tax and customs optimisation", "HR and payroll at scale", "M&A and corporate restructuring", "Free economic zone advisory", "Regulatory and labour compliance"],
+    name: "Consumer & Lifestyle",
+    icon: Store,
+    accent: "180,83,9",
+    image: "/industries/consumer.jpg",
+    description: "From FMCG and retail to hospitality, media, and sports — we support consumer-facing businesses across Uzbekistan with market entry structuring, HR at scale, payroll, and operational compliance.",
+    sectors: ["FMCG & Retail", "Hospitality & Tourism", "Media & Entertainment", "Sports"],
+    offerings: ["Market entry and entity formation", "M&A and expansion structuring", "Payroll and HR outsourcing", "Franchise and distribution agreements", "IP and content contracts", "Event and sponsorship structuring"],
   },
   {
-    name: "Media & Entertainment",
-    icon: Film,
-    accent: "126,34,206",
-    image: "/industries/media.jpg",
-    description: "Content creators, production companies, and media platforms benefit from our IP, contract, and HR advisory — ensuring that creative and commercial interests are properly protected.",
-    offerings: ["Intellectual property structuring", "Content and production contracts", "HR and talent agreements", "Tax planning for royalties", "Event and sponsorship structuring"],
-  },
-  {
-    name: "Private Equity & Wealth",
-    icon: Gem,
-    accent: "99,13,13",
-    image: "/industries/pe.jpg",
-    description: "PE funds and high-net-worth individuals investing in Uzbekistan trust us to structure holdings efficiently, manage compliance, and provide the reporting frameworks their stakeholders require.",
-    offerings: ["Holding and fund structure design", "Tax advisory and optimisation", "Legal compliance and governance", "Financial reporting (IFRS)", "Asset protection structuring"],
-  },
-  {
-    name: "Sports",
-    icon: Medal,
-    accent: "22,163,74",
-    image: "/industries/sports.jpg",
-    description: "Sports clubs, federations, and athlete management firms call on us to handle the contractual, HR, and tax complexities that arise in professional sports operating across Central Asian markets.",
-    offerings: ["Athlete and club contracts", "IP and sponsorship licensing", "HR and payroll for sports entities", "Event and tournament structuring", "Tax planning for prize and licensing income"],
+    name: "Healthcare & Social",
+    icon: Stethoscope,
+    accent: "13,148,136",
+    image: "/industries/healthcare-social.jpg",
+    description: "International pharma companies, healthcare operators, private schools, and universities rely on us for smooth market entry, licensing advisory, and the HR and compliance infrastructure needed to operate at scale.",
+    sectors: ["Pharmaceuticals", "Healthcare Providers", "Private Education", "EdTech"],
+    offerings: ["Market entry and product registration", "Regulatory compliance advisory", "HR, payroll, and EOR services", "Entity formation and licensing", "Foreign staff work permits", "Tax compliance and reporting"],
   },
 ];
 
@@ -217,7 +123,7 @@ const allEngagements = [
 
 const heroStats = [
   { value: "6", label: "Disciplines" },
-  { value: "16", label: "Industries" },
+  { value: "6", label: "Sectors" },
   { value: "8+", label: "Years" },
   { value: "$10B+", label: "Deals advised" },
 ];
@@ -373,7 +279,7 @@ function ServicesSection() {
 
 function IndustriesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const active = industries[activeIndex];
+  const active = industryGroups[activeIndex];
 
   return (
     <section className="py-20 md:py-28 bg-black relative overflow-hidden border-y border-white/[0.06]">
@@ -381,14 +287,14 @@ function IndustriesSection() {
         <AnimatedSection className="mb-10 md:mb-12">
           <p className="tracking-luxury text-white/50 mb-3">Sector Experience</p>
           <h2 className="heading-luxury text-2xl md:text-3xl text-foreground">
-            Industries we serve
+            Sectors we serve
           </h2>
         </AnimatedSection>
 
         <div className="grid md:grid-cols-[5fr_7fr] border border-white/[0.07] overflow-hidden">
           {/* Left — industry list */}
           <div className="border-r border-white/[0.07] divide-y divide-white/[0.04] overflow-y-auto md:max-h-[640px] scrollbar-none">
-            {industries.map((ind, i) => {
+            {industryGroups.map((ind, i) => {
               const IconComp = ind.icon;
               const isActive = i === activeIndex;
               return (
@@ -475,7 +381,7 @@ function IndustriesSection() {
                 </div>
 
                 {/* Header */}
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-3">
                   <active.icon
                     className="w-5 h-5 text-primary shrink-0"
                     strokeWidth={1.25}
@@ -483,6 +389,18 @@ function IndustriesSection() {
                   <h3 className="font-serif text-2xl md:text-3xl text-foreground tracking-wide leading-tight">
                     {active.name}
                   </h3>
+                </div>
+
+                {/* Sector chips */}
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {active.sectors.map((s) => (
+                    <span
+                      key={s}
+                      className="text-[10px] tracking-[0.1em] uppercase text-white/40 border border-white/[0.07] px-2.5 py-1"
+                    >
+                      {s}
+                    </span>
+                  ))}
                 </div>
 
                 {/* Description */}
@@ -542,7 +460,7 @@ export default function ExpertisePage() {
 
             <RevealLine delay={0.5}>
               <p className="text-lg text-white/50 max-w-2xl mt-8 leading-relaxed">
-                Six core disciplines. Sixteen industries. One cohesive advisory
+                Six core disciplines. Six industry sectors. One cohesive advisory
                 practice built for the complexities of Central Asian markets.
               </p>
             </RevealLine>
