@@ -291,9 +291,9 @@ function IndustriesSection() {
           </h2>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-[5fr_7fr] border border-white/[0.07] overflow-hidden">
+        <div className="grid md:grid-cols-[5fr_7fr] border border-white/[0.07] overflow-hidden md:h-[600px]">
           {/* Left — industry list */}
-          <div className="border-r border-white/[0.07] divide-y divide-white/[0.04] flex flex-col">
+          <div className="border-r border-white/[0.07] divide-y divide-white/[0.04] flex flex-col h-full">
             {industryGroups.map((ind, i) => {
               const IconComp = ind.icon;
               const isActive = i === activeIndex;
@@ -303,7 +303,7 @@ function IndustriesSection() {
                   type="button"
                   onClick={() => setActiveIndex(i)}
                   className={cn(
-                    "relative w-full flex flex-1 items-center gap-3.5 px-5 py-4 text-left transition-all duration-250 group outline-none",
+                    "relative w-full flex flex-1 items-center gap-3.5 px-5 text-left transition-all duration-250 group outline-none",
                     isActive
                       ? "bg-white/[0.04] text-foreground"
                       : "text-white/38 hover:text-white/68 hover:bg-white/[0.02]"
@@ -348,7 +348,7 @@ function IndustriesSection() {
           </div>
 
           {/* Right — detail panel */}
-          <div className="relative bg-[#080808] overflow-hidden">
+          <div className="relative bg-[#080808] overflow-y-auto h-full scrollbar-none">
             {/* Content */}
             <AnimatePresence mode="wait">
               <motion.div
