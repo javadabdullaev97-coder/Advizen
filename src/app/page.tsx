@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Shield, Users, Lightbulb, Target, Handshake, Mail, Phone } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Shield, Users, Lightbulb, Target, Handshake, Mail, Phone, Calculator, Scale, LineChart, Megaphone, Landmark, type LucideProps } from "lucide-react";
 import Parallax from "@/components/Parallax";
 import AnimatedSection, {
   StaggerContainer,
@@ -12,11 +12,21 @@ import TextReveal from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import GlassCard from "@/components/GlassCard";
 import CosmicParallaxBg from "@/components/CosmicParallaxBg";
-import CategoryList from "@/components/CategoryList";
 import ClientsBar from "@/components/ClientsBar";
 import CountUp from "@/components/CountUp";
 import { servicesData } from "@/lib/services";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+
+type LucideIcon = React.ComponentType<LucideProps>;
+
+const serviceIcons: Record<string, LucideIcon> = {
+  tax: Calculator,
+  legal: Scale,
+  finance: LineChart,
+  hr: Users,
+  marketing: Megaphone,
+  funding: Landmark,
+};
 
 const firmValues = [
   {
@@ -156,15 +166,45 @@ export default function Home() {
             </AnimatedSection>
           </Parallax>
 
-          <CategoryList
-            items={servicesData.map((s) => ({
-              id: s.slug,
-              title: s.title,
-              subtitle: s.category,
-              icon: <span className="text-xs font-mono">{s.num}</span>,
-              href: `/expertise/${s.slug}`,
-            }))}
-          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {servicesData.map((service, i) => {
+              const Icon = serviceIcons[service.slug] ?? ArrowUpRight;
+              return (
+                <motion.div
+                  key={service.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: (i % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Link href={`/expertise/${service.slug}`} className="group glow-card block h-full cursor-pointer">
+                    <div className="glow-card-spinner" />
+                    <div className="glow-card-backdrop" />
+                    <div className="glow-card-content p-5 md:p-6 flex flex-col h-full">
+                      <div className="glow-card-glow" />
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-8 h-8 rounded-md border border-white/[0.08] bg-white/[0.02] flex items-center justify-center shrink-0 transition-colors duration-300 group-hover:border-primary/30 group-hover:bg-primary/[0.05]">
+                          <Icon className="w-3.5 h-3.5 text-white/35 glow-card-icon transition-colors duration-300" strokeWidth={1.25} />
+                        </div>
+                        <span className="font-mono text-[10px] tracking-[0.18em] text-white/15 tabular-nums glow-card-title">
+                          {service.num}
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-lg text-foreground/65 leading-snug mb-2 glow-card-title tracking-wide">
+                        {service.title}
+                      </h3>
+                      <p className="text-[12px] text-white/28 leading-relaxed flex-1 glow-card-desc line-clamp-2">
+                        {service.description[0]}
+                      </p>
+                      <div className="mt-4 flex items-center justify-end">
+                        <ArrowUpRight className="w-3.5 h-3.5 text-white/12 group-hover:text-white/50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-250" />
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 

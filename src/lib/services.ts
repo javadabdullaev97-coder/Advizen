@@ -37,7 +37,7 @@ export const servicesData: ServiceData[] = [
     category: "Advisory",
     headline: "Full-spectrum legal\ncounsel & protection",
     description: [
-      "Our legal team provides end-to-end counsel for businesses operating in Uzbekistan — from entity formation and contract architecture to regulatory compliance and dispute resolution.",
+      "Our legal team provides end-to-end counsel for businesses operating in Uzbekistan — from entity formation and contract architecture to regulatory compliance and corporate structuring.",
       "We protect your interests with the rigour and attention to detail that complex, multi-jurisdictional operations demand.",
     ],
     capabilities: [
@@ -45,7 +45,6 @@ export const servicesData: ServiceData[] = [
       "Contract drafting & review",
       "Corporate governance",
       "Regulatory compliance",
-      "Dispute resolution",
       "Intellectual property",
       "Labour law advisory",
       "Merger & acquisition support",
@@ -94,29 +93,8 @@ export const servicesData: ServiceData[] = [
     ],
   },
   {
-    slug: "marketing",
-    num: "05",
-    title: "Strategic Marketing",
-    category: "Growth",
-    headline: "Brand presence across\nCentral Asian markets",
-    description: [
-      "We build and execute marketing strategies that establish your brand in Uzbekistan and across Central Asia — from digital campaigns to full brand development.",
-      "Our approach combines data-driven performance marketing with deep local market understanding to deliver measurable impact.",
-    ],
-    capabilities: [
-      "Digital strategy & planning",
-      "Social media management",
-      "Content creation & copywriting",
-      "Brand identity development",
-      "SEO & performance marketing",
-      "Market research & analysis",
-      "Campaign management",
-      "Public relations",
-    ],
-  },
-  {
     slug: "funding",
-    num: "06",
+    num: "05",
     title: "Funding & Grants",
     category: "Growth",
     headline: "Securing capital\nfor ambitious ventures",

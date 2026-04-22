@@ -15,6 +15,7 @@ import TextReveal, { RevealLine } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
 import AuroraBackground from "@/components/AuroraBackground";
 import { cn } from "@/lib/utils";
+import { publications } from "@/lib/publications";
 
 /* ── Data ─────────────────────────────────────────────── */
 
@@ -38,87 +39,6 @@ const flagship = {
 };
 
 type FilterTag = "All" | "Tax" | "HR" | "Legal" | "Market" | "Compliance";
-
-const publications: {
-  slug: string;
-  tag: string;
-  category: FilterTag;
-  title: string;
-  description: string;
-  year: string;
-  pages: number;
-  hasDownload?: boolean;
-  hasRead?: boolean;
-}[] = [
-  {
-    slug: "uzbekistan-tax-landscape-2024",
-    tag: "Tax Briefing",
-    category: "Tax",
-    title: "Uzbekistan Tax Landscape 2024–2025",
-    description:
-      "An analysis of recent tax reforms, key changes in legislation, and strategic implications for domestic and foreign-invested entities.",
-    year: "2024",
-    pages: 24,
-    hasRead: true,
-  },
-  {
-    slug: "employer-of-record-central-asia",
-    tag: "HR Insight",
-    category: "HR",
-    title: "Employer of Record in Central Asia",
-    description:
-      "How foreign companies can hire and manage talent in Uzbekistan without establishing a local legal entity.",
-    year: "2024",
-    pages: 18,
-    hasRead: true,
-  },
-  {
-    slug: "foreign-investment-protection",
-    tag: "Legal Brief",
-    category: "Legal",
-    title: "Foreign Investment Protection in Uzbekistan",
-    description:
-      "An overview of legal guarantees, bilateral treaties, and dispute resolution mechanisms available to foreign investors.",
-    year: "2023",
-    pages: 20,
-    hasRead: true,
-    hasDownload: true,
-  },
-  {
-    slug: "agriculture-agribusiness-opportunities",
-    tag: "Market Report",
-    category: "Market",
-    title: "Agriculture & Agribusiness Opportunities",
-    description:
-      "Sector analysis of Uzbekistan's agricultural market, export potential, and investment pathways.",
-    year: "2023",
-    pages: 32,
-    hasRead: true,
-  },
-  {
-    slug: "ifrs-adoption-uzbekistan",
-    tag: "Compliance Guide",
-    category: "Compliance",
-    title: "IFRS Adoption in Uzbekistan",
-    description:
-      "Practical guidance on transitioning from National Accounting Standards to International Financial Reporting Standards.",
-    year: "2023",
-    pages: 28,
-    hasRead: true,
-    hasDownload: true,
-  },
-  {
-    slug: "payroll-social-contributions",
-    tag: "HR Guide",
-    category: "HR",
-    title: "Payroll & Social Contributions",
-    description:
-      "A detailed breakdown of payroll taxes, social contributions, and reporting obligations for employers in Uzbekistan.",
-    year: "2022",
-    pages: 16,
-    hasRead: true,
-  },
-];
 
 const filters: FilterTag[] = ["All", "Tax", "HR", "Legal", "Market", "Compliance"];
 
