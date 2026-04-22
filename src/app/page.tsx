@@ -21,12 +21,12 @@ import { cn } from "@/lib/utils";
 
 type LucideIcon = ComponentType<LucideProps>;
 
-/* ── Orbital values data ─────────────────────────────── */
+/* ── Orbital values data ──────────────────── */
 
 const firmValues = [
   {
     id: 1, title: "One-Stop Shop", date: "",
-    content: "Tax, legal, finance, HR, and marketing — all under one roof. No need to juggle multiple firms. One partner, one point of contact, complete coverage.",
+    content: "Tax, legal, finance, and HR — all under one roof. No need to juggle multiple firms. One partner, one point of contact, complete coverage.",
     category: "Core Value", icon: Target, relatedIds: [2, 3], status: "completed" as const, energy: 100,
   },
   {
@@ -51,7 +51,7 @@ const firmValues = [
   },
 ];
 
-/* ── Region data ─────────────────────────────────────── */
+/* ── Region data ─────────────────────── */
 
 interface RegionData {
   name: string;
@@ -162,7 +162,7 @@ const REGION_DATA: Record<string, RegionData> = {
   },
 };
 
-/* ── Region info panel ───────────────────────────────── */
+/* ── Region info panel ──────────────────── */
 
 function RegionInfoPanel({ activeId }: { activeId: string | null }) {
   const region = activeId ? REGION_DATA[activeId] : null;
@@ -262,7 +262,7 @@ function RegionInfoPanel({ activeId }: { activeId: string | null }) {
   );
 }
 
-/* ── Page ────────────────────────────────────────────── */
+/* ── Page ─────────────────────────────────── */
 
 export default function Home() {
   const [activeRegionId, setActiveRegionId] = useState<string | null>("UZ-TK");
@@ -332,7 +332,7 @@ export default function Home() {
                 className="heading-luxury text-4xl md:text-5xl text-foreground"
               />
               <p className="mt-5 text-white/55 max-w-xl mx-auto leading-relaxed">
-                Tax, legal, finance, HR, marketing, and funding — working in concert on a shared view of your business.
+                Tax, legal, finance, HR, and funding — working in concert on a shared view of your business.
               </p>
             </AnimatedSection>
           </Parallax>
@@ -370,7 +370,7 @@ export default function Home() {
               <AnimatedSection delay={0.15}>
                 <p className="text-white/50 leading-relaxed mb-4">
                   Advizen is a one-stop business advisory partner in Uzbekistan — offering integrated
-                  consulting across tax, legal, finance, HR, and marketing under a single point of contact.
+                  consulting across tax, legal, finance, and HR under a single point of contact.
                 </p>
                 <p className="text-white/40 leading-relaxed mb-10">
                   We combine deep local expertise with international standards, helping businesses
