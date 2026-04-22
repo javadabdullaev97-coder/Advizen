@@ -114,7 +114,7 @@ export const servicesData: ServiceData[] = [
   },
   {
     slug: "corporate",
-    num: "07",
+    num: "06",
     title: "Corporate Services",
     category: "Structure",
     headline: "Company setup &\ncorporate administration",
@@ -135,7 +135,7 @@ export const servicesData: ServiceData[] = [
   },
   {
     slug: "entity-management",
-    num: "08",
+    num: "07",
     title: "Entity Management",
     category: "Structure",
     headline: "We run your Uzbekistan\nentity end-to-end",
