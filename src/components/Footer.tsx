@@ -15,6 +15,8 @@ const footerLinks = {
     { label: "HR Services", href: "/expertise/hr" },
     { label: "Marketing", href: "/expertise/marketing" },
     { label: "Funding", href: "/expertise/funding" },
+    { label: "Corporate Services", href: "/expertise/corporate" },
+    { label: "Entity Management", href: "/expertise/entity-management" },
   ],
   Firm: [
     { label: "Store", href: "/store" },

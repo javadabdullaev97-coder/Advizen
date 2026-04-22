@@ -53,6 +53,8 @@ const jsonLd = {
     "HR Services",
     "Marketing",
     "Funding",
+    "Corporate Services",
+    "Entity Management",
   ],
   foundingDate: "2016",
   numberOfEmployees: {

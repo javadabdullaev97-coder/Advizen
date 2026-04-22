@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Calculator, Scale, LineChart, Users, Megaphone, Landmark, type LucideProps } from "lucide-react";
+import { Calculator, Scale, LineChart, Users, Megaphone, Landmark, Briefcase, LayoutDashboard, type LucideProps } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type LucideIcon = React.ComponentType<LucideProps>;
@@ -12,9 +12,11 @@ const disciplines: { num: string; title: string; short: string; blurb: string; i
   { num: "01", title: "Tax", short: "Tax", blurb: "Strategy, compliance, and cross-border structuring.", icon: Calculator },
   { num: "02", title: "Legal", short: "Legal", blurb: "Corporate, contract, and regulatory counsel.", icon: Scale },
   { num: "03", title: "Finance & Accounting", short: "Finance", blurb: "Reporting, controls, and advisory to IFRS standards.", icon: LineChart },
-  { num: "04", title: "HR", short: "HR", blurb: "Employer of record, talent, and labour compliance.", icon: Users },
+  { num: "04", title: "HR", short: "HR", blurb: "Talent, payroll, and labour compliance.", icon: Users },
   { num: "05", title: "Marketing", short: "Marketing", blurb: "Brand, positioning, and market-entry strategy.", icon: Megaphone },
   { num: "06", title: "Funding", short: "Funding", blurb: "Access to capital, IFI programmes, and incentives.", icon: Landmark },
+  { num: "07", title: "Corporate Services", short: "Corporate", blurb: "Formation, nominal director, EOR, and company admin.", icon: Briefcase },
+  { num: "08", title: "Entity Management", short: "Entity Mgmt", blurb: "Full-service outsourced management of your UZ entity.", icon: LayoutDashboard },
 ];
 
 export default function DisciplinesIntegration() {
