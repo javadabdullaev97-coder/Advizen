@@ -70,7 +70,7 @@ const industryGroups: IndustryGroup[] = [
     name: "Real Estate & Infrastructure",
     icon: Building2,
     accent: "71,85,105",
-    image: "/industries/real-estate.jpg",
+    image: "/industries/construction.jpg",
     description: "Large-scale property and infrastructure projects demand careful tax and legal planning from the outset. We advise developers, contractors, and investors on project structuring, permitting, and compliance.",
     sectors: ["Commercial Real Estate", "Residential Development", "Construction", "Infrastructure"],
     offerings: ["Project tax optimisation", "Contract architecture and review", "Labour law and workforce compliance", "Permitting and regulatory advisory", "Investment structuring for developers"],
@@ -149,7 +149,6 @@ function ServicesSection() {
           </p>
         </AnimatedSection>
 
-        {/* Accordion rows */}
         <div className="border-t border-white/[0.08]">
           {servicesData.map((service, i) => {
             const isExpanded = expandedSlug === service.slug;
@@ -166,13 +165,11 @@ function ServicesSection() {
                   isExpanded && "bg-white/[0.015]"
                 )}
               >
-                {/* Row header — clickable */}
                 <button
                   type="button"
                   onClick={() => setExpandedSlug(isExpanded ? null : service.slug)}
                   className="w-full flex items-center gap-5 md:gap-8 py-6 md:py-7 text-left group cursor-pointer"
                 >
-                  {/* Number */}
                   <span
                     className={cn(
                       "font-serif text-3xl md:text-4xl tabular-nums w-12 md:w-14 shrink-0 text-right transition-colors duration-300",
@@ -182,7 +179,6 @@ function ServicesSection() {
                     {service.num}
                   </span>
 
-                  {/* Icon box */}
                   <span
                     className={cn(
                       "w-9 h-9 rounded-md flex items-center justify-center shrink-0 border transition-all duration-300",
@@ -200,7 +196,6 @@ function ServicesSection() {
                     />
                   </span>
 
-                  {/* Title */}
                   <h3
                     className={cn(
                       "font-serif text-xl md:text-2xl flex-1 tracking-wide transition-colors duration-300",
@@ -211,7 +206,6 @@ function ServicesSection() {
                   </h3>
                 </button>
 
-                {/* Expandable detail panel */}
                 <AnimatePresence initial={false}>
                   {isExpanded && (
                     <motion.div
@@ -223,7 +217,6 @@ function ServicesSection() {
                     >
                       <div className="pl-[4.25rem] md:pl-[5.5rem] pb-8 md:pb-10 pt-2 pr-4 md:pr-8">
                         <div className="grid md:grid-cols-[3fr_2fr] gap-8 md:gap-12">
-                          {/* Left: descriptions + link */}
                           <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -237,7 +230,6 @@ function ServicesSection() {
                             </p>
                           </motion.div>
 
-                          {/* Right: capabilities */}
                           <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -300,7 +292,6 @@ function IndustriesSection() {
         </AnimatedSection>
 
         <div className="grid md:grid-cols-[5fr_7fr] border border-white/[0.07] overflow-hidden md:h-[760px]">
-          {/* Left — industry list */}
           <div className="border-r border-white/[0.07] divide-y divide-white/[0.04] flex flex-col h-full">
             {industryGroups.map((ind, i) => {
               const IconComp = ind.icon;
@@ -317,15 +308,12 @@ function IndustriesSection() {
                       : "text-white/45 hover:text-white/75 hover:bg-white/[0.02]"
                   )}
                 >
-                  {/* Active left border */}
                   <span
                     className={cn(
                       "absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-300",
                       isActive ? "bg-primary opacity-100" : "opacity-0"
                     )}
                   />
-
-                  {/* Icon box */}
                   <span
                     className={cn(
                       "w-9 h-9 rounded flex items-center justify-center shrink-0 transition-all duration-250",
@@ -339,11 +327,9 @@ function IndustriesSection() {
                       strokeWidth={1.5}
                     />
                   </span>
-
                   <span className={cn("text-[13px] tracking-[0.07em] uppercase transition-all duration-250", isActive ? "font-semibold" : "font-medium")}>
                     {ind.name}
                   </span>
-
                   <ArrowRight
                     className={cn(
                       "ml-auto w-4 h-4 shrink-0 transition-all duration-250",
@@ -355,7 +341,6 @@ function IndustriesSection() {
             })}
           </div>
 
-          {/* Right — detail panel */}
           <div className="relative bg-[#080808] h-full overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
@@ -366,7 +351,6 @@ function IndustriesSection() {
                 transition={{ duration: 0.2 }}
                 className="absolute inset-0 p-6 md:p-8 overflow-y-auto"
               >
-                {/* Industry image */}
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -390,7 +374,6 @@ function IndustriesSection() {
                   </div>
                 </motion.div>
 
-                {/* Header */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -403,7 +386,6 @@ function IndustriesSection() {
                   </h3>
                 </motion.div>
 
-                {/* Sector chips */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -420,7 +402,6 @@ function IndustriesSection() {
                   ))}
                 </motion.div>
 
-                {/* Description */}
                 <motion.p
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -430,7 +411,6 @@ function IndustriesSection() {
                   {active.description}
                 </motion.p>
 
-                {/* Offerings */}
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -466,10 +446,8 @@ export default function ExpertisePage() {
 
   return (
     <>
-      {/* ====== HERO ====== */}
       <AuroraBackground>
         <section className="relative pt-36 pb-24 md:pt-44 md:pb-32">
-
           <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
             <motion.p
               initial={{ opacity: 0 }}
@@ -495,7 +473,6 @@ export default function ExpertisePage() {
               </p>
             </RevealLine>
 
-            {/* Stats */}
             <div className="mt-12 pt-10 border-t border-white/[0.08] flex flex-wrap gap-x-12 gap-y-6">
               {heroStats.map((s, i) => (
                 <motion.div
@@ -518,17 +495,13 @@ export default function ExpertisePage() {
         </section>
       </AuroraBackground>
 
-      {/* ====== SERVICES ====== */}
       <ServicesSection />
 
-      {/* ====== INDUSTRIES ====== */}
       <IndustriesSection />
 
-      {/* ====== TRACK RECORD ====== */}
       <section className="py-24 md:py-32 bg-black relative overflow-hidden">
         <div className="ambient-glow ambient-glow-oxblood w-[700px] h-[700px] top-1/2 right-0 translate-x-1/3 -translate-y-1/2 opacity-[0.18]" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-
           <AnimatedSection className="mb-14 md:mb-16">
             <div>
               <p className="tracking-luxury text-white/50 mb-4">Track Record</p>
@@ -538,7 +511,6 @@ export default function ExpertisePage() {
             </div>
           </AnimatedSection>
 
-          {/* All engagements — uniform glow cards */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {allEngagements.map((deal, i) => (
               <motion.div
@@ -554,8 +526,6 @@ export default function ExpertisePage() {
                 <div className="glow-card-backdrop" />
                 <div className="glow-card-content p-7 md:p-8 flex flex-col h-full">
                   <div className="glow-card-glow" />
-
-                  {/* Metric */}
                   <div className="mb-6">
                     <span className="font-serif text-3xl md:text-4xl text-foreground/85 tracking-tight leading-none glow-card-title">
                       {deal.metric}
@@ -564,18 +534,12 @@ export default function ExpertisePage() {
                       {deal.metricLabel}
                     </p>
                   </div>
-
-                  {/* Sector */}
                   <span className="inline-block text-xs tracking-[0.16em] uppercase text-red-400/70 mb-3">
                     {deal.sector}
                   </span>
-
-                  {/* Headline */}
                   <p className="text-[14px] text-foreground/60 leading-snug font-light mb-6 flex-1 glow-card-desc">
                     {deal.headline}
                   </p>
-
-                  {/* Disciplines */}
                   <div className="flex flex-wrap gap-1.5 pt-5 border-t border-white/[0.05]">
                     {deal.disciplines.map((d) => (
                       <span key={d} className="text-[10px] tracking-[0.12em] uppercase text-white/30 border border-white/[0.06] rounded-full px-2.5 py-0.5">
@@ -590,14 +554,11 @@ export default function ExpertisePage() {
         </div>
       </section>
 
-      {/* ====== CTA ====== */}
       <section className="py-28 md:py-36 bg-black relative overflow-hidden">
         <div className="ambient-glow ambient-glow-warm w-[900px] h-[900px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="ambient-glow ambient-glow-oxblood w-[350px] h-[350px] bottom-0 right-0 translate-x-1/2 translate-y-1/2 opacity-[0.14]" />
-
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <AnimatedSection>
-            {/* Decorative watermark letter */}
             <motion.span
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 0.03 }}
@@ -607,22 +568,18 @@ export default function ExpertisePage() {
             >
               A
             </motion.span>
-
             <p className="tracking-luxury text-white/50 mb-6">Next Step</p>
-
             <TextReveal
               text="Ready to begin?"
               as="h2"
               className="heading-luxury text-3xl md:text-5xl text-foreground mb-6"
             />
-
             <RevealLine delay={0.2}>
               <p className="text-base md:text-lg text-white/50 max-w-xl mx-auto mb-12 leading-relaxed">
                 Every engagement begins with a conversation. Let us understand
                 your business before we propose solutions.
               </p>
             </RevealLine>
-
             <RevealLine delay={0.35}>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <MagneticButton variant="primary" as="a" href="/contact">
