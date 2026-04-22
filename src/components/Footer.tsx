@@ -15,6 +15,8 @@ const footerLinks = {
     { label: "HR Services", href: "/expertise/hr" },
     { label: "Marketing", href: "/expertise/marketing" },
     { label: "Funding", href: "/expertise/funding" },
+  ],
+  "Managed Services": [
     { label: "Corporate Services", href: "/expertise/corporate" },
     { label: "Entity Management", href: "/expertise/entity-management" },
   ],
@@ -46,7 +48,7 @@ export default function Footer() {
               hidden: { opacity: 0, y: 24 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
             }}
-            className="md:col-span-5"
+            className="md:col-span-4"
           >
             <div className="flex items-center gap-3">
               <Image src="/logo.png" alt="Advizen" width={40} height={32} />
@@ -116,7 +118,7 @@ export default function Footer() {
               hidden: { opacity: 0, y: 24 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
             }}
-            className="md:col-span-3"
+            className="md:col-span-2"
           >
             <h3 className="tracking-luxury text-muted-dark mb-6">Newsletter</h3>
             <p className="text-sm text-white/50 mb-4">
