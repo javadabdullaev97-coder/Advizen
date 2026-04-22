@@ -203,7 +203,6 @@ export default function ContactPage() {
                     <option value="legal" className="bg-surface">Legal Advisory</option>
                     <option value="finance" className="bg-surface">Accounting</option>
                     <option value="hr" className="bg-surface">Human Resources</option>
-                    <option value="marketing" className="bg-surface">Strategic Marketing</option>
                     <option value="funding" className="bg-surface">Funding &amp; Grants</option>
                     <option value="other" className="bg-surface">Other</option>
                   </select>
