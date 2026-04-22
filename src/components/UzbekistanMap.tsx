@@ -29,7 +29,7 @@ const TASHKENT = { cx: 612, cy: 264 };
 /* Geographic sweep: west to east */
 const CYCLE_ORDER = ["UZ-QR", "UZ-XO", "UZ-NW", "UZ-BU", "UZ-SA", "UZ-QA", "UZ-SU", "UZ-JI", "UZ-SI", "UZ-TO", "UZ-NG", "UZ-FA", "UZ-AN"];
 
-export default function UzbekistanMap() {
+export default function UzbekistanMap({ onActiveChange }: { onActiveChange?: (id: string) => void }) {
   const reduced = useReducedMotion();
   const [hovered, setHovered] = useState<string | null>(null);
   const [cycleIdx, setCycleIdx] = useState(0);
@@ -52,26 +52,16 @@ export default function UzbekistanMap() {
   const activeId = hovered ?? CYCLE_ORDER[cycleIdx];
   const regionName = REGIONS.find(r => r.id === activeId)?.name ?? "";
 
+  useEffect(() => {
+    onActiveChange?.(activeId);
+  }, [activeId, onActiveChange]);
+
   return (
     <div
       className="relative w-full max-w-2xl mx-auto select-none"
       onPointerLeave={() => setHovered(null)}
     >
-      {/* Region name — shown on hover and auto-cycle */}
-      <div className="h-6 flex items-center justify-center mb-2">
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={regionName}
-            className="text-xs tracking-[0.2em] uppercase text-white/55"
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.15 }}
-          >
-            {regionName}
-          </motion.p>
-        </AnimatePresence>
-      </div>
+      {/* Region name label removed — shown in the side panel instead */}
 
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -80,8 +70,8 @@ export default function UzbekistanMap() {
         style={{ display: "block", overflow: "hidden" }}
       >
         <defs>
-          <filter id="uz-region-glow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="7" result="blur" />
+          <filter id="uz-region-glow" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -121,21 +111,17 @@ export default function UzbekistanMap() {
           {/* Region paths */}
           {REGIONS.map((r) => {
             const active = r.id === activeId;
-            const isHovered = r.id === hovered;
             return (
               <path
                 key={r.id}
                 d={r.d}
                 onPointerEnter={() => setHovered(r.id)}
                 style={{
-                  fill: active ? "rgba(122,26,26,0.50)" : "rgba(255,255,255,0.07)",
-                  stroke: active ? "rgba(200,60,60,0.75)" : "rgba(255,255,255,0.10)",
-                  strokeWidth: 0.5,
+                  fill: active ? "rgb(80,10,10)" : "rgba(255,255,255,0.06)",
+                  stroke: active ? "rgb(140,25,25)" : "rgba(255,255,255,0.08)",
+                  strokeWidth: active ? 1.5 : 1,
                   filter: active ? "url(#uz-region-glow)" : "none",
-                  transform: isHovered ? "scale(1.025)" : "scale(1)",
-                  transformOrigin: "center",
-                  transformBox: "fill-box",
-                  transition: "fill 280ms ease, stroke 280ms ease, transform 280ms ease",
+                  transition: "fill 280ms ease, stroke 280ms ease, stroke-width 280ms ease",
                   cursor: "default",
                   pointerEvents: "all",
                 }}

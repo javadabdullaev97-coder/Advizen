@@ -1,26 +1,24 @@
 "use client";
 
-import { useState, type ComponentType, type SVGProps } from "react";
+import Link from "next/link";
+import { useState, useEffect, type ComponentType, type SVGProps } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
+  Briefcase,
   Building2,
   Calculator,
   Cpu,
-  FileText,
   Flame,
-  GitMerge,
-  Globe,
   Landmark,
+  LayoutDashboard,
   LineChart,
-  Network,
+  Megaphone,
   Scale,
-  Shield,
   Stethoscope,
   Store,
   Users,
-  Zap,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import TextReveal, { RevealLine } from "@/components/TextReveal";
@@ -103,7 +101,10 @@ const serviceIcons: Record<string, LucideIcon> = {
   legal: Scale,
   finance: LineChart,
   hr: Users,
+  marketing: Megaphone,
   funding: Landmark,
+  corporate: Briefcase,
+  "entity-management": LayoutDashboard,
 };
 
 const allEngagements = [
@@ -125,119 +126,10 @@ const allEngagements = [
 ];
 
 const heroStats = [
-  { value: "5", label: "Disciplines" },
+  { value: "8", label: "Disciplines" },
   { value: "6", label: "Sectors" },
   { value: "8+", label: "Years" },
   { value: "$10B+", label: "Deals advised" },
-];
-
-interface Solution {
-  id: string;
-  title: string;
-  tagline: string;
-  description: string;
-  services: string[];
-  disciplines: string[];
-  icon: LucideIcon;
-}
-
-const solutions: Solution[] = [
-  {
-    id: "01",
-    title: "M&A Advisory",
-    tagline: "Full-cycle transaction support",
-    description:
-      "From initial structuring through due diligence to close — comprehensive support for acquisitions, mergers, disposals, and corporate reorganisations across Uzbekistan and the region.",
-    services: [
-      "Tax & legal due diligence",
-      "Deal & holding structure design",
-      "Transfer pricing documentation",
-      "Regulatory filings & approvals",
-      "Post-merger integration advisory",
-    ],
-    disciplines: ["Tax", "Legal", "Finance"],
-    icon: GitMerge,
-  },
-  {
-    id: "02",
-    title: "Corporate Structuring",
-    tagline: "Architecture for holding & investment",
-    description:
-      "Design and implement holding structures, SPVs, and governance frameworks that protect assets, minimise tax exposure, and scale with your ambitions.",
-    services: [
-      "Holding company formation",
-      "SPV & fund structuring",
-      "Shareholder agreement drafting",
-      "Cross-border tax optimisation",
-      "Corporate governance frameworks",
-    ],
-    disciplines: ["Tax", "Legal"],
-    icon: Network,
-  },
-  {
-    id: "03",
-    title: "Entity Management",
-    tagline: "Full entity lifecycle, handled",
-    description:
-      "End-to-end management of your legal entities in Uzbekistan — from registration and licensing through ongoing compliance to dissolution.",
-    services: [
-      "Company registration & licensing",
-      "Branch & representative office setup",
-      "Annual compliance & filings",
-      "Corporate document management",
-      "Registered address & secretary",
-    ],
-    disciplines: ["Legal", "Tax", "HR"],
-    icon: FileText,
-  },
-  {
-    id: "04",
-    title: "FEZ Advisory",
-    tagline: "Free Economic Zone benefits, realised",
-    description:
-      "Navigate Uzbekistan's Free Economic Zones to access tax holidays, customs exemptions, and streamlined regulatory conditions for qualifying businesses.",
-    services: [
-      "FEZ eligibility assessment",
-      "Registration & accreditation",
-      "Tax incentive structuring",
-      "Customs & import duty optimisation",
-      "Ongoing FEZ compliance",
-    ],
-    disciplines: ["Tax", "Legal"],
-    icon: Zap,
-  },
-  {
-    id: "05",
-    title: "Market Entry",
-    tagline: "Foreign company launch, end-to-end",
-    description:
-      "Full-service advisory for international companies entering the Uzbek market — from jurisdiction selection and entity formation to first-hire onboarding.",
-    services: [
-      "Jurisdiction & structure selection",
-      "Entity formation & registration",
-      "Tax registration & first filings",
-      "Work permits & relocation",
-      "Payroll & HR setup",
-    ],
-    disciplines: ["Tax", "Legal", "HR", "Finance"],
-    icon: Globe,
-  },
-  {
-    id: "06",
-    title: "Due Diligence",
-    tagline: "Investment-grade insight",
-    description:
-      "Rigorous tax, legal, and financial due diligence for investors, acquirers, and lenders — reducing risk and surfacing hidden value before commitment.",
-    services: [
-      "Tax due diligence",
-      "Legal due diligence",
-      "Financial due diligence",
-      "Risk assessment & red-flag reports",
-      "Vendor-side DD preparation",
-    ],
-    disciplines: ["Tax", "Legal", "Finance"],
-    icon: Shield,
-  },
 ];
 
 
@@ -251,7 +143,7 @@ function ServicesSection() {
         <AnimatedSection className="mb-14 md:mb-16">
           <p className="tracking-luxury text-white/50 mb-4">Practice Areas</p>
           <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
-            Five disciplines, one team
+            Eight disciplines, one team
           </h2>
           <p className="mt-5 text-white/45 max-w-2xl leading-relaxed">
             From regulatory compliance to strategic growth — integrated advisory
@@ -389,193 +281,15 @@ function ServicesSection() {
   );
 }
 
-function SolutionsSection() {
-  const [activeId, setActiveId] = useState<string | null>(null);
-
-  return (
-    <section className="py-24 md:py-32 bg-[#050505] relative overflow-hidden border-t border-white/[0.05]">
-      <div className="ambient-glow ambient-glow-oxblood w-[600px] h-[600px] top-0 right-0 translate-x-1/3 -translate-y-1/3 opacity-[0.12]" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-        <AnimatedSection className="mb-14 md:mb-16">
-          <p className="tracking-luxury text-white/50 mb-4">Solutions</p>
-          <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
-            Built for your transaction
-          </h2>
-          <p className="mt-5 text-white/45 max-w-2xl leading-relaxed">
-            Cross-disciplinary solutions assembled around your deal, structure,
-            or growth objective — not around our org chart.
-          </p>
-        </AnimatedSection>
-
-        {/* Grid — gap-px creates hairline dividers */}
-        <div className="grid md:grid-cols-3 gap-px bg-white/[0.06]">
-          {solutions.map((sol, i) => {
-            const isActive = activeId === sol.id;
-            const Icon = sol.icon;
-            return (
-              <motion.div
-                key={sol.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{
-                  duration: 0.55,
-                  delay: (i % 3) * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className={cn(
-                  "relative group cursor-pointer transition-colors duration-300",
-                  isActive ? "bg-[#0d0d0d]" : "bg-[#050505] hover:bg-[#090909]"
-                )}
-                onClick={() => setActiveId(isActive ? null : sol.id)}
-              >
-                {/* Active top border */}
-                <motion.div
-                  className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-primary/70 to-transparent"
-                  initial={false}
-                  animate={{ opacity: isActive ? 1 : 0, scaleX: isActive ? 1 : 0.4 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                />
-
-                <div className="p-8 md:p-9">
-                  {/* Number */}
-                  <span className="text-[9px] tracking-[0.22em] uppercase text-white/18 mb-7 block">
-                    {sol.id}
-                  </span>
-
-                  {/* Icon */}
-                  <motion.div
-                    className={cn(
-                      "w-9 h-9 rounded flex items-center justify-center mb-6 border transition-all duration-350",
-                      isActive
-                        ? "bg-primary/10 border-primary/25"
-                        : "bg-white/[0.025] border-white/[0.06] group-hover:border-white/[0.12] group-hover:bg-white/[0.04]"
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        "w-4 h-4 transition-colors duration-350",
-                        isActive
-                          ? "text-primary"
-                          : "text-white/28 group-hover:text-white/55"
-                      )}
-                      strokeWidth={1.5}
-                    />
-                  </motion.div>
-
-                  {/* Title */}
-                  <h3
-                    className={cn(
-                      "font-serif text-xl md:text-[1.35rem] tracking-wide mb-1.5 transition-colors duration-300 leading-snug",
-                      isActive
-                        ? "text-foreground"
-                        : "text-white/55 group-hover:text-white/80"
-                    )}
-                  >
-                    {sol.title}
-                  </h3>
-
-                  {/* Tagline */}
-                  <p
-                    className={cn(
-                      "text-[12px] leading-relaxed mb-6 transition-colors duration-300",
-                      isActive ? "text-white/40" : "text-white/25 group-hover:text-white/35"
-                    )}
-                  >
-                    {sol.tagline}
-                  </p>
-
-                  {/* Discipline chips */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {sol.disciplines.map((d) => (
-                      <span
-                        key={d}
-                        className={cn(
-                          "text-[9px] tracking-[0.14em] uppercase border px-2 py-0.5 transition-colors duration-300",
-                          isActive
-                            ? "text-primary/60 border-primary/20"
-                            : "text-white/22 border-white/[0.05] group-hover:text-white/32 group-hover:border-white/[0.09]"
-                        )}
-                      >
-                        {d}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Expandable detail */}
-                  <AnimatePresence initial={false}>
-                    {isActive && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <div className="mt-8 pt-7 border-t border-white/[0.07]">
-                          <motion.p
-                            initial={{ opacity: 0, y: 6 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                            className="text-[13px] text-white/48 leading-relaxed mb-7"
-                          >
-                            {sol.description}
-                          </motion.p>
-
-                          <p className="text-[9px] tracking-[0.2em] uppercase text-white/22 mb-3.5">
-                            What's included
-                          </p>
-                          <div className="space-y-2.5">
-                            {sol.services.map((svc, si) => (
-                              <motion.div
-                                key={svc}
-                                initial={{ opacity: 0, x: 8 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{
-                                  delay: 0.15 + si * 0.05,
-                                  duration: 0.3,
-                                  ease: [0.16, 1, 0.3, 1],
-                                }}
-                                className="flex items-center gap-2.5 text-[12.5px] text-white/58"
-                              >
-                                <span className="w-[4px] h-[4px] rounded-full bg-primary/55 shrink-0" />
-                                {svc}
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Expand/collapse chevron */}
-                <div
-                  className={cn(
-                    "absolute top-8 right-8 transition-all duration-300",
-                    isActive ? "opacity-40" : "opacity-0 group-hover:opacity-20"
-                  )}
-                >
-                  <motion.div
-                    animate={{ rotate: isActive ? 45 : 0 }}
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <ArrowUpRight className="w-3.5 h-3.5 text-white" />
-                  </motion.div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function IndustriesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = industryGroups[activeIndex];
+
+  useEffect(() => {
+    industryGroups.forEach(({ image }) => {
+      if (image) new window.Image().src = image;
+    });
+  }, []);
 
   return (
     <section className="py-20 md:py-28 bg-black relative overflow-hidden border-y border-white/[0.06]">
@@ -599,10 +313,10 @@ function IndustriesSection() {
                   type="button"
                   onClick={() => setActiveIndex(i)}
                   className={cn(
-                    "relative w-full flex flex-1 items-center gap-3.5 px-5 text-left transition-all duration-250 group outline-none",
+                    "relative w-full flex flex-1 items-center gap-4 px-6 text-left transition-all duration-250 group outline-none",
                     isActive
                       ? "bg-white/[0.04] text-foreground"
-                      : "text-white/38 hover:text-white/68 hover:bg-white/[0.02]"
+                      : "text-white/45 hover:text-white/75 hover:bg-white/[0.02]"
                   )}
                 >
                   {/* Active left border */}
@@ -616,25 +330,25 @@ function IndustriesSection() {
                   {/* Icon box */}
                   <span
                     className={cn(
-                      "w-7 h-7 rounded flex items-center justify-center shrink-0 transition-all duration-250",
+                      "w-9 h-9 rounded flex items-center justify-center shrink-0 transition-all duration-250",
                       isActive ? "bg-primary/10" : "bg-white/[0.03] group-hover:bg-white/[0.06]"
                     )}
                   >
                     <IconComp
-                      className={cn("w-3.5 h-3.5 shrink-0 transition-colors duration-250",
-                        isActive ? "text-primary" : "text-white/30 group-hover:text-white/50"
+                      className={cn("w-[18px] h-[18px] shrink-0 transition-colors duration-250",
+                        isActive ? "text-primary" : "text-white/40 group-hover:text-white/65"
                       )}
                       strokeWidth={1.5}
                     />
                   </span>
 
-                  <span className={cn("text-[11.5px] tracking-[0.09em] uppercase transition-all duration-250", isActive ? "font-medium" : "")}>
+                  <span className={cn("text-[13px] tracking-[0.07em] uppercase transition-all duration-250", isActive ? "font-semibold" : "font-medium")}>
                     {ind.name}
                   </span>
 
                   <ArrowRight
                     className={cn(
-                      "ml-auto w-3.5 h-3.5 shrink-0 transition-all duration-250",
+                      "ml-auto w-4 h-4 shrink-0 transition-all duration-250",
                       isActive ? "text-primary opacity-100 translate-x-0" : "opacity-0 -translate-x-1"
                     )}
                   />
@@ -645,18 +359,20 @@ function IndustriesSection() {
 
           {/* Right — detail panel */}
           <div className="relative bg-[#080808] h-full overflow-hidden">
-            {/* Content — absolute so it never drives the container height */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.name}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0 p-6 md:p-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute inset-0 p-6 md:p-8 overflow-y-auto"
               >
                 {/* Industry image */}
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   className="relative w-full h-44 md:h-52 rounded-xl overflow-hidden mb-6"
                   style={{
                     background: `linear-gradient(145deg, rgba(${active.accent},0.2) 0%, #0d0d0d 55%, rgba(${active.accent},0.06) 100%)`,
@@ -667,28 +383,35 @@ function IndustriesSection() {
                       src={active.image}
                       alt={active.name}
                       className="absolute inset-0 w-full h-full object-cover"
+                      fetchPriority="high"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                     />
                   )}
-                  {/* Fallback icon — visible when image hasn't loaded */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <active.icon className="w-14 h-14 text-white/[0.06]" strokeWidth={0.6} />
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Header */}
-                <div className="flex items-center gap-3 mb-3">
-                  <active.icon
-                    className="w-5 h-5 text-primary shrink-0"
-                    strokeWidth={1.25}
-                  />
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-center gap-3 mb-3"
+                >
+                  <active.icon className="w-5 h-5 text-primary shrink-0" strokeWidth={1.25} />
                   <h3 className="font-serif text-2xl md:text-3xl text-foreground tracking-wide leading-tight">
                     {active.name}
                   </h3>
-                </div>
+                </motion.div>
 
                 {/* Sector chips */}
-                <div className="flex flex-wrap gap-1.5 mb-5">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: 0.13, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-wrap gap-1.5 mb-5"
+                >
                   {active.sectors.map((s) => (
                     <span
                       key={s}
@@ -697,26 +420,39 @@ function IndustriesSection() {
                       {s}
                     </span>
                   ))}
-                </div>
+                </motion.div>
 
                 {/* Description */}
-                <p className="text-[14px] text-white/52 leading-relaxed mb-6">
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: 0.19, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-[14px] text-white/52 leading-relaxed mb-6"
+                >
                   {active.description}
-                </p>
+                </motion.p>
 
                 {/* Offerings */}
-                <p className="text-[10px] tracking-[0.18em] uppercase text-white/25 mb-3.5">
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.25 }}
+                  className="text-[10px] tracking-[0.18em] uppercase text-white/25 mb-3.5"
+                >
                   What we offer
-                </p>
+                </motion.p>
                 <div className="flex flex-wrap gap-2">
-                  {active.offerings.map((item) => (
-                    <span
+                  {active.offerings.map((item, oi) => (
+                    <motion.span
                       key={item}
+                      initial={{ opacity: 0, scale: 0.94 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.28, delay: 0.28 + oi * 0.04, ease: [0.16, 1, 0.3, 1] }}
                       className="flex items-center gap-2 px-3 py-2 border border-white/[0.07] bg-white/[0.02] text-[12px] text-white/52 hover:border-primary/30 hover:bg-primary/[0.04] hover:text-white/80 transition-all duration-250 cursor-default"
                     >
                       <span className="w-[5px] h-[5px] rounded-full bg-primary/50 shrink-0" />
                       {item}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </motion.div>
@@ -756,7 +492,7 @@ export default function ExpertisePage() {
 
             <RevealLine delay={0.5}>
               <p className="text-lg text-white/50 max-w-2xl mt-8 leading-relaxed">
-                Five core disciplines. Six industry sectors. One cohesive advisory
+                Eight core disciplines. Six industry sectors. One cohesive advisory
                 practice built for the complexities of Central Asian markets.
               </p>
             </RevealLine>
@@ -784,11 +520,8 @@ export default function ExpertisePage() {
         </section>
       </AuroraBackground>
 
-      {/* ====== DISCIPLINES ====== */}
+      {/* ====== SERVICES ====== */}
       <ServicesSection />
-
-      {/* ====== SOLUTIONS ====== */}
-      <SolutionsSection />
 
       {/* ====== INDUSTRIES ====== */}
       <IndustriesSection />

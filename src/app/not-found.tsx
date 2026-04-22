@@ -254,7 +254,7 @@ const navSuggestions = [
   {
     href: "/library",
     icon: BookOpen,
-    label: "The Library",
+    label: "Insights",
     description: "Guides, briefings, and market intelligence",
   },
   {
