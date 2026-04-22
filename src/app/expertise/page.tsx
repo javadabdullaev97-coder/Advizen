@@ -8,17 +8,24 @@ import {
   ArrowUpRight,
   Briefcase,
   Calculator,
+  Globe,
+  Handshake,
   Landmark,
   LayoutDashboard,
   LineChart,
+  MapPin,
   Scale,
+  ScanSearch,
+  ShieldCheck,
+  UserCheck,
   Users,
+  Wallet,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import TextReveal, { RevealLine } from "@/components/TextReveal";
 import MagneticButton from "@/components/MagneticButton";
-import { servicesData } from "@/lib/services";
-import { industryGroups, allEngagements, heroStats, type IndustryGroup } from "@/lib/industries";
+import { advisoryServices, operationsServices } from "@/lib/services";
+import { industryGroups, allEngagements, heroStats } from "@/lib/industries";
 import AuroraBackground from "@/components/AuroraBackground";
 import { cn } from "@/lib/utils";
 
@@ -30,144 +37,165 @@ const serviceIcons: Record<string, LucideIcon> = {
   finance: LineChart,
   hr: Users,
   funding: Landmark,
-  corporate: Briefcase,
+  "ma-advisory": Handshake,
+  "due-diligence": ScanSearch,
   "entity-management": LayoutDashboard,
+  corporate: Briefcase,
+  eor: UserCheck,
+  payroll: Wallet,
+  immigration: Globe,
+  "virtual-office": MapPin,
+  compliance: ShieldCheck,
 };
 
-function ServicesSection() {
-  const [expandedSlug, setExpandedSlug] = useState<string | null>(null);
+function ServiceCard({ service, index }: { service: typeof advisoryServices[0]; index: number }) {
+  const Icon = serviceIcons[service.slug] ?? ArrowUpRight;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      className="group bg-black p-7 md:p-8 hover:bg-white/[0.02] transition-colors duration-300 flex flex-col"
+    >
+      <div className="flex items-start justify-between mb-6">
+        <span className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/[0.07] bg-white/[0.03] group-hover:border-primary/25 group-hover:bg-primary/[0.07] transition-all duration-300">
+          <Icon
+            className="w-[18px] h-[18px] text-white/40 group-hover:text-primary transition-colors duration-300"
+            strokeWidth={1.5}
+          />
+        </span>
+        <span className="font-serif text-2xl text-white/[0.08] group-hover:text-white/[0.16] transition-colors tabular-nums">
+          {service.num}
+        </span>
+      </div>
+      <h3 className="font-serif text-xl text-white/75 mb-3 group-hover:text-foreground transition-colors duration-300">
+        {service.title}
+      </h3>
+      <p className="text-[13px] text-white/38 leading-relaxed mb-5 flex-1 line-clamp-3">
+        {service.description[0]}
+      </p>
+      <div className="flex flex-wrap gap-1.5 mb-6">
+        {service.capabilities.slice(0, 3).map((cap) => (
+          <span
+            key={cap}
+            className="text-[10px] tracking-[0.07em] text-white/30 border border-white/[0.06] px-2.5 py-1"
+          >
+            {cap}
+          </span>
+        ))}
+        {service.capabilities.length > 3 && (
+          <span className="text-[10px] text-white/18 border border-white/[0.04] px-2.5 py-1">
+            +{service.capabilities.length - 3}
+          </span>
+        )}
+      </div>
+      <Link
+        href={`/expertise/${service.slug}`}
+        className="flex items-center gap-1.5 text-[11px] tracking-[0.14em] uppercase text-white/28 group-hover:text-primary transition-colors duration-300 w-fit"
+      >
+        Explore <ArrowUpRight className="w-3 h-3" />
+      </Link>
+    </motion.div>
+  );
+}
 
+function AdvisorySection() {
   return (
     <section className="py-24 md:py-32 bg-black relative overflow-hidden">
       <div className="ambient-glow ambient-glow-oxblood w-[500px] h-[500px] -top-32 -left-32 opacity-[0.18]" />
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         <AnimatedSection className="mb-14 md:mb-16">
-          <p className="tracking-luxury text-white/50 mb-4">Practice Areas</p>
+          <p className="tracking-luxury text-white/50 mb-4">Advisory</p>
           <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
-            Seven disciplines, one team
+            You consult — we counsel
           </h2>
           <p className="mt-5 text-white/45 max-w-2xl leading-relaxed">
-            From regulatory compliance to strategic growth — integrated advisory
-            built for the complexities of Central Asian markets.
+            Strategic guidance across tax, legal, finance, HR, funding, M&A, and due diligence.
+            You make the decisions; we provide the expertise.
           </p>
         </AnimatedSection>
 
-        <div className="border-t border-white/[0.08]">
-          {servicesData.map((service, i) => {
-            const isExpanded = expandedSlug === service.slug;
-            const Icon = serviceIcons[service.slug] ?? ArrowUpRight;
-            return (
-              <motion.div
-                key={service.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                className={cn(
-                  "border-b border-white/[0.08] transition-colors duration-500",
-                  isExpanded && "bg-white/[0.015]"
-                )}
-              >
-                <button
-                  type="button"
-                  onClick={() => setExpandedSlug(isExpanded ? null : service.slug)}
-                  className="w-full flex items-center gap-5 md:gap-8 py-6 md:py-7 text-left group cursor-pointer"
-                >
-                  <span
-                    className={cn(
-                      "font-serif text-3xl md:text-4xl tabular-nums w-12 md:w-14 shrink-0 text-right transition-colors duration-300",
-                      isExpanded ? "text-primary" : "text-white/10 group-hover:text-white/22"
-                    )}
-                  >
-                    {service.num}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06]">
+          {advisoryServices.map((service, i) => (
+            <ServiceCard key={service.slug} service={service} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OperationsSection() {
+  const [flagship, ...rest] = operationsServices;
+  const FlagshipIcon = serviceIcons[flagship.slug] ?? ArrowUpRight;
+
+  return (
+    <section className="py-24 md:py-32 bg-black relative overflow-hidden border-t border-white/[0.06]">
+      <div className="ambient-glow ambient-glow-warm w-[600px] h-[600px] top-0 right-0 translate-x-1/2 -translate-y-1/4 opacity-[0.07]" />
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <AnimatedSection className="mb-14 md:mb-16">
+          <p className="tracking-luxury text-white/50 mb-4">Operations</p>
+          <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
+            You delegate — we execute
+          </h2>
+          <p className="mt-5 text-white/45 max-w-2xl leading-relaxed">
+            Fully managed services where we handle execution on your behalf — from entity
+            management and payroll to immigration and compliance monitoring.
+          </p>
+        </AnimatedSection>
+
+        {/* Flagship: Entity Management */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Link
+            href={`/expertise/${flagship.slug}`}
+            className="group block border border-primary/[0.18] bg-primary/[0.03] hover:bg-primary/[0.06] hover:border-primary/[0.28] transition-all duration-300 p-8 md:p-10 mb-px"
+          >
+            <div className="grid md:grid-cols-[5fr_7fr] gap-8 md:gap-16 items-center">
+              <div>
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="w-10 h-10 rounded-lg flex items-center justify-center border border-primary/25 bg-primary/[0.08]">
+                    <FlagshipIcon className="w-[18px] h-[18px] text-primary" strokeWidth={1.5} />
                   </span>
-
-                  <span
-                    className={cn(
-                      "w-9 h-9 rounded-md flex items-center justify-center shrink-0 border transition-all duration-300",
-                      isExpanded
-                        ? "bg-primary/10 border-primary/25"
-                        : "bg-white/[0.02] border-white/[0.06] group-hover:border-white/[0.14] group-hover:bg-white/[0.04]"
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        "w-4 h-4 transition-colors duration-300",
-                        isExpanded ? "text-primary" : "text-white/28 group-hover:text-white/50"
-                      )}
-                      strokeWidth={1.5}
-                    />
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-primary/60">
+                    Flagship
                   </span>
-
-                  <h3
-                    className={cn(
-                      "font-serif text-xl md:text-2xl flex-1 tracking-wide transition-colors duration-300",
-                      isExpanded ? "text-foreground" : "text-white/45 group-hover:text-white/78"
-                    )}
+                </div>
+                <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
+                  {flagship.title}
+                </h3>
+                <p className="text-[13px] text-white/45 leading-relaxed">
+                  {flagship.description[0]}
+                </p>
+                <div className="flex items-center gap-1.5 mt-6 text-[11px] tracking-[0.14em] uppercase text-primary/60 group-hover:text-primary transition-colors duration-300">
+                  Explore <ArrowUpRight className="w-3 h-3" />
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {flagship.capabilities.map((cap) => (
+                  <span
+                    key={cap}
+                    className="flex items-center gap-2 text-[12px] text-white/45 border border-white/[0.07] px-3 py-2 group-hover:border-primary/[0.15] transition-colors duration-300"
                   >
-                    {service.title}
-                  </h3>
-                </button>
+                    <span className="w-[5px] h-[5px] rounded-full bg-primary/50 shrink-0" />
+                    {cap}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Link>
+        </motion.div>
 
-                <AnimatePresence initial={false}>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pl-[4.25rem] md:pl-[5.5rem] pb-8 md:pb-10 pt-2 pr-4 md:pr-8">
-                        <div className="grid md:grid-cols-[3fr_2fr] gap-8 md:gap-12">
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.08, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                          >
-                            <p className="text-[14px] text-white/52 leading-relaxed mb-3">
-                              {service.description[0]}
-                            </p>
-                            <p className="text-[13px] text-white/32 leading-relaxed">
-                              {service.description[1]}
-                            </p>
-                          </motion.div>
-
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.16, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                          >
-                            <p className="text-[10px] tracking-[0.18em] uppercase text-white/30 mb-4">
-                              Capabilities
-                            </p>
-                            <div className="space-y-2.5">
-                              {service.capabilities.map((cap, ci) => (
-                                <motion.div
-                                  key={cap}
-                                  initial={{ opacity: 0, x: 8 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{
-                                    delay: 0.2 + ci * 0.04,
-                                    duration: 0.3,
-                                    ease: [0.16, 1, 0.3, 1],
-                                  }}
-                                  className="flex items-center gap-2.5 text-[13px] text-white/65"
-                                >
-                                  <span className="w-[5px] h-[5px] rounded-full bg-primary/60 shrink-0" />
-                                  {cap}
-                                </motion.div>
-                              ))}
-                            </div>
-                          </motion.div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
+        {/* Remaining 6 operations services */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06]">
+          {rest.map((service, i) => (
+            <ServiceCard key={service.slug} service={service} index={i} />
+          ))}
         </div>
       </div>
     </section>
@@ -224,13 +252,19 @@ function IndustriesSection() {
                     )}
                   >
                     <IconComp
-                      className={cn("w-[18px] h-[18px] shrink-0 transition-colors duration-250",
+                      className={cn(
+                        "w-[18px] h-[18px] shrink-0 transition-colors duration-250",
                         isActive ? "text-primary" : "text-white/40 group-hover:text-white/65"
                       )}
                       strokeWidth={1.5}
                     />
                   </span>
-                  <span className={cn("text-[13px] tracking-[0.07em] uppercase transition-all duration-250", isActive ? "font-semibold" : "font-medium")}>
+                  <span
+                    className={cn(
+                      "text-[13px] tracking-[0.07em] uppercase transition-all duration-250",
+                      isActive ? "font-semibold" : "font-medium"
+                    )}
+                  >
                     {ind.name}
                   </span>
                   <ArrowRight
@@ -269,7 +303,9 @@ function IndustriesSection() {
                       alt={active.name}
                       className="absolute inset-0 w-full h-full object-cover"
                       fetchPriority="high"
-                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
                     />
                   )}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -328,7 +364,11 @@ function IndustriesSection() {
                       key={item}
                       initial={{ opacity: 0, scale: 0.94 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.28, delay: 0.28 + oi * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{
+                        duration: 0.28,
+                        delay: 0.28 + oi * 0.04,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
                       className="flex items-center gap-2 px-3 py-2 border border-white/[0.07] bg-white/[0.02] text-[12px] text-white/52 hover:border-primary/30 hover:bg-primary/[0.04] hover:text-white/80 transition-all duration-250 cursor-default"
                     >
                       <span className="w-[5px] h-[5px] rounded-full bg-primary/50 shrink-0" />
@@ -346,7 +386,6 @@ function IndustriesSection() {
 }
 
 export default function ExpertisePage() {
-
   return (
     <>
       <AuroraBackground>
@@ -371,7 +410,8 @@ export default function ExpertisePage() {
 
             <RevealLine delay={0.5}>
               <p className="text-lg text-white/50 max-w-2xl mt-8 leading-relaxed">
-                Seven advisory disciplines. Seven managed operations services. One integrated practice built for the complexities of Central Asian markets.
+                Seven advisory disciplines. Seven managed operations services. One integrated
+                practice built for the complexities of Central Asian markets.
               </p>
             </RevealLine>
 
@@ -397,7 +437,8 @@ export default function ExpertisePage() {
         </section>
       </AuroraBackground>
 
-      <ServicesSection />
+      <AdvisorySection />
+      <OperationsSection />
 
       <IndustriesSection />
 
@@ -444,7 +485,10 @@ export default function ExpertisePage() {
                   </p>
                   <div className="flex flex-wrap gap-1.5 pt-5 border-t border-white/[0.05]">
                     {deal.disciplines.map((d) => (
-                      <span key={d} className="text-[10px] tracking-[0.12em] uppercase text-white/30 border border-white/[0.06] rounded-full px-2.5 py-0.5">
+                      <span
+                        key={d}
+                        className="text-[10px] tracking-[0.12em] uppercase text-white/30 border border-white/[0.06] rounded-full px-2.5 py-0.5"
+                      >
                         {d}
                       </span>
                     ))}
@@ -478,8 +522,8 @@ export default function ExpertisePage() {
             />
             <RevealLine delay={0.2}>
               <p className="text-base md:text-lg text-white/50 max-w-xl mx-auto mb-12 leading-relaxed">
-                Every engagement begins with a conversation. Let us understand
-                your business before we propose solutions.
+                Every engagement begins with a conversation. Let us understand your business
+                before we propose solutions.
               </p>
             </RevealLine>
             <RevealLine delay={0.35}>
