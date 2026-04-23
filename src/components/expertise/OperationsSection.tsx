@@ -17,14 +17,21 @@ export default function OperationsSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
 
         <AnimatedSection className="mb-14 md:mb-16">
-          <p className="tracking-luxury text-white/50 mb-4">Operations</p>
-          <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
-            You delegate &mdash; we execute
-          </h2>
-          <p className="mt-4 text-white/45 max-w-xl leading-relaxed text-sm">
-            Fully managed services where we handle execution on your behalf &mdash; from entity
-            management and payroll to immigration and compliance monitoring.
-          </p>
+          <div className="flex items-end justify-between gap-8">
+            <div>
+              <p className="tracking-luxury text-white/50 mb-4">Operations</p>
+              <h2 className="heading-luxury text-3xl md:text-4xl text-foreground">
+                You delegate &mdash; we execute
+              </h2>
+              <p className="mt-4 text-white/45 max-w-xl leading-relaxed text-sm">
+                Fully managed services where we handle execution on your behalf &mdash; from entity
+                management and payroll to immigration and compliance monitoring.
+              </p>
+            </div>
+            <span className="hidden md:block font-serif text-[11px] tracking-[0.16em] uppercase text-white/18 shrink-0 pb-1">
+              {operationsServices.length} services
+            </span>
+          </div>
         </AnimatedSection>
 
         <div className="border-t border-white/[0.07]">
@@ -37,20 +44,23 @@ export default function OperationsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.4, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                className="relative border-b border-white/[0.06] group/row"
+                className={cn(
+                  "relative border-b border-white/[0.06] group/row transition-colors duration-200",
+                  isOpen ? "bg-white/[0.018]" : "hover:bg-white/[0.01]"
+                )}
               >
                 {/* Left active bar */}
                 <motion.span
-                  animate={{ opacity: isOpen ? 1 : 0 }}
+                  animate={{ opacity: isOpen ? 1 : 0, scaleY: isOpen ? 1 : 0.4 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary"
+                  className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary origin-top"
                 />
 
                 {/* Row header */}
                 <button
                   type="button"
                   onClick={() => setActiveIndex(isOpen ? null : i)}
-                  className="w-full flex items-center gap-5 md:gap-8 py-5 md:py-6 pl-5 pr-0 text-left"
+                  className="w-full flex items-center gap-5 md:gap-8 py-5 md:py-6 pl-6 pr-4 text-left"
                 >
                   <span className="font-serif text-xs tabular-nums text-white/18 w-5 shrink-0">
                     {service.num}
@@ -67,7 +77,12 @@ export default function OperationsSection() {
                     {service.title}
                   </span>
 
-                  <span className="hidden lg:block text-[12px] text-white/20 max-w-[260px] text-right leading-snug shrink-0 group-hover/row:text-white/35 transition-colors duration-200">
+                  <span
+                    className={cn(
+                      "hidden lg:block text-[12px] max-w-[260px] text-right leading-snug shrink-0 transition-colors duration-200",
+                      isOpen ? "text-white/30" : "text-white/18 group-hover/row:text-white/32"
+                    )}
+                  >
                     {service.headline.replace("\n", " ")}
                   </span>
 
@@ -75,7 +90,7 @@ export default function OperationsSection() {
                     animate={{ rotate: isOpen ? 45 : 0 }}
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                     className={cn(
-                      "w-7 h-7 rounded-full border flex items-center justify-center shrink-0 transition-colors duration-250 ml-4",
+                      "w-7 h-7 rounded-full border flex items-center justify-center shrink-0 transition-colors duration-250 ml-2",
                       isOpen
                         ? "border-primary/30 bg-primary/[0.07]"
                         : "border-white/[0.10] group-hover/row:border-white/[0.22]"
@@ -90,7 +105,7 @@ export default function OperationsSection() {
                   </motion.span>
                 </button>
 
-                {/* Expanded content — animated height */}
+                {/* Expanded content */}
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
@@ -100,7 +115,7 @@ export default function OperationsSection() {
                       transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-8 pl-10 pr-4 md:pr-2 grid md:grid-cols-[1fr_auto] gap-8 items-start">
+                      <div className="pb-8 pl-12 pr-4 md:pr-6 grid md:grid-cols-[1fr_auto] gap-8 items-start">
                         <div>
                           <motion.p
                             initial={{ opacity: 0, y: 6 }}
@@ -137,6 +152,7 @@ export default function OperationsSection() {
                           initial={{ opacity: 0, x: 6 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.22, delay: 0.09 }}
+                          className="pt-0.5"
                         >
                           <Link
                             href={`/expertise/${service.slug}`}
@@ -153,6 +169,18 @@ export default function OperationsSection() {
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Footer */}
+        <div className="mt-6 flex items-center justify-between border-t border-white/[0.04] pt-4">
+          <p className="text-[10px] tracking-[0.16em] uppercase text-white/18">
+            Managed operations
+          </p>
+          <span className="font-serif text-sm text-white/[0.10] tabular-nums">
+            {activeIndex !== null
+              ? String(activeIndex + 1).padStart(2, "0")
+              : "—"}&thinsp;/&thinsp;{String(operationsServices.length).padStart(2, "0")}
+          </span>
         </div>
 
       </div>
