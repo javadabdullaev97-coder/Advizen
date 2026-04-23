@@ -171,18 +171,6 @@ export default function OperationsSection() {
           })}
         </div>
 
-        {/* Footer */}
-        <div className="mt-6 flex items-center justify-between border-t border-white/[0.04] pt-4">
-          <p className="text-[10px] tracking-[0.16em] uppercase text-white/18">
-            Managed operations
-          </p>
-          <span className="font-serif text-sm text-white/[0.10] tabular-nums">
-            {activeIndex !== null
-              ? String(activeIndex + 1).padStart(2, "0")
-              : "—"}&thinsp;/&thinsp;{String(operationsServices.length).padStart(2, "0")}
-          </span>
-        </div>
-
       </div>
     </section>
   );
