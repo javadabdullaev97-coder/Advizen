@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import { operationsServices } from "@/lib/services";
 import { cn } from "@/lib/utils";
@@ -77,15 +76,6 @@ export default function OperationsSection() {
                     {service.title}
                   </span>
 
-                  <span
-                    className={cn(
-                      "hidden lg:block text-[12px] max-w-[260px] text-right leading-snug shrink-0 transition-colors duration-200",
-                      isOpen ? "text-white/30" : "text-white/18 group-hover/row:text-white/32"
-                    )}
-                  >
-                    {service.headline.replace("\n", " ")}
-                  </span>
-
                   <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
@@ -115,7 +105,7 @@ export default function OperationsSection() {
                       transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-8 pl-12 pr-4 md:pr-6 grid md:grid-cols-[1fr_auto] gap-8 items-start">
+                      <div className="pb-8 pl-12 pr-4 md:pr-6">
                         <div>
                           <motion.p
                             initial={{ opacity: 0, y: 6 }}
@@ -148,20 +138,6 @@ export default function OperationsSection() {
                             ))}
                           </motion.div>
                         </div>
-                        <motion.div
-                          initial={{ opacity: 0, x: 6 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.22, delay: 0.09 }}
-                          className="pt-0.5"
-                        >
-                          <Link
-                            href={`/expertise/${service.slug}`}
-                            className="hidden md:inline-flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase text-white/32 hover:text-white/70 transition-colors duration-200 whitespace-nowrap"
-                          >
-                            Full overview
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                          </Link>
-                        </motion.div>
                       </div>
                     </motion.div>
                   )}
