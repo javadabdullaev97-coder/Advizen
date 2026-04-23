@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight, Plus, Minus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Plus } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import { operationsServices } from "@/lib/services";
 import { cn } from "@/lib/utils";
@@ -40,11 +40,10 @@ export default function OperationsSection() {
                 className="relative border-b border-white/[0.06] group/row"
               >
                 {/* Left active bar */}
-                <span
-                  className={cn(
-                    "absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-300",
-                    isOpen ? "bg-primary opacity-100" : "opacity-0"
-                  )}
+                <motion.span
+                  animate={{ opacity: isOpen ? 1 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary"
                 />
 
                 {/* Row header */}
@@ -72,49 +71,85 @@ export default function OperationsSection() {
                     {service.headline.replace("\n", " ")}
                   </span>
 
-                  <span
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                     className={cn(
-                      "w-7 h-7 rounded-full border flex items-center justify-center shrink-0 transition-all duration-250 ml-4",
+                      "w-7 h-7 rounded-full border flex items-center justify-center shrink-0 transition-colors duration-250 ml-4",
                       isOpen
                         ? "border-primary/30 bg-primary/[0.07]"
                         : "border-white/[0.10] group-hover/row:border-white/[0.22]"
                     )}
                   >
-                    {isOpen ? (
-                      <Minus className="w-3 h-3 text-primary" />
-                    ) : (
-                      <Plus className="w-3 h-3 text-white/35 group-hover/row:text-white/60" />
-                    )}
-                  </span>
+                    <Plus
+                      className={cn(
+                        "w-3 h-3 transition-colors duration-250",
+                        isOpen ? "text-primary" : "text-white/35 group-hover/row:text-white/60"
+                      )}
+                    />
+                  </motion.span>
                 </button>
 
-                {/* Expanded content */}
-                {isOpen && (
-                  <div className="pb-8 pl-10 pr-4 md:pr-2 grid md:grid-cols-[1fr_auto] gap-8 items-start">
-                    <div>
-                      <p className="text-[14px] text-white/52 leading-relaxed mb-5">
-                        {service.description[0]}
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {service.capabilities.map((cap) => (
-                          <span
-                            key={cap}
-                            className="text-[11px] text-white/35 border border-white/[0.07] px-3 py-1.5 hover:border-white/[0.14] hover:text-white/55 transition-all duration-200 cursor-default"
-                          >
-                            {cap}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <Link
-                      href={`/expertise/${service.slug}`}
-                      className="hidden md:inline-flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase text-white/32 hover:text-white/70 transition-colors duration-200 whitespace-nowrap self-start pt-0.5"
+                {/* Expanded content — animated height */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
                     >
-                      Full overview
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                )}
+                      <div className="pb-8 pl-10 pr-4 md:pr-2 grid md:grid-cols-[1fr_auto] gap-8 items-start">
+                        <div>
+                          <motion.p
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.25, delay: 0.06 }}
+                            className="text-[14px] text-white/52 leading-relaxed mb-5"
+                          >
+                            {service.description[0]}
+                          </motion.p>
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.2, delay: 0.12 }}
+                            className="flex flex-wrap gap-1.5"
+                          >
+                            {service.capabilities.map((cap, ci) => (
+                              <motion.span
+                                key={cap}
+                                initial={{ opacity: 0, scale: 0.93 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                  delay: 0.14 + ci * 0.018,
+                                  duration: 0.18,
+                                  ease: [0.16, 1, 0.3, 1],
+                                }}
+                                className="text-[11px] text-white/35 border border-white/[0.07] px-3 py-1.5 hover:border-white/[0.14] hover:text-white/55 transition-all duration-200 cursor-default"
+                              >
+                                {cap}
+                              </motion.span>
+                            ))}
+                          </motion.div>
+                        </div>
+                        <motion.div
+                          initial={{ opacity: 0, x: 6 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.22, delay: 0.09 }}
+                        >
+                          <Link
+                            href={`/expertise/${service.slug}`}
+                            className="hidden md:inline-flex items-center gap-2 text-[11px] tracking-[0.14em] uppercase text-white/32 hover:text-white/70 transition-colors duration-200 whitespace-nowrap"
+                          >
+                            Full overview
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}
