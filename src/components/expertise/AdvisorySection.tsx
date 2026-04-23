@@ -179,8 +179,8 @@ export default function AdvisorySection() {
                   transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
                   className="flex items-center gap-3 mb-6"
                 >
-                  <span className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/[0.10] bg-white/[0.05]">
-                    <ActiveIcon className="w-4 h-4 text-white/70" strokeWidth={1.5} />
+                  <span className="w-11 h-11 rounded-lg flex items-center justify-center border border-white/[0.10] bg-white/[0.05]">
+                    <ActiveIcon className="w-5 h-5 text-white/70" strokeWidth={1.5} />
                   </span>
                   <div>
                     <h3 className="heading-luxury text-xl md:text-[1.35rem] text-foreground leading-tight">
