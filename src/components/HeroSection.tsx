@@ -68,19 +68,18 @@ export default function HeroSection() {
     <section className="relative min-h-screen bg-black overflow-hidden flex flex-col items-center justify-center">
       <StarField />
 
-      {/* Oxblood orb — true circle, only bottom arc visible */}
+      {/* Oxblood orb — large circle, only gentle bottom arc visible */}
       <div
         aria-hidden
         className="absolute left-1/2 -translate-x-1/2 pointer-events-none rounded-full"
         style={{
-          top: -680,
-          width: 900,
-          height: 900,
+          top: -1220,
+          width: 1440,
+          height: 1440,
           background:
-            "radial-gradient(circle at 50% 50%, rgba(140,20,20,0.65) 0%, rgba(99,13,13,0.35) 40%, rgba(60,8,8,0.10) 65%, transparent 80%)",
+            "radial-gradient(circle at 50% 50%, rgba(130,18,18,0.60) 0%, rgba(99,13,13,0.28) 42%, rgba(55,7,7,0.06) 66%, transparent 80%)",
           boxShadow:
-            "0 0 160px 60px rgba(99,13,13,0.20), 0 0 320px 120px rgba(99,13,13,0.12)",
-          border: "1px solid rgba(130,18,18,0.20)",
+            "0 0 220px 100px rgba(99,13,13,0.18), 0 0 480px 220px rgba(70,8,8,0.09)",
         }}
       />
 
