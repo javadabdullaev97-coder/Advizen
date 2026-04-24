@@ -129,7 +129,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.82, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="uppercase leading-none text-white select-none"
-          style={{ fontSize: "clamp(4rem, 13.5vw, 11.5rem)", letterSpacing: "0.18em", fontFamily: "var(--font-display), sans-serif", fontWeight: 300 }}
+          style={{ fontSize: "clamp(3.5rem, 10vw, 9rem)", letterSpacing: "0.1em", fontFamily: "var(--font-display), sans-serif", fontWeight: 300 }}
         >
           ADVIZEN
         </motion.h1>
