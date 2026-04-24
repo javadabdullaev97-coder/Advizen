@@ -28,7 +28,8 @@ const ROCKS = [
   },
   {
     id: 5, w: 72, h: 62,
-    clip: "polygon(44% 0%, 100% 24%, 82% 80%, 32% 100%, 0% 65%, 18% 10%)",
+    clip: "polygon(44% 0%, 100% 24%, 82% 80%,
+    32% 100%, 0% 65%, 18% 10%)",
     pos: { right: "20%", top: "63%" }, rotate: -6, yAnim: [0, -11, 0], dur: 4.7, delay: 1.3,
   },
   {
@@ -129,7 +130,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.82, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="uppercase leading-none text-white select-none"
-          style={{ fontSize: "clamp(4rem, 13.5vw, 11.5rem)", letterSpacing: "0.06em", fontFamily: "var(--font-display), sans-serif" }}
+          style={{ fontSize: "clamp(4rem, 13.5vw, 11.5rem)", letterSpacing: "0.18em", fontFamily: "var(--font-display), sans-serif", fontWeight: 300 }}
         >
           ADVIZEN
         </motion.h1>
