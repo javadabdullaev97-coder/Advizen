@@ -43,7 +43,7 @@ export default function UzbekistanMap({ onActiveChange }: { onActiveChange?: (id
     }
     intervalRef.current = setInterval(() => {
       setCycleIdx(p => (p + 1) % CYCLE_ORDER.length);
-    }, 1400);
+    }, 2800);
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
