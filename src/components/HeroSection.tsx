@@ -25,7 +25,7 @@ export default function HeroSection() {
 
       {/* Main content */}
       <div className="relative z-10 text-center px-6 w-full max-w-6xl">
-        <p className="text-[9px] tracking-[0.42em] uppercase text-white/50 mb-10">
+        <p className="text-[11px] tracking-[0.38em] uppercase text-white/70 mb-10">
           Business Advisory · Uzbekistan
         </p>
 
@@ -34,12 +34,12 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="uppercase leading-none text-white select-none"
-          style={{ fontSize: "clamp(3.5rem, 10vw, 9rem)", letterSpacing: "0.1em", fontFamily: "var(--font-display), sans-serif", fontWeight: 300 }}
+          style={{ fontSize: "clamp(3.5rem, 10vw, 9rem)", letterSpacing: "0.12em", fontFamily: "var(--font-hero), sans-serif", fontWeight: 200 }}
         >
           ADVIZEN
         </motion.h1>
 
-        <p className="mt-6 text-[13px] text-white/60 max-w-xs mx-auto leading-relaxed">
+        <p className="mt-8 text-[15px] text-white/75 max-w-sm mx-auto leading-relaxed">
           Strategic counsel for businesses entering and operating across Central Asia.
         </p>
 
