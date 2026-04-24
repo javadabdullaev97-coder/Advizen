@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import regionImageLoader from "@/lib/image-loader";
 import { useState, useCallback, type ComponentType } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -67,7 +68,7 @@ const REGION_DATA: Record<string, RegionData> = {
     name: "Andijan",
     population: "3.1M",
     gdp: "~$3.0B",
-    sezs: ["Andijan SEZ", "Qo’rg‘ontepa FEZ"],
+    sezs: ["Andijan SEZ", "Qo'rg'ontepa FEZ"],
     industries: ["Automotive", "Textiles", "Chemicals", "Food Processing", "Engineering"],
   },
   "UZ-BU": {
@@ -176,8 +177,8 @@ const REGION_IMAGE: Record<string, string> = {
   "UZ-SA": "/Regions/Samarkand.png",
   "UZ-SU": "/Regions/Surkhandarya.png",
   "UZ-SI": "/Regions/Syrdarya.png",
-  "UZ-TK": "/Regions/Tashkent%20City.png",
-  "UZ-TO": "/Regions/Tashkent%20region.png",
+  "UZ-TK": "/Regions/Tashkent City.png",
+  "UZ-TO": "/Regions/Tashkent region.png",
 };
 
 /* ── Region info panel ─────────────────────── */
@@ -202,12 +203,13 @@ function RegionInfoPanel({ activeId }: { activeId: string | null }) {
               <div className="relative h-44 rounded-xl overflow-hidden mb-5 border border-white/[0.06]"
                 style={{ background: "linear-gradient(135deg, rgba(122,26,26,0.22) 0%, #080808 65%)" }}>
                 <Image
+                  loader={regionImageLoader}
                   src={REGION_IMAGE[activeId ?? ""] ?? "/Regions/Andijan.png"}
                   alt={region.name}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) calc(100vw - 3rem), 480px"
-                  quality={72}
+                  quality={75}
                 />
                 {/* bottom gradient overlay */}
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#080808]/70 to-transparent pointer-events-none" />
