@@ -14,6 +14,8 @@ export default function HeroSection() {
         alt=""
         fill
         priority
+        quality={100}
+        sizes="100vw"
         className="object-cover object-center"
         aria-hidden
       />
