@@ -21,32 +21,24 @@ const disciplines: { num: string; title: string; short: string; blurb: string; i
 export default function DisciplinesIntegration() {
   const [active, setActive] = useState(0);
   const shouldReduce = useReducedMotion();
-  const [hovered, setHovered] = useState(false);
   const N = disciplines.length;
-  const PULSE_MS = 1000;
+  const PULSE_MS = 1800;
 
   useEffect(() => {
-    if (!shouldReduce && !hovered) return;
-    if (hovered) return;
+    if (!shouldReduce) return;
     const id = setInterval(() => {
       setActive((p) => (p + 1) % N);
     }, PULSE_MS);
     return () => clearInterval(id);
-  }, [shouldReduce, hovered, N]);
+  }, [shouldReduce, N]);
 
-  const advance = () => {
-    if (!hovered) setActive((p) => (p + 1) % N);
-  };
+  const advance = () => setActive((p) => (p + 1) % N);
 
   const current = disciplines[active];
   const Icon = current.icon;
 
   return (
-    <div
-      className="relative mx-auto max-w-2xl"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <div className="relative mx-auto max-w-2xl">
       <div className="relative flex items-start">
         {/* LEFT — Advizen tile */}
         <div className="relative z-10 flex flex-col items-center gap-5 shrink-0">
@@ -71,7 +63,7 @@ export default function DisciplinesIntegration() {
               style={{ top: `calc(50% + ${(i - 1) * 12}px - 0.5px)` }}
             />
           ))}
-          {!shouldReduce && !hovered && [0, 1, 2].map((i) => (
+          {!shouldReduce && [0, 1, 2].map((i) => (
             <motion.div
               key={`pulse-${active}-${i}`}
               className="absolute h-px w-20 md:w-24 -ml-10 md:-ml-12"
