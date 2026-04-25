@@ -12,6 +12,9 @@ import pitRefundsEducation from "./articles/pit-refunds-education-uzbekistan";
 import licensingProcedures from "./articles/licensing-procedures-uzbekistan";
 import cryptoAssetProviders from "./articles/crypto-asset-service-providers-uzbekistan";
 import specialEconomicZones from "./articles/special-economic-zones-uzbekistan";
+import accountingLaw from "./articles/accounting-law-uzbekistan";
+import representativeOffices from "./articles/representative-offices-uzbekistan";
+import voluntaryLiquidation from "./articles/voluntary-liquidation-uzbekistan";
 
 function build(slug: string, extra: Omit<PublicationArticle, keyof typeof publications[0]>): PublicationArticle {
   const pub = publications.find((p) => p.slug === slug)!;
@@ -32,6 +35,9 @@ export const articles: Record<string, PublicationArticle> = {
   "licensing-procedures-uzbekistan": build("licensing-procedures-uzbekistan", licensingProcedures),
   "crypto-asset-service-providers-uzbekistan": build("crypto-asset-service-providers-uzbekistan", cryptoAssetProviders),
   "special-economic-zones-uzbekistan": build("special-economic-zones-uzbekistan", specialEconomicZones),
+  "accounting-law-uzbekistan": build("accounting-law-uzbekistan", accountingLaw),
+  "representative-offices-uzbekistan": build("representative-offices-uzbekistan", representativeOffices),
+  "voluntary-liquidation-uzbekistan": build("voluntary-liquidation-uzbekistan", voluntaryLiquidation),
 };
 
 export function getArticleBySlug(slug: string): PublicationArticle | undefined {
