@@ -155,6 +155,18 @@ export const publications: Publication[] = [
     hasRead: true,
   },
   {
+    slug: "special-economic-zones-uzbekistan",
+    tag: "Legal Briefing",
+    category: "Legal",
+    title: "Special Economic Zones in Uzbekistan: Tax, Customs and Legal Benefits",
+    description:
+      "A structured overview of the tax exemptions, customs privileges, legal guarantees, currency freedoms, and investment incentives available to SEZ participants in Uzbekistan.",
+    year: "2026",
+    date: "2026-04-01",
+    pages: 10,
+    hasRead: true,
+  },
+  {
     slug: "pit-refunds-education-uzbekistan",
     tag: "Tax Briefing",
     category: "Tax",
