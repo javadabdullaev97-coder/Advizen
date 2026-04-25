@@ -131,6 +131,18 @@ export const publications: Publication[] = [
     hasRead: true,
   },
   {
+    slug: "licensing-procedures-uzbekistan",
+    tag: "Legal Briefing",
+    category: "Legal",
+    title: "Licensing, Permits & Notifications in Uzbekistan",
+    description:
+      "A practical overview of Uzbekistan's three-track authorisation framework — licensing, permitting documents, and notifications — under the unified Law No. ЗРУ-701.",
+    year: "2026",
+    date: "2026-02-18",
+    pages: 10,
+    hasRead: true,
+  },
+  {
     slug: "pit-refunds-education-uzbekistan",
     tag: "Tax Briefing",
     category: "Tax",
