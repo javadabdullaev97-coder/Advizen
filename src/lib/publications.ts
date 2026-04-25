@@ -93,6 +93,18 @@ export const publications: Publication[] = [
     pages: 8,
     hasRead: true,
   },
+  {
+    slug: "online-gambling-uzbekistan",
+    tag: "Legal Brief",
+    category: "Legal",
+    title: "Regulating Online Gambling, Lotteries, and Betting in Uzbekistan",
+    description:
+      "Explore the essential regulatory framework and licensing requirements for operating online gambling, lottery, and betting platforms in Uzbekistan, effective January 1, 2025.",
+    year: "2024",
+    date: "2024-12-23",
+    pages: 6,
+    hasRead: true,
+  },
 ];
 
 export function getPublicationBySlug(slug: string): Publication | undefined {
