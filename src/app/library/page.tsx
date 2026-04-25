@@ -50,9 +50,9 @@ const flagship = {
   ],
 };
 
-type FilterTag = "All" | "Advisory" | "Tax" | "HR" | "Legal" | "Market" | "Compliance";
+type FilterTag = "All" | "Advisory" | "Tax" | "HR" | "Legal";
 
-const filters: FilterTag[] = ["All", "Advisory", "Tax", "HR", "Legal", "Market", "Compliance"];
+const filters: FilterTag[] = ["All", "Advisory", "Tax", "HR", "Legal"];
 
 const stats = [
   { value: "10", label: "Publications" },
