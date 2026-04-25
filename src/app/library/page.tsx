@@ -19,7 +19,7 @@ import AuroraBackground from "@/components/AuroraBackground";
 import { cn } from "@/lib/utils";
 import { publications, sortedPublications, type Publication } from "@/lib/publications";
 
-/* ── Helpers ────────────────────────────────────── */
+/* ── Helpers ────────────────────────────────────────────── */
 
 function formatDate(dateStr?: string, year?: string): string {
   if (dateStr) {
@@ -29,7 +29,7 @@ function formatDate(dateStr?: string, year?: string): string {
   return year ?? "";
 }
 
-/* ── Data ──────────────────────────────────────────────── */
+/* ── Data ──────────────────────────────────────────────────────── */
 
 const flagship = {
   tag: "Flagship Publication",
@@ -55,7 +55,7 @@ type FilterTag = "All" | "Advisory" | "Tax" | "HR" | "Legal";
 const filters: FilterTag[] = ["All", "Advisory", "Tax", "HR", "Legal"];
 
 const stats = [
-  { value: "12", label: "Publications" },
+  { value: "13", label: "Publications" },
   { value: "Free", label: "Access" },
   { value: "EN / RU", label: "Languages" },
   { value: "2026", label: "Latest edition" },
@@ -64,7 +64,7 @@ const stats = [
 const luxuryEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ITEMS_PER_PAGE = 10;
 
-/* ── Article Row ───────────────────────────────────────── */
+/* ── Article Row ───────────────────────────────────────────────────── */
 
 function ArticleRow({ pub }: { pub: Publication }) {
   return (
@@ -98,7 +98,7 @@ function ArticleRow({ pub }: { pub: Publication }) {
   );
 }
 
-/* ── Page ─────────────────────────────────────────────────── */
+/* ── Page ───────────────────────────────────────────────────────────── */
 
 export default function LibraryPage() {
   const [activeFilter, setActiveFilter] = useState<FilterTag>("All");
