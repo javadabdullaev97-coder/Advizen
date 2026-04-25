@@ -131,6 +131,18 @@ export const publications: Publication[] = [
     hasRead: true,
   },
   {
+    slug: "crypto-asset-service-providers-uzbekistan",
+    tag: "Legal Briefing",
+    category: "Legal",
+    title: "Licensing Crypto-Asset Service Providers in Uzbekistan",
+    description:
+      "A practical guide to obtaining a licence as a crypto exchange, mining pool, depository, or crypto shop in Uzbekistan — requirements, fees, and ongoing obligations.",
+    year: "2026",
+    date: "2026-04-25",
+    pages: 10,
+    hasRead: true,
+  },
+  {
     slug: "licensing-procedures-uzbekistan",
     tag: "Legal Briefing",
     category: "Legal",

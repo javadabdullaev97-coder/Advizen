@@ -10,6 +10,7 @@ import permanentEstablishment from "./articles/permanent-establishment-uzbekista
 import selfEmployment from "./articles/self-employment-uzbekistan";
 import pitRefundsEducation from "./articles/pit-refunds-education-uzbekistan";
 import licensingProcedures from "./articles/licensing-procedures-uzbekistan";
+import cryptoAssetProviders from "./articles/crypto-asset-service-providers-uzbekistan";
 
 function build(slug: string, extra: Omit<PublicationArticle, keyof typeof publications[0]>): PublicationArticle {
   const pub = publications.find((p) => p.slug === slug)!;
@@ -28,6 +29,7 @@ export const articles: Record<string, PublicationArticle> = {
   "self-employment-uzbekistan": build("self-employment-uzbekistan", selfEmployment),
   "pit-refunds-education-uzbekistan": build("pit-refunds-education-uzbekistan", pitRefundsEducation),
   "licensing-procedures-uzbekistan": build("licensing-procedures-uzbekistan", licensingProcedures),
+  "crypto-asset-service-providers-uzbekistan": build("crypto-asset-service-providers-uzbekistan", cryptoAssetProviders),
 };
 
 export function getArticleBySlug(slug: string): PublicationArticle | undefined {

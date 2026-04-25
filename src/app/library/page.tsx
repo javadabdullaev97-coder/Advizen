@@ -55,7 +55,7 @@ type FilterTag = "All" | "Advisory" | "Tax" | "HR" | "Legal";
 const filters: FilterTag[] = ["All", "Advisory", "Tax", "HR", "Legal"];
 
 const stats = [
-  { value: "11", label: "Publications" },
+  { value: "12", label: "Publications" },
   { value: "Free", label: "Access" },
   { value: "EN / RU", label: "Languages" },
   { value: "2026", label: "Latest edition" },
