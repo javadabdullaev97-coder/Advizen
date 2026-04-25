@@ -167,6 +167,42 @@ export const publications: Publication[] = [
     hasRead: true,
   },
   {
+    slug: "accounting-law-uzbekistan",
+    tag: "Advisory",
+    category: "Advisory",
+    title: "Accounting in Uzbekistan: A Practical Legal Guide",
+    description:
+      "A practical overview of Uzbekistan's accounting law — who must comply, how books are kept, what reports are required, and what penalties apply.",
+    year: "2026",
+    date: "2026-04-10",
+    pages: 12,
+    hasRead: true,
+  },
+  {
+    slug: "representative-offices-uzbekistan",
+    tag: "Legal Briefing",
+    category: "Legal",
+    title: "Opening a Representative Office in Uzbekistan: Accreditation Guide",
+    description:
+      "A step-by-step guide to accrediting a foreign commercial organisation's representative office in Uzbekistan — documents, timelines, costs, and ongoing obligations.",
+    year: "2026",
+    date: "2026-04-15",
+    pages: 10,
+    hasRead: true,
+  },
+  {
+    slug: "voluntary-liquidation-uzbekistan",
+    tag: "Legal Briefing",
+    category: "Legal",
+    title: "Voluntary Liquidation of a Business in Uzbekistan",
+    description:
+      "A step-by-step guide to Uzbekistan's simplified voluntary liquidation procedure for commercial entities, from the resolution to final deregistration.",
+    year: "2026",
+    date: "2026-04-20",
+    pages: 10,
+    hasRead: true,
+  },
+  {
     slug: "pit-refunds-education-uzbekistan",
     tag: "Tax Briefing",
     category: "Tax",
