@@ -81,6 +81,18 @@ export const publications: Publication[] = [
     pages: 10,
     hasRead: true,
   },
+  {
+    slug: "creative-industry-park-uzbekistan",
+    tag: "Legal Brief",
+    category: "Legal",
+    title: "Strategic Benefits for Residents of Creative Industry Park",
+    description:
+      "Explore the specialised legal framework, significant tax incentives, and unique support mechanisms available for businesses within Uzbekistan's Creative Industry Park.",
+    year: "2024",
+    date: "2024-12-25",
+    pages: 8,
+    hasRead: true,
+  },
 ];
 
 export function getPublicationBySlug(slug: string): Publication | undefined {
