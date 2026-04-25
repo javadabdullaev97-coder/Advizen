@@ -138,7 +138,7 @@ export const articles: Record<string, PublicationArticle> = {
       { type: "h2", text: "Individual Accumulative Pension Contribution" },
       {
         type: "p",
-        text: "Employees contribute 0.1% of their gross salary to an individual accumulative pension account. This is a mandatory employee-side deduction, withheld by the employer alongside PIT. The accumulative pension system was introduced to supplement the state pension and is managed by designated financial institutions.",
+        text: "Employees contribute 0.1% of their gross salary to an individual accumulative pension account. This deduction is included within the PIT calculation and withheld by the employer as part of the overall income tax remittance. The accumulative pension system was introduced to supplement the state pension and is managed by designated financial institutions.",
       },
       { type: "h2", text: "Reporting Obligations" },
       {
@@ -175,8 +175,8 @@ export const articles: Record<string, PublicationArticle> = {
         items: [
           "Personal Income Tax: 12% (flat, withheld by employer)",
           "Unified Social Payment: 12% (employer cost, on gross payroll)",
-          "Accumulative Pension: 0.1% (employee deduction)",
-          "Total employer burden: ~24.1% of gross salary",
+          "Accumulative Pension: 0.1% (included in PIT)",
+          "Total employer burden: ~24% of gross salary",
         ],
       },
       {
