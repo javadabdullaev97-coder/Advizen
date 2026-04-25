@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -62,6 +62,7 @@ const stats = [
 ];
 
 const luxuryEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const ITEMS_PER_PAGE = 10;
 
 /* ── Article Row ───────────────────────────────────────── */
 
@@ -102,6 +103,7 @@ function ArticleRow({ pub }: { pub: Publication }) {
 export default function LibraryPage() {
   const [activeFilter, setActiveFilter] = useState<FilterTag>("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filtered = useMemo(() => {
     let result = sortedPublications(publications);
@@ -119,6 +121,11 @@ export default function LibraryPage() {
     }
     return result;
   }, [activeFilter, searchQuery]);
+
+  useEffect(() => { setCurrentPage(1); }, [activeFilter, searchQuery]);
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
   return (
     <>
@@ -352,14 +359,14 @@ export default function LibraryPage() {
               </motion.div>
             ) : (
               <motion.div
-                key={activeFilter + searchQuery}
+                key={activeFilter + searchQuery + currentPage}
                 className="border-t border-white/[0.07]"
                 initial="hidden"
                 animate="visible"
                 exit={{ opacity: 0, transition: { duration: 0.15 } }}
                 variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
               >
-                {filtered.map((pub) => (
+                {paginated.map((pub) => (
                   <motion.div
                     key={pub.slug}
                     variants={{
@@ -383,6 +390,42 @@ export default function LibraryPage() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-1.5 mt-12 pt-10 border-t border-white/[0.06]">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="w-9 h-9 flex items-center justify-center rounded-full text-white/30 hover:text-white/65 hover:bg-white/[0.04] disabled:opacity-30 disabled:cursor-default transition-all duration-200 cursor-pointer"
+              >
+                <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={cn(
+                    "w-9 h-9 rounded-full font-mono text-xs tabular-nums transition-all duration-200 cursor-pointer",
+                    currentPage === page
+                      ? "bg-white/[0.08] text-white border border-white/[0.15]"
+                      : "text-white/35 hover:text-white/65 hover:bg-white/[0.04]",
+                  )}
+                >
+                  {page}
+                </button>
+              ))}
+
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="w-9 h-9 flex items-center justify-center rounded-full text-white/30 hover:text-white/65 hover:bg-white/[0.04] disabled:opacity-30 disabled:cursor-default transition-all duration-200 cursor-pointer"
+              >
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
