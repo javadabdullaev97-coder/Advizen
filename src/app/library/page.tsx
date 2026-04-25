@@ -73,10 +73,10 @@ function ArticleRow({ pub }: { pub: Publication }) {
 
       {/* Left column: tag + date */}
       <div className="w-28 md:w-44 shrink-0 pt-0.5 pl-4">
-        <span className="inline-block text-[10px] tracking-[0.14em] uppercase text-primary-light/60 border border-primary-light/15 rounded-full px-2.5 py-0.5">
+        <span className="inline-block text-[10px] tracking-[0.14em] uppercase text-white/65 border border-white/[0.18] rounded-full px-2.5 py-0.5">
           {pub.tag}
         </span>
-        <p className="font-mono text-[10px] text-white/[0.28] mt-2.5 tabular-nums">
+        <p className="font-mono text-[10px] text-white/45 mt-2.5 tabular-nums">
           {formatDate(pub.date, pub.year)}
         </p>
       </div>

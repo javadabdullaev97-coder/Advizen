@@ -78,6 +78,7 @@ export const publications: Publication[] = [
     description:
       "From April 2026, escrow accounts are mandatory for all real estate and vehicle transactions. We break down the legislative changes, timelines, and what buyers and sellers must know.",
     year: "2026",
+    date: "2026-03-01",
     pages: 10,
     hasRead: true,
   },
