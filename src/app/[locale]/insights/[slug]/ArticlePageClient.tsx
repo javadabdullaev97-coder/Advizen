@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type MouseEvent } from "react";
 import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -74,6 +74,21 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
   const tPub = useTranslations("Publications");
   const tServices = useTranslations("Services");
   const locale = useLocale();
+
+  /* Drive scrolling explicitly rather than relying on the native #anchor jump,
+     which was not moving the page. getElementById is used (not querySelector)
+     so ids that start with a digit still resolve; scroll-mt-28 on each <h2>
+     supplies the offset for the fixed navbar. */
+  const scrollToSection = (
+    e: MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", `#${id}`);
+  };
 
   const article = getArticleBySlug(slug, locale);
 
@@ -243,6 +258,7 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                           <a
                             key={item.id}
                             href={`#${item.id}`}
+                            onClick={(e) => scrollToSection(e, item.id)}
                             className="group relative flex items-start gap-2.5 rounded-sm px-2 py-2 text-[13px] leading-snug transition-colors duration-200"
                             style={{
                               color: isActive
@@ -356,7 +372,10 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                             <a
                               key={item.id}
                               href={`#${item.id}`}
-                              onClick={() => setTocOpen(false)}
+                              onClick={(e) => {
+                                scrollToSection(e, item.id);
+                                setTocOpen(false);
+                              }}
                               className="flex items-center gap-3 px-4 py-3 text-[13px] text-white/55 hover:text-white/85 hover:bg-white/[0.02] transition-colors"
                             >
                               <span className="font-mono text-[10px] text-white/22 tabular-nums shrink-0 w-5">
