@@ -83,7 +83,7 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
   const toc =
     article?.content
       .filter((b) => b.type === "h2" && b.text)
-      .map((b) => ({ id: slugify(b.text!), text: b.text! })) ?? [];
+      .map((b, i) => ({ id: slugify(b.text!) || `section-${i}`, text: b.text! })) ?? [];
 
   /* ── Scroll-spy via IntersectionObserver ───────────────────────────────────── */
   useEffect(() => {
@@ -388,7 +388,7 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
 
                 if (block.type === "h2") {
                   h2Counter++;
-                  const sectionId = slugify(block.text!);
+                  const sectionId = slugify(block.text!) || `section-${h2Counter - 1}`;
                   return (
                     <AnimatedSection key={i} delay={delay}>
                       <h2
