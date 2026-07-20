@@ -154,7 +154,6 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
 
   /* ── Counters reset each render ─────────────────────────────────────────────────────── */
   let h2Counter = 0;
-  const firstParagraphIndex = article.content.findIndex((b) => b.type === "p");
 
   /* ── Related services (first 5) ───────────────────────────────────── */
   const relatedServices = servicesData.slice(0, 5);
@@ -424,16 +423,9 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                 }
 
                 if (block.type === "p") {
-                  const isFirst = i === firstParagraphIndex;
                   return (
                     <AnimatedSection key={i} delay={delay}>
-                      <p
-                        className={`text-white/60 leading-[1.85] mb-6 ${
-                          isFirst
-                            ? "first-letter:text-[3.2rem] first-letter:font-serif first-letter:text-foreground/70 first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-[0.85]"
-                            : ""
-                        }`}
-                      >
+                      <p className="text-white/60 leading-[1.85] mb-6">
                         {block.text}
                       </p>
                     </AnimatedSection>
