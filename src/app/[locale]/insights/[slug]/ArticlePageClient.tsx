@@ -8,9 +8,7 @@ import {
   ArrowRight,
   ChevronDown,
   Download,
-  Clock,
   User,
-  BookOpen,
 } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import TextReveal, { RevealLine } from "@/components/TextReveal";
@@ -205,16 +203,6 @@ export default function ArticlePageClient({ slug }: { slug: string }) {
                         <span className="text-sm">{article.author}</span>
                       </div>
                     )}
-                    {article.readTime && (
-                      <div className="flex items-center gap-2 text-white/40">
-                        <Clock className="w-3.5 h-3.5" />
-                        <span className="text-sm">{article.readTime}</span>
-                      </div>
-                    )}
-                    <div className="flex items-center gap-2 text-white/40">
-                      <BookOpen className="w-3.5 h-3.5" />
-                      <span className="text-sm">{tArticle("pages", { count: article.pages })}</span>
-                    </div>
                     <span className="font-mono text-xs text-white/25 tabular-nums">
                       {article.year}
                     </span>
