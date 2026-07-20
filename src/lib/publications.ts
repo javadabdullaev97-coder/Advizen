@@ -54,6 +54,18 @@ export interface PublicationArticle extends Publication {
 
 export const publications: Publication[] = [
   {
+    slug: "tashkent-international-financial-centre",
+    tag: "Legal Briefing",
+    category: "Legal",
+    title: "Tashkent International Financial Centre: The 2026 Constitutional Law",
+    description:
+      "A neutral analysis of the Constitutional Law establishing the Tashkent International Financial Centre — its common-law legal architecture, the 2076 tax exemption and its Pillar Two limits, the operational regime, and how it compares to DIFC, ADGM, AIFC, and QFC.",
+    year: "2026",
+    date: "2026-07-20",
+    pages: 22,
+    hasRead: true,
+  },
+  {
     slug: "outsourcing-operational-activities",
     tag: "Advisory",
     category: "Advisory",

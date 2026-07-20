@@ -68,6 +68,10 @@
       "HR": "HR"
     },
     "items": {
+      "tashkent-international-financial-centre": {
+        "title": "Toshkent xalqaro moliya markazi: 2026 yilgi Konstitutsiyaviy qonun",
+        "description": "Toshkent xalqaro moliya markazini tashkil etuvchi Konstitutsiyaviy qonunning neytral tahlili — uning umumiy huquqqa asoslangan huquqiy arxitekturasi, 2076 yilgacha soliq ozod etilishi va uning Pillar Two chegaralari, operatsion rejimi hamda DIFC, ADGM, AIFC va QFC bilan taqqoslash."
+      },
       "outsourcing-operational-activities": {
         "title": "O'zbekistonda operatsion faoliyatni autsorsing qilish",
         "description": "O'zbekistondagi autsorsing kelishuvlarini boshqaruvchi me'yoriy bazaga amaliy ko'rinish, jumladan ruxsat etilgan tuzilmalar, mehnat oqibatlari va shartnoma talablari."
