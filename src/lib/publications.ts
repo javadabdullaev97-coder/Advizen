@@ -63,6 +63,7 @@ export const publications: Publication[] = [
     year: "2026",
     date: "2026-07-20",
     pages: 22,
+    image: "/Articles Image/TIFC.webp",
     hasRead: true,
   },
   {
